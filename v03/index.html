@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #efebe3;
+    --paint: #0c33c8;
+    --ink: #2a2926;
+    --display: "Syne", "Helvetica Neue", Arial, sans-serif;
+    --body: "Manrope", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--canvas); }
+  html:not(.spilled), html:not(.spilled) body { height: 100%; overflow: hidden; }
+  body {
+    color: var(--canvas);
+    font-family: var(--body); font-size: clamp(17px, 1.3vw, 20px); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--canvas); color: var(--paint); }
+
+  /* the fabric: sits over everything, so paint and lettering share the same weave */
+  .fabric {
+    position: fixed; inset: 0; z-index: 10; pointer-events: none;
+    mix-blend-mode: multiply;
+    background:
+      repeating-linear-gradient(0deg, rgba(90,80,60,.07) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(90,80,60,.06) 0 1px, transparent 1px 3px),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .40  0 0 0 0 .32  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.004' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .38  0 0 0 .18 0'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
+  }
+
+  #paint { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+  /* ---------- shelf + can ---------- */
+  /* the shelf ends under the middle of the can, so it teeters on the edge */
+  .shelf { position: absolute; left: 0; top: 120px; width: 73px; height: 2px; border-radius: 0 2px 2px 0; background: var(--ink); z-index: 3; }
+  .can {
+    position: absolute; left: 49px; top: 64px; width: 48px; height: 56px; z-index: 4;
+    border: 0; background: none; cursor: pointer; padding: 0;
+    transform-origin: 50% 100%;
+    animation: teeter 3.6s ease-in-out infinite;
+  }
+  .can svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .can:hover { animation-duration: 1.7s; }
+  .can:focus-visible { outline: 2px dashed var(--ink); outline-offset: 8px; }
+  @keyframes teeter {
+    0%, 100% { rotate: 0deg; }
+    12% { rotate: 6deg; } 22% { rotate: -2deg; } 34% { rotate: 9deg; }
+    46% { rotate: -1deg; } 56% { rotate: 4deg; } 66% { rotate: 0deg; }
+  }
+  .can.tipped { animation: tip 1s cubic-bezier(.55,0,.75,.4) forwards; cursor: default; }
+  @keyframes tip {
+    0% { rotate: 6deg; }
+    50% { rotate: 121deg; animation-timing-function: ease-out; }
+    66% { rotate: 109deg; animation-timing-function: ease-in-out; }
+    83% { rotate: 117deg; } 100% { rotate: 115deg; }
+  }
+
+  /* ---------- the lettering (canvas-coloured; only paint reveals it) ---------- */
+  .copy {
+    position: relative; z-index: 2;
+    margin-left: clamp(20px, 7vw, 120px);
+    width: min(72vw, 1060px);
+    padding: 330px 0 220px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(26px, 6.2vw, 140px); line-height: .92; letter-spacing: -.035em;
+    text-transform: uppercase;
+  }
+  .statement {
+    font-family: var(--display); font-weight: 500;
+    font-size: clamp(24px, 2.6vw, 40px); line-height: 1.2; letter-spacing: -.01em;
+    max-width: 24ch; margin-top: 44px;
+  }
+  section { margin-top: clamp(120px, 14vw, 200px); }
+  h2 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(44px, 6.4vw, 104px); line-height: .92; letter-spacing: -.03em;
+  }
+  .role { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: .24em; text-transform: uppercase; margin-bottom: 18px; }
+  .bio { display: grid; grid-template-columns: 1fr 1fr; gap: 28px clamp(28px, 4vw, 64px); margin-top: 52px; }
+  .bio .lead {
+    grid-column: 1 / -1;
+    font-family: var(--display); font-weight: 500; font-size: clamp(24px, 2.4vw, 36px); line-height: 1.25; max-width: 30ch;
+  }
+  .arc {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(38px, 6.6vw, 110px); line-height: 1; letter-spacing: -.03em;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .3em;
+  }
+  .arc i { font-style: normal; font-weight: 500; opacity: .55; }
+  .arc-note { max-width: 36em; margin-top: 30px; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 90px); }
+  .facts h3 { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: .24em; text-transform: uppercase; margin-bottom: 22px; }
+  .facts ul { list-style: none; }
+  .facts li { padding: 16px 0; border-top: 2px solid var(--canvas); }
+  .facts li b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.2; }
+  .cta h2 { font-size: clamp(52px, 9vw, 150px); }
+  .cta a {
+    display: inline-block; margin-top: 44px;
+    font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2.4vw, 34px);
+    text-decoration: none; border-bottom: 3px solid var(--canvas); padding-bottom: 4px;
+  }
+  .cta p { margin-top: 20px; font-family: var(--display); font-weight: 700; letter-spacing: .24em; text-transform: uppercase; font-size: 14px; }
+
+  @media (max-width: 700px) {
+    .copy { width: calc(100vw - 40px); margin-left: 20px; padding-top: 310px; }
+    h1 { font-size: 7.6vw; }
+    .bio, .facts { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<canvas id="paint" aria-hidden="true"></canvas>
+
+<div class="shelf" aria-hidden="true"></div>
+<button class="can" id="can" aria-label="Tip over the paint can to reveal the page">
+  <svg viewBox="0 0 48 56" fill="none" stroke="#2a2926" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M6,17 C6,-3 42,-3 42,17" stroke-width="1.8"/>
+    <path d="M5,12 V47 C5,54.5 43,54.5 43,47 V12" fill="#efebe3"/>
+    <ellipse cx="24" cy="12" rx="19" ry="5.2" fill="#efebe3"/>
+    <ellipse cx="24" cy="12.3" rx="14.5" ry="2.9" fill="#0c33c8" stroke="none"/>
+    <path d="M5,25 C5,31 43,31 43,25" stroke-width="1.6"/>
+  </svg>
+</button>
+
+<main class="copy" id="copy">
+  <header>
+    <h1>Artisan<br>Technology</h1>
+    <p class="statement">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+  </header>
+
+  <section>
+    <p class="role">Principal Engineer</p>
+    <h2>Lindsay Moore</h2>
+    <div class="bio">
+      <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking "what if we did it this way?" and then building it.</p>
+      <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      <p>I like interesting questions and the full arc. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="arc"><span>idea</span><i>&gt;&gt;</i><span>prototype</span><i>&gt;&gt;</i><span>production</span></p>
+  </section>
+
+  <section class="facts">
+    <div>
+      <h3>Education</h3>
+      <ul>
+        <li><b>M.S. Computer Science</b>University of Chicago</li>
+        <li><b>M.S. Informatics</b>University of Minnesota</li>
+        <li><b>B. Production, Engineering &amp; Business</b>McNally Smith College</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Community &amp; Research</h3>
+      <ul>
+        <li><b>Board, Pumping Station: One</b>Chicago's oldest and largest hackerspace</li>
+        <li><b>Research, STAGE Center</b>A multidisciplinary technology and arts lab at UChicago</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Let's build something together.</h2>
+    <a href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+    <p>Chicago, IL</p>
+  </section>
+</main>
+
+<div class="fabric" aria-hidden="true"></div>
+
+<script>
+(() => {
+  const THUMB = location.search.includes('thumb');
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PAINT = '#0c33c8';
+
+  // geometry (document px) — must agree with the CSS for .shelf and .can
+  const shelfY = 120, pivot = { x: 73, y: shelfY };   // shelf ends under the middle of the can
+  const TIP = 115 * Math.PI / 180, rimDepth = 44;       // resting angle; pivot → mouth distance
+  const mouth = { x: pivot.x + rimDepth * Math.sin(TIP), y: pivot.y - rimDepth * Math.cos(TIP) };
+  const bandY = 238;                                    // where the pour hits and the drip line forms
+  const hit = { x: mouth.x + 4, y: bandY };
+
+  const cv = document.getElementById('paint');
+  const ctx = cv.getContext('2d');
+  const can = document.getElementById('can');
+
+  let W, H, dpr, docH, drips = [], runs = [], specks = [];
+  let tipAt = null, curtain = 0;
+
+  const edgeX = y => {
+    const narrow = W < 700;
+    const k = narrow ? .3 : 1;
+    return W * (narrow ? 1.04 : .885) + k * (22 * Math.sin(y / 173 + .5) + 11 * Math.sin(y / 59 + 2.1) + 5 * Math.sin(y / 21));
+  };
+  // the ragged top of the smear
+  const thick = (x, ts) => 24 + 9 * Math.sin(x / 37 + 1) + 5 * Math.sin(x / 13) + 8 * Math.sin(x / 91 + 2) + 1.5 * Math.sin(x / 9 + ts * 1.3);
+
+  function layout() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    docH = Math.max(document.documentElement.scrollHeight, H);
+
+    let seed = 23;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+    // the drip line: long runners, short stubs, all different speeds
+    drips = [];
+    const right = edgeX(bandY) - 14;
+    for (let x = -30 + rnd() * 20; x < right; x += 16 + rnd() * 34) {
+      const stub = rnd() < .3;
+      drips.push({
+        x, w: stub ? 7 + rnd() * 7 : 9 + rnd() * 15,
+        max: stub ? 25 + rnd() * 150 : Infinity,
+        v: 70 + rnd() * 260, acc: 10 + rnd() * 50,
+        delay: .05 + rnd() * .5, sway: rnd() * 6.28,
+      });
+    }
+    // bubbles in the wet smear
+    specks = Array.from({ length: Math.round(W / 14) }, () => ({ x: rnd() * right, y: bandY - 14 + rnd() * 34, r: .8 + rnd() * 2 }));
+
+    // runs creeping down the bare right-hand margin once the canvas is flooded
+    runs = [];
+    for (let y = bandY + 120; y < docH - 100; y += 2) {
+      const e0 = edgeX(y - 2), e1 = edgeX(y), e2 = edgeX(y + 2);
+      if (e1 > e0 && e1 >= e2 && rnd() < .8) {
+        runs.push({ x: e1 - 1 - rnd() * 3, y, w: 8 + rnd() * 9, max: 90 + rnd() * 420, speed: 6 + rnd() * 16, delay: rnd() * 14 });
+      }
+    }
+  }
+
+  // how far the smear has spread along the drip line at band-time tb
+  const spreadL = tb => hit.x - (hit.x + 60) * Math.min(1, tb / .5);
+  const spreadR = tb => { const k = Math.min(1, tb / 1.5); return hit.x + (edgeX(bandY) - hit.x) * (1 - (1 - k) ** 3); };
+  const reachedAt = x => x < hit.x ? .5 * (hit.x - x) / (hit.x + 60) : 1.5 * (1 - Math.cbrt(1 - Math.min(1, (x - hit.x) / (edgeX(bandY) - hit.x))));
+
+  function dripPath(p, x, w, len, sy, ts, sway, join, top = bandY) {
+    const tip = top + len;
+    const y0 = Math.max(top, sy - 40), y1 = Math.min(tip, sy + H + 40);
+    if (y1 <= y0) return;
+    const sx = y => 1.6 * Math.sin(y / 70 + sway) + .6 * Math.sin(y / 23 + ts + sway);
+    const L = [], R = [];
+    for (let y = y0; y <= y1; y += 10) {
+      const hw = w / 2 * (1 + .12 * Math.sin(y / 41 + sway)) * (join ? Math.min(1, .2 + (y - top) / 40) : 1);
+      let lx = x + sx(y) - hw;
+      if (join && lx - edgeX(y) < 6) lx = Math.min(lx, edgeX(y) - 2);   // no hairline gap where a run leaves the pool
+      L.push([lx, y - sy]); R.push([x + sx(y) + hw, y - sy]);
+    }
+    // wind clockwise like the smear and the flood, so overlapping shapes union instead of cancelling
+    L.reverse();
+    p.moveTo(R[0][0], R[0][1]);
+    R.forEach(([a, b]) => p.lineTo(a, b));
+    if (tip <= y1) p.arc(x + sx(tip), tip - sy, w * .62, 0, Math.PI);   // the bead at the end of every drip
+    L.forEach(([a, b]) => p.lineTo(a, b));
+    p.closePath();
+  }
+
+  const drops = [];
+  let nextDrop = 0;
+
+  function frame(now) {
+    const sy = scrollY;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    if (tipAt === null) { requestAnimationFrame(frame); return; }
+
+    const t = (now - tipAt) / 1000;
+    const tStream = t - .45, tb = t - .7;     // stream starts mid-tip; smear once it lands
+    const ts = now / 1000;
+    ctx.fillStyle = PAINT;
+
+    if (tb > 0) {
+      const xl = spreadL(tb), xr = spreadR(tb);
+      const p = new Path2D();
+
+      // 1. the smear along the drip line
+      p.moveTo(xl, bandY + 12 - sy);
+      for (let x = xl; x <= xr; x += 6) p.lineTo(x, bandY - thick(x, ts) * Math.min(1, (x - xl) / 20, (xr - x) / 20 + .15) - sy);
+      p.lineTo(xr, bandY + 10 - sy);
+      p.lineTo(xl, bandY + 12 - sy);
+      p.closePath();
+      p.moveTo(xr + 14, bandY - 8 - sy);
+      p.arc(xr, bandY - 8 - sy, 14, 0, Math.PI * 2);
+
+      // 2. the flood that follows the drips down
+      // drips get a head start; the flood follows. If the visitor scrolls ahead, the flood catches up.
+      const flood = Math.max(0, tb - 2.3);
+      const timed = 60 * flood + 55 * flood * flood;
+      const needed = sy > 40 ? sy + H * .92 - bandY : 0;
+      curtain = Math.max(curtain, timed, flood > 0 ? curtain + (needed - curtain) * .04 : 0);
+      if (curtain > 2) {
+        const yb = x => bandY + curtain * (1 + .05 * Math.sin(x / 83 + ts * .6) + .035 * Math.sin(x / 31 - ts * .9));
+        const e0 = edgeX(bandY);
+        const xR = y => Math.min(xr + Math.max(0, edgeX(y) - e0), edgeX(y));
+        p.moveTo(xl, bandY - sy);
+        const bottomR = yb(xR(bandY));
+        for (let y = bandY; y < bottomR; y += 7) p.lineTo(xR(y), y - sy);
+        for (let x = xR(bottomR); x >= xl; x -= 8) p.lineTo(x, yb(x) - sy);
+        p.lineTo(xl, bandY - sy);
+        p.closePath();
+      }
+
+      // 3. the drips, racing ahead of the flood
+      for (const d of drips) {
+        if (d.x < xl || d.x > xr) continue;
+        const age = tb - reachedAt(d.x) - d.delay;
+        if (age <= 0) continue;
+        const len = Math.min(d.max, 14 + d.v * age + d.acc * age * age);
+        dripPath(p, d.x, d.w, len, sy, ts, d.sway);
+      }
+
+      // runs on the bare margin once everything is flooded
+      if (bandY + curtain > docH) {
+        for (const r of runs) {
+          const age = t - 8 - r.delay;
+          if (age <= 0) continue;
+          dripPath(p, r.x, r.w, Math.min(r.max, age * r.speed), sy, ts, r.y, true, r.y - 30);
+        }
+      }
+
+      // paint with a little body: soft drop shadow, flat colour, wet sheen
+      ctx.save(); ctx.translate(0, 3); ctx.fillStyle = 'rgba(8,16,70,.16)'; ctx.fill(p); ctx.restore();
+      ctx.fillStyle = PAINT; ctx.fill(p);
+      ctx.save();
+      ctx.clip(p);
+      for (let i = 0; i < 3; i++) {
+        const gx = W * (.2 + .3 * i) + 80 * Math.sin(ts * .21 + i * 2), gy = H * (.3 + .25 * (i % 2)) + 60 * Math.cos(ts * .17 + i);
+        const g = ctx.createRadialGradient(gx, gy, 0, gx, gy, W * .35);
+        g.addColorStop(0, 'rgba(120,150,255,.16)'); g.addColorStop(1, 'rgba(120,150,255,0)');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      }
+      ctx.fillStyle = 'rgba(0,10,60,.35)';
+      for (const s of specks) {
+        if (s.x < xl || s.x > xr) continue;
+        ctx.beginPath(); ctx.arc(s.x, s.y - sy, s.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+
+      // dark beads on the drip tips (as in wet paint)
+      ctx.fillStyle = 'rgba(0,8,50,.4)';
+      for (const d of drips) {
+        const age = tb - reachedAt(d.x) - d.delay;
+        if (age <= 0 || d.x < xl || d.x > xr) continue;
+        const tip = bandY + Math.min(d.max, 14 + d.v * age + d.acc * age * age);
+        if (tip < bandY + curtain + 20) continue;
+        ctx.beginPath(); ctx.arc(d.x + 1.6 * Math.sin(tip / 70 + d.sway) + .6 * Math.sin(tip / 23 + ts + d.sway), tip - sy + d.w * .3, d.w * .22, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.fillStyle = PAINT;
+    }
+
+    // the pour: from the can's mouth straight down into the drip line
+    if (tStream > 0) {
+      const grow = Math.min(1, tStream / .3);
+      const end = mouth.y + (bandY - mouth.y) * grow;
+      ctx.strokeStyle = PAINT; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.moveTo(mouth.x, mouth.y - sy);
+      for (let y = mouth.y + 4; y <= end; y += 5) {
+        const k = (y - mouth.y) / (bandY - mouth.y);
+        ctx.lineTo(mouth.x + k * 4 + Math.sin(y * .1 - ts * 9) * 1.1 * k, y - sy);
+      }
+      ctx.stroke();
+      ctx.lineWidth = 1.3; ctx.strokeStyle = 'rgba(255,255,255,.3)';
+      ctx.beginPath();
+      for (let y = mouth.y + 8; y <= end - 4; y += 5) ctx.lineTo(mouth.x - 1.5 + (y - mouth.y) / 40, y - sy);
+      ctx.stroke();
+
+      if (ts > nextDrop && grow === 1) {
+        drops.push({ x: mouth.x + 5 + Math.random() * 7, y: mouth.y + 6, v: 0, r: 2 + Math.random() * 2.2 });
+        nextDrop = ts + .5 + Math.random() * 1.6;
+      }
+      ctx.fillStyle = PAINT;
+      for (let i = drops.length - 1; i >= 0; i--) {
+        const d = drops[i];
+        d.v += .4; d.y += d.v;
+        if (d.y > bandY - 10) { drops.splice(i, 1); continue; }
+        ctx.beginPath(); ctx.ellipse(d.x, d.y - sy, d.r, d.r * 1.4, 0, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  function spill(instant) {
+    if (tipAt !== null) return;
+    document.documentElement.classList.add('spilled');
+    can.classList.add('tipped');
+    can.setAttribute('aria-disabled', 'true');
+    layout();
+    tipAt = performance.now() - (instant ? 30000 : 0);
+    if (instant) { can.style.animation = 'none'; can.style.rotate = '115deg'; }
+  }
+
+  can.addEventListener('click', () => spill(REDUCE));
+  layout();
+  requestAnimationFrame(frame);
+  if (THUMB) spill(true);
+
+  let rt;
+  const refresh = () => { clearTimeout(rt); rt = setTimeout(layout, 120); };
+  addEventListener('resize', refresh);
+  document.fonts && document.fonts.ready.then(refresh);
+  new ResizeObserver(refresh).observe(document.getElementById('copy'));
+})();
+</script>
+</body>
+</html>

@@ -9,7 +9,7 @@ V01: Create an interesting one-page site for a cutting edge, bespoke technology 
 
 V02: Known for breathtaking black-and-white design evoking the vastness of the American landscape, especially mountains, forests, rivers, and deserts. Combine dramatic light, deep shadows, sharp details, and carefully composed scenes to create a sense of grandeur and beauty. Technical precision. Celebrate the natural world but also convey a powerful sense of scale, serenity, and wilderness. 
 
-V03: 
+V03: the background is an off white canvas. you can see the texture of the canvas fabric. at the top left of the page is an illustration of a small paint bucket. it's rocking precariously on the edge of a thin line (is it a shelf?). there is no text visible. just the stark canvas and the small paint can with the line under it. the slight rocking of the paint can draws the user to click it. when the user clicks the can, it tips onto it's side. paint spills endlessly - filling most of the canvas and revealing the white lettering which stands out now (it didn't get covered by the paint) this revelas the content of the site. There is ongoing dripping and slight motion which continues to illustrate the spill. evoking overflow of ideas, and endless supply of creative juice. 
 
 
 TECH STACK: Plain HTML and CSS, and optional JavaScript. No frameworks, no build step, no external APIs, and no data storage. The index GALLERY LANDING PAGE and each SITE version within will be hosted in vercel.
