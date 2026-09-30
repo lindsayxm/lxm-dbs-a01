@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accelerated Prototyping: Artisan Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c10;
+    --text: #eceef4;
+    --muted: #7d849a;
+    --line: #2a2e3a;
+    --accent: #4ff3ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 56px) 64px;
+  }
+  header { margin-bottom: clamp(32px, 5vw, 56px); }
+  h1 {
+    font-size: clamp(28px, 4.4vw, 60px); line-height: 1; letter-spacing: -.03em; font-weight: 700;
+  }
+  h1 span { color: var(--muted); }
+  .meta {
+    margin-top: 14px; font-family: "JetBrains Mono", monospace; font-size: 12px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(12px, 1.6vw, 24px); list-style: none; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 600px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .card { display: block; text-decoration: none; color: inherit; }
+  .frame {
+    aspect-ratio: 16 / 10; border: 1px dashed var(--line); border-radius: 4px; overflow: hidden;
+    display: grid; place-items: center; background: #0f1016;
+  }
+  .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .5s ease; }
+  a.card .frame { border-style: solid; transition: border-color .25s, box-shadow .25s; }
+  a.card:hover .frame { border-color: var(--accent); box-shadow: 0 8px 30px -10px rgba(79,243,255,.45); }
+  a.card:hover img { transform: scale(1.04); }
+  .frame .ph { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #3a3f4f; }
+  .cap {
+    display: flex; justify-content: space-between; gap: 8px; margin-top: 10px;
+    font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  }
+  a.card .cap b { color: var(--text); font-weight: 400; }
+</style>
+</head>
+<body>
+<header>
+  <h1>ACCELERATED PROTOTYPING: <span>ARTISAN TECHNOLOGY</span></h1>
+  <p class="meta" id="count"></p>
+</header>
+
+<ol class="grid" id="grid"></ol>
+
+<script>
+  // Add one entry per completed iteration; the remaining slots render as placeholders.
+  const versions = [
+    { n: 1, name: 'Silicon Lattice' },
+    { n: 2, name: 'Zone System' },
+  ];
+
+  const TOTAL = 25;
+  const grid = document.getElementById('grid');
+  const pad = n => String(n).padStart(2, '0');
+  for (let i = 1; i <= TOTAL; i++) {
+    const v = versions.find(v => v.n === i);
+    const li = document.createElement('li');
+    li.innerHTML = v
+      ? `<a class="card" href="v${pad(i)}/"><div class="frame"><img src="thumbs/v${pad(i)}.jpg" alt="Version ${pad(i)}: ${v.name}" loading="lazy"></div><div class="cap"><b>v${pad(i)}</b><span>${v.name}</span></div></a>`
+      : `<div class="card"><div class="frame"><span class="ph">v${pad(i)}</span></div><div class="cap"><span>v${pad(i)}</span><span>—</span></div></div>`;
+    grid.appendChild(li);
+  }
+  document.getElementById('count').textContent = `${versions.length} / ${TOTAL} iterations`;
+</script>
+</body>
+</html>
