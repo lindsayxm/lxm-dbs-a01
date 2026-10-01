@@ -61,6 +61,7 @@
 
 <script>
   // Add one entry per completed iteration; the remaining slots render as placeholders.
+  // `rev` busts the browser cache: bump it whenever a version's thumbnail is regenerated.
   const versions = [
     { n: 1, name: 'Silicon Lattice' },
     { n: 2, name: 'Zone System' },
@@ -69,6 +70,11 @@
     { n: 5, name: 'Brutalist' },
     { n: 6, name: 'Brutalist Minimal' },
     { n: 7, name: 'Tenebrism' },
+    { n: 8, name: 'Collage', rev: 3 },
+    { n: 9, name: 'Mid-Century Modern', rev: 4 },
+    { n: 10, name: 'Glassmorphism', rev: 2 },
+    { n: 11, name: 'Utilitarian' },
+    { n: 12, name: 'Dark Magic Academia' },
   ];
 
   const TOTAL = 25;
@@ -78,7 +84,7 @@
     const v = versions.find(v => v.n === i);
     const li = document.createElement('li');
     li.innerHTML = v
-      ? `<a class="card" href="v${pad(i)}/"><div class="frame"><img src="thumbs/v${pad(i)}.jpg" alt="Version ${pad(i)}: ${v.name}" loading="lazy"></div><div class="cap"><b>v${pad(i)}</b><span>${v.name}</span></div></a>`
+      ? `<a class="card" href="v${pad(i)}/"><div class="frame"><img src="thumbs/v${pad(i)}.jpg?rev=${v.rev || 1}" alt="Version ${pad(i)}: ${v.name}" loading="lazy"></div><div class="cap"><b>v${pad(i)}</b><span>${v.name}</span></div></a>`
       : `<div class="card"><div class="frame"><span class="ph">v${pad(i)}</span></div><div class="cap"><span>v${pad(i)}</span><span>—</span></div></div>`;
     grid.appendChild(li);
   }

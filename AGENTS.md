@@ -15,8 +15,19 @@ V04: create an animation of a noisy static filled signal on one side, passing th
 
 V05: Brutalist version - a monotone, bold, and brash. Brutalism in design is raw, bold, and purposefully unrefined. Borrowed from architecture, it rejects polish for stark functionality and visual honesty. In digital, it breaks UI norms to stand out. Monospaced fonts, grayscale palettes, harsh edges, solid blocks, default buttons.
 
-V06: Brutalist but more minimal than 
+V06: Brutalist but more minimal than V05
 
+V07: Tenebrism. Tenebrism is a painting technique that uses dramatic lighting and intense contrasts between light and dark. In visual design, it creates depth, drama, and emotional weight. High contrast chiaroscuro, black backgrounds, spotlighting, oil textures. Intense, emotional, moody. Ideal for gothic art, storytelling visuals, or cinematic posters.
+
+V08: tenebrism but not pretentious. more cinematic and bombastic. less drama more action movie. maybe put the ARTISAN TECHNOLOGY text partially behind the boot in the image lindsay-v2. a kick in the face.  
+
+V09: MidCentury Modern. Mid-Century design is inspired by the 1940s–60s, emphasizing form, function, and organic simplicity. It blends bold geometry with warm textures and modern optimism. Clean lines, retro colors, boomerangs, mod patterns, sans-serif fonts. Mood & Occasion: Nostalgic, modernist, optimistic. Great for furniture branding, lifestyle blogs, or editorial layouts.
+
+V10: Glassmorphism gives UI elements a frosted glass look — transparent with blur and depth. It’s soft, futuristic, and layered. Frosted backgrounds, blur effects, semi-transparency, soft shadows, neon tints. Futuristic, elegant, sleek. 
+
+V11: Utilitarian. Utilitarian design is function-first, clean, and direct. It prioritizes clarity over aesthetics and often has a rugged, military-industrial feel. Grid layout, monospaced or industrial fonts, muted tones, absence of decoration. Mood & Occasion: Practical, minimal, efficient. Used in manuals, signage, utility apps, and technical interfaces
+
+V12:
 
 TECH STACK: Plain HTML and CSS, and optional JavaScript. No frameworks, no build step, no external APIs, and no data storage. The index GALLERY LANDING PAGE and each SITE version within will be hosted in vercel.
 

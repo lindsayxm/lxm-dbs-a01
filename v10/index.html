@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0717;
+    --text: #f4f1ff;
+    --soft: rgba(244,241,255,.68);
+    --faint: rgba(244,241,255,.42);
+    --magenta: #ff4fd8;
+    --violet: #8a5bff;
+    --cyan: #3ef0ff;
+    --glass: rgba(255,255,255,.07);
+    --glass-hi: rgba(255,255,255,.14);
+    --edge: rgba(255,255,255,.22);
+    --sans: "Instrument Sans", system-ui, sans-serif;
+    --serif: "Instrument Serif", Georgia, serif;
+    --gutter: clamp(16px, 4vw, 56px);
+    --flute: 26px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--magenta); color: #fff; }
+  a { color: inherit; }
+  .serif { font-family: var(--serif); font-weight: 400; }
+  .neon { font-style: italic; background: linear-gradient(90deg, var(--magenta), var(--violet) 50%, var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .08em; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--edge); background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); font-size: 13px; color: var(--soft); white-space: nowrap; }
+  .pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+
+  /* the light behind the glass */
+  .aurora { position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(80px); }
+  .aurora b { position: absolute; border-radius: 50%; opacity: .55; animation: float 26s ease-in-out infinite alternate; }
+  .aurora b:nth-child(1) { width: 42vw; height: 42vw; left: 10%; top: 30%; background: var(--magenta); }
+  .aurora b:nth-child(2) { width: 46vw; height: 46vw; left: 55%; top: 45%; background: var(--violet); animation-duration: 32s; }
+  .aurora b:nth-child(3) { width: 30vw; height: 30vw; left: 35%; top: 70%; background: var(--cyan); opacity: .35; animation-duration: 38s; }
+  @keyframes float { to { transform: translate(6vw, -8vh) scale(1.12); } }
+  main, footer { position: relative; z-index: 1; }
+
+  /* glass, the house material */
+  .glass {
+    background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
+    backdrop-filter: blur(26px) saturate(160%); -webkit-backdrop-filter: blur(26px) saturate(160%);
+    border: 1px solid var(--edge); border-radius: 28px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(255,255,255,.05), 0 30px 80px -30px rgba(0,0,0,.6);
+  }
+
+  /* ================= HERO ================= */
+  .hero { position: relative; height: 100vh; min-height: 620px; overflow: hidden; isolation: isolate; }
+  .photo { position: absolute; inset: 0; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 0; display: block; filter: contrast(1.12) saturate(1.25) brightness(1.4); }
+  /* neon grade over the photo */
+  .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, rgba(10,7,23,.9) 0%, rgba(10,7,23,.45) 30%, rgba(10,7,23,0) 52%), linear-gradient(0deg, rgba(10,7,23,.6), transparent 30%); mix-blend-mode: normal; }
+  .photo.tint::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(200deg, rgba(62,240,255,.55), rgba(138,91,255,.45) 50%, rgba(255,79,216,.55)); mix-blend-mode: color; }
+
+  /* reeded glass: the same photo refracted through vertical flutes, clipped to the pane */
+  .reeded { position: absolute; inset: 0; z-index: 2; clip-path: inset(0 calc(100% - var(--pr, 72%)) 0 var(--pl, 44%)); }
+  .reeded .photo { filter: url(#reed) blur(.6px); }
+  .reeded .photo img { transform: scale(1.03); }
+  .flutes { position: absolute; top: 0; bottom: 0; z-index: 3; left: var(--pl, 44%); width: calc(var(--pr, 72%) - var(--pl, 44%)); pointer-events: none;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.22) 0, rgba(255,255,255,.04) 3px, transparent 9px, transparent calc(var(--flute) - 7px), rgba(0,0,0,.22) calc(var(--flute) - 1px), rgba(255,255,255,.22) var(--flute)),
+      linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0) 40%, rgba(255,255,255,.06));
+    box-shadow: inset 1px 0 0 rgba(255,255,255,.5), inset -1px 0 0 rgba(255,255,255,.3), -30px 0 60px -20px rgba(255,79,216,.25), 30px 0 60px -20px rgba(62,240,255,.25); }
+  .grab { position: absolute; z-index: 5; top: 50%; left: var(--pl, 44%); transform: translate(-50%, -50%); width: 34px; height: 64px; border-radius: 18px; cursor: ew-resize; display: grid; place-items: center; }
+  .grab::before { content: ""; width: 2px; height: 22px; border-left: 2px solid rgba(255,255,255,.75); border-right: 2px solid rgba(255,255,255,.75); }
+
+  .nav { position: absolute; z-index: 6; top: 20px; left: var(--gutter); right: var(--gutter); display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 10px 12px 10px 20px; border-radius: 999px; }
+  .nav .brand { font-weight: 600; letter-spacing: -.01em; }
+  .nav .brand span { color: var(--faint); font-weight: 400; }
+  .nav ul { list-style: none; display: flex; gap: 6px; }
+  .nav ul a { display: block; padding: 7px 14px; border-radius: 999px; text-decoration: none; font-size: 14px; color: var(--soft); transition: background .3s, color .3s; }
+  .nav ul a:hover { background: var(--glass-hi); color: var(--text); }
+  @media (max-width: 700px) { .nav ul li:not(:last-child) { display: none; } }
+  @media (max-aspect-ratio: 1/1) { .photo { top: 64px; } }  /* drop the face below the nav on tall screens */
+
+  .headline { position: absolute; z-index: 6; left: var(--gutter); bottom: clamp(70px, 12vh, 130px); max-width: min(760px, 88vw); }
+  .headline .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .headline h1 { font-family: var(--sans); font-weight: 500; font-size: clamp(54px, 9vw, 150px); line-height: .9; letter-spacing: -.045em; text-shadow: 0 10px 50px rgba(10,7,23,.5); }
+  .headline h1 .serif { font-size: 1.08em; letter-spacing: -.02em; }
+  .headline p { margin-top: 24px; max-width: 34ch; font-size: clamp(17px, 1.5vw, 21px); color: var(--soft); }
+  .hint { position: absolute; z-index: 6; right: var(--gutter); bottom: 28px; font-size: 13px; color: var(--faint); }
+
+  /* ================= SECTIONS ================= */
+  section { padding: clamp(80px, 11vw, 150px) var(--gutter); }
+  .eyebrow { margin-bottom: 26px; }
+  h2 { font-weight: 500; font-size: clamp(40px, 5.6vw, 92px); line-height: .95; letter-spacing: -.04em; }
+
+  .statement .card { padding: clamp(30px, 5vw, 70px); max-width: 1180px; }
+  .statement h2 { max-width: 16ch; }
+  .statement .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(36px, 5vw, 60px); }
+  .statement .chip { padding: 22px; border-radius: 20px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); }
+  .statement .chip b { display: block; font-weight: 500; font-size: 20px; margin: 18px 0 6px; }
+  .statement .chip span { color: var(--soft); font-size: 15px; }
+  .statement .chip svg { width: 34px; height: 34px; stroke: var(--cyan); fill: none; stroke-width: 1.4; filter: drop-shadow(0 0 6px rgba(62,240,255,.6)); }
+  @media (max-width: 820px) { .statement .row { grid-template-columns: 1fr; } }
+
+  .engineer { display: grid; grid-template-columns: minmax(260px, 5fr) 7fr; gap: clamp(24px, 4vw, 60px); align-items: center; }
+  .portrait { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden; border: 1px solid var(--edge); box-shadow: 0 40px 90px -30px rgba(0,0,0,.7); }
+  .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
+  .portrait .clear { filter: saturate(1.1); }
+  .portrait .reed { filter: url(#reed2); transition: opacity .9s ease; }
+  .portrait::after { content: ""; position: absolute; inset: 0; pointer-events: none; transition: opacity .9s ease;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0, transparent 6px, transparent 16px, rgba(0,0,0,.18) 21px, rgba(255,255,255,.18) 22px), linear-gradient(160deg, rgba(255,79,216,.25), rgba(62,240,255,.2)); }
+  .portrait:hover .reed, .portrait:hover::after { opacity: 0; }
+  .portrait .pill { position: absolute; left: 16px; bottom: 16px; z-index: 2; }
+  .bio { padding: clamp(28px, 4vw, 56px); }
+  .bio .role { margin: 14px 0 28px; color: var(--soft); }
+  .bio .lead { font-size: clamp(22px, 2.2vw, 32px); line-height: 1.25; letter-spacing: -.015em; margin-bottom: 22px; }
+  .bio .lead em { font-family: var(--serif); font-style: italic; font-size: 1.12em; color: var(--cyan); }
+  .bio p.body { color: var(--soft); max-width: 40em; }
+  @media (max-width: 860px) { .engineer { grid-template-columns: 1fr; } .portrait { max-width: 460px; } }
+
+  .arc { text-align: center; }
+  .arc h2 { margin: 0 auto; max-width: 18ch; }
+  .flow { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 3vw, 40px); margin: clamp(50px, 7vw, 90px) auto 0; max-width: 1100px; }
+  .flow::before { content: ""; position: absolute; left: 12%; right: 12%; top: 50%; height: 2px; background: linear-gradient(90deg, var(--magenta), var(--violet), var(--cyan)); box-shadow: 0 0 18px rgba(138,91,255,.8); }
+  .flow::after { content: ""; position: absolute; top: calc(50% - 5px); left: 12%; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 16px 4px var(--cyan); animation: travel 4s cubic-bezier(.6,0,.4,1) infinite; }
+  @keyframes travel { to { left: calc(88% - 12px); } }
+  .stage { position: relative; z-index: 1; padding: clamp(26px, 3vw, 40px) 18px; border-radius: 999px; }
+  .stage small { display: block; color: var(--faint); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+  .stage b { display: block; font-weight: 500; font-size: clamp(26px, 3vw, 44px); letter-spacing: -.03em; margin-top: 4px; }
+  .stage:last-child b { font-family: var(--serif); font-style: italic; font-weight: 400; }
+  .arc p.note { max-width: 46ch; margin: 44px auto 0; color: var(--soft); }
+  @media (max-width: 700px) { .flow { grid-template-columns: 1fr; } .flow::before { left: 50%; right: auto; top: 8%; bottom: 8%; width: 2px; height: auto; } .flow::after { display: none; } }
+
+  .record { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 24px); }
+  .record .glass { padding: clamp(26px, 3.4vw, 46px); }
+  .record h3 { font-weight: 500; font-size: clamp(30px, 3vw, 46px); letter-spacing: -.03em; margin-bottom: 20px; }
+  .record h3 .serif { font-style: italic; }
+  .record ul { list-style: none; }
+  .record li { display: flex; justify-content: space-between; gap: 18px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.12); }
+  .record li b { font-weight: 500; }
+  .record li span { color: var(--soft); text-align: right; font-size: 15px; }
+  @media (max-width: 860px) { .record { grid-template-columns: 1fr; } .record li { flex-direction: column; gap: 2px; } .record li span { text-align: left; } }
+
+  .cta .glass { padding: clamp(40px, 7vw, 100px) clamp(24px, 5vw, 80px); text-align: center; position: relative; overflow: hidden; }
+  .cta .glass::before { content: ""; position: absolute; width: 60%; aspect-ratio: 1; left: 20%; top: -30%; background: radial-gradient(circle, rgba(255,79,216,.35), transparent 60%); filter: blur(30px); z-index: -1; }
+  .cta h2 { font-size: clamp(48px, 8vw, 140px); }
+  .cta .btn { display: inline-flex; align-items: center; gap: 12px; margin-top: 44px; padding: 18px 30px; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: clamp(16px, 1.6vw, 20px);
+    background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.4); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 0 0 0 rgba(62,240,255,.0), 0 20px 50px -20px rgba(255,79,216,.6); transition: box-shadow .4s, transform .4s; }
+  .cta .btn:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 0 40px 2px rgba(62,240,255,.35), 0 20px 50px -20px rgba(255,79,216,.8); }
+  .cta .where { margin-top: 22px; color: var(--faint); }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 24px var(--gutter) 30px; color: var(--faint); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) { .aurora b, .flow::after { animation: none; } }
+</style>
+</head>
+<body>
+<!-- Reeded-glass refraction: a sawtooth ramp per flute shifts the image sideways inside each flute. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="reed" x="0" y="0" width="100%" height="100%" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='26' height='10'><defs><linearGradient id='g'><stop offset='0' stop-color='rgb(0,128,0)'/><stop offset='1' stop-color='rgb(255,128,0)'/></linearGradient></defs><rect width='26' height='10' fill='url(%23g)'/></svg>" x="0" y="0" width="26" height="10" preserveAspectRatio="none" result="ramp"/>
+      <feTile in="ramp" result="map"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="70" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="reed2" x="0" y="0" width="100%" height="100%" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='10'><defs><linearGradient id='g'><stop offset='0' stop-color='rgb(0,128,0)'/><stop offset='1' stop-color='rgb(255,128,0)'/></linearGradient></defs><rect width='22' height='10' fill='url(%23g)'/></svg>" x="0" y="0" width="22" height="10" preserveAspectRatio="none" result="ramp"/>
+      <feTile in="ramp" result="map"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="46" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div>
+
+<header class="hero" id="hero">
+  <div class="photo tint"><img src="../img/lindsay-v2.jpg" alt="Lindsay Moore seated in an armchair in a dark brick room"></div>
+  <div class="reeded" aria-hidden="true"><div class="photo tint"><img src="../img/lindsay-v2.jpg" alt=""></div></div>
+  <div class="flutes" aria-hidden="true"></div>
+  <div class="grab" id="grab" role="slider" aria-label="Move the glass pane" aria-valuemin="0" aria-valuemax="100" aria-valuenow="44" tabindex="0"></div>
+
+  <nav class="nav glass">
+    <span class="brand">Artisan <span>Technology</span></span>
+    <ul><li><a href="#work">Work</a></li><li><a href="#engineer">Engineer</a></li><li><a href="#contact">Contact</a></li></ul>
+  </nav>
+
+  <div class="headline">
+    <div class="tags"><span class="pill"><i></i>Custom software</span><span class="pill"><i></i>Custom hardware</span><span class="pill">Chicago, IL</span></div>
+    <h1>Artisan<br><span class="serif neon">Technology</span></h1>
+    <p>For problems that don't fit off-the-shelf solutions.</p>
+  </div>
+  <p class="hint">Drag the glass ⟷</p>
+</header>
+
+<main>
+  <section class="statement" id="work">
+    <div class="card glass">
+      <span class="pill eyebrow">01 — The practice</span>
+      <h2>Built to fit <span class="serif neon">exactly</span> what you need.</h2>
+      <p style="margin-top:26px;max-width:46ch;color:var(--soft);font-size:clamp(18px,1.5vw,22px)">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+      <div class="row">
+        <div class="chip"><svg viewBox="0 0 34 34"><rect x="8" y="8" width="18" height="18" rx="2"/><path d="M12 8V3M17 8V3M22 8V3M12 31v-5M17 31v-5M22 31v-5M8 12H3M8 17H3M8 22H3M31 12h-5M31 17h-5M31 22h-5"/></svg><b>Hardware</b><span>Devices, circuits and sensors, from first sketch to working build.</span></div>
+        <div class="chip"><svg viewBox="0 0 34 34"><path d="M12 9 4 17l8 8M22 9l8 8-8 8M19 6l-4 22"/></svg><b>Software</b><span>Firmware, tools and applications written for your problem.</span></div>
+        <div class="chip"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="4"/><circle cx="6" cy="7" r="3"/><circle cx="28" cy="7" r="3"/><circle cx="6" cy="27" r="3"/><circle cx="28" cy="27" r="3"/><path d="m8.5 9 5.5 5.5M25.5 9 20 14.5M8.5 25l5.5-5.5M25.5 25 20 19.5"/></svg><b>Systems</b><span>Everything designed as one, built to hold up in the real world.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="engineer">
+    <div class="engineer">
+      <figure class="portrait">
+        <img class="clear" src="../img/artisan-technology.jpg" alt="A stacked glass circuit die with an iridescent core">
+        <img class="reed" src="../img/artisan-technology.jpg" alt="" aria-hidden="true">
+        <span class="pill">Hover to clear the glass</span>
+      </figure>
+      <div class="bio glass">
+        <span class="pill eyebrow">02 — Principal engineer</span>
+        <h2>Lindsay <span class="serif neon">Moore</span></h2>
+        <p class="role">Principal Engineer · 10+ years</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <em>"what if we did it this way?"</em> and then building it.</p>
+        <p class="body">I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="arc">
+    <span class="pill eyebrow">03 — The full arc</span>
+    <h2>Interesting questions, <span class="serif neon">all the way through.</span></h2>
+    <div class="flow">
+      <div class="stage glass"><small>Stage 01</small><b>Idea</b></div>
+      <div class="stage glass"><small>Stage 02</small><b>Prototype</b></div>
+      <div class="stage glass"><small>Stage 03</small><b>Production</b></div>
+    </div>
+    <p class="note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+  </section>
+
+  <section>
+    <div class="record">
+      <div class="glass">
+        <span class="pill eyebrow">04 — Education</span>
+        <h3>Trained in <span class="serif">both</span> worlds</h3>
+        <ul>
+          <li><b>Master's, Computer Science</b><span>University of Chicago</span></li>
+          <li><b>Master's, Informatics</b><span>University of Minnesota</span></li>
+          <li><b>Bachelor's, Production, Engineering &amp; Business</b><span>McNally Smith College</span></li>
+        </ul>
+      </div>
+      <div class="glass">
+        <span class="pill eyebrow">05 — Community &amp; research</span>
+        <h3>Part of the <span class="serif">scene</span></h3>
+        <ul>
+          <li><b>Board, Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></li>
+          <li><b>Research, STAGE Center</b><span>Multidisciplinary technology and arts lab, UChicago</span></li>
+          <li><b>Research, Chicago Virtual Production</b><span>An independent virtual production group</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="glass">
+      <span class="pill eyebrow">06 — Start something</span>
+      <h2>Let's build <span class="serif neon">something together.</span></h2>
+      <a class="btn" href="mailto:lindsay@artisan.technology">lindsay@artisan.technology <span aria-hidden="true">→</span></a>
+      <p class="where">Chicago, IL</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© Artisan Technology LLC</span>
+  <span>Chicago, IL</span>
+</footer>
+
+<script>
+  // The reeded pane: drag its leading edge, or let it drift with the pointer.
+  (() => {
+    const hero = document.getElementById('hero'), grab = document.getElementById('grab');
+    const W = () => innerWidth < 700 ? 46 : 28;          // pane width, % of hero
+    // On load, the pane's right edge lands on the bridge of the nose, so it veils half the face.
+    // The photo is square, object-fit: cover, object-position 62% 0; the nose sits ~49.5% across it.
+    const faceStart = () => {
+      const w = hero.clientWidth, h = hero.querySelector('.photo').clientHeight, size = Math.max(w, h);
+      const noseX = (w - size) * .62 + size * .495;
+      return noseX / w * 100 - W();
+    };
+    let left = faceStart(), dragging = false;
+    const set = v => {
+      left = Math.max(0, Math.min(100 - W(), v));
+      hero.style.setProperty('--pl', left + '%');
+      hero.style.setProperty('--pr', (left + W()) + '%');
+      grab.setAttribute('aria-valuenow', Math.round(left));
+    };
+    set(left);
+    const pct = e => (e.clientX - hero.getBoundingClientRect().left) / hero.clientWidth * 100;
+    let moved = false;
+    grab.addEventListener('pointerdown', e => { dragging = moved = true; grab.setPointerCapture(e.pointerId); });
+    grab.addEventListener('pointermove', e => { if (dragging) set(pct(e)); });
+    grab.addEventListener('pointerup', () => dragging = false);
+    grab.addEventListener('keydown', e => { moved = true; if (e.key === 'ArrowLeft') set(left - 2); if (e.key === 'ArrowRight') set(left + 2); });
+    addEventListener('resize', () => set(moved ? left : faceStart()));
+  })();
+</script>
+</body>
+</html>

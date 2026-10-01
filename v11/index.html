@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology — AT-01</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ecebe6;
+    --ink: #121212;
+    --grey: #77756f;
+    --line: #c9c7bf;
+    --orange: #e4572e;
+    --sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --g: clamp(16px, 3vw, 44px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--orange); color: var(--paper); }
+  a { color: inherit; }
+  .mono { font-family: var(--mono); font-size: 11px; line-height: 1.5; letter-spacing: .02em; }
+  .mono b { font-weight: 500; }
+  .grey { color: var(--grey); }
+  .bar { display: block; height: 10px; background: var(--ink); }
+  .wrap { padding: 0 var(--g); }
+
+  /* ================= HERO: spec poster ================= */
+  .hero { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: var(--g); gap: clamp(16px, 2.4vw, 32px); }
+  .top { display: grid; grid-template-columns: auto auto 1fr auto auto; align-items: start; gap: clamp(12px, 2vw, 28px); }
+  .big { font-weight: 800; font-size: clamp(64px, 10vw, 160px); line-height: .78; letter-spacing: -.06em; }
+  .top .sub { font-size: clamp(14px, 1.3vw, 19px); font-weight: 500; letter-spacing: -.01em; padding-top: .1em; }
+  .top .bar { align-self: center; margin-top: -1.5vw; }
+  .top .r { text-align: right; }
+
+  .stage { display: grid; grid-template-columns: 1fr minmax(0, 2.2fr) 1fr; align-items: center; gap: clamp(16px, 3vw, 40px); }
+  .stage .col { display: grid; gap: 22px; align-self: stretch; align-content: space-between; }
+  .stage .col.r { text-align: right; }
+  .device { position: relative; aspect-ratio: 1075 / 628; width: 100%; }
+  .device img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: grayscale(1) contrast(1.15) brightness(1.08); }
+  .device .block { position: absolute; left: -9%; top: 41%; width: 64%; height: 26%; background: var(--orange); mix-blend-mode: multiply; }
+  .device .cal { position: absolute; right: 0; bottom: -18px; }
+
+  .foot { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(16px, 3vw, 48px); align-items: end; border-top: 1px solid var(--ink); padding-top: 14px; }
+  .foot h1 { font-weight: 800; font-size: clamp(40px, 6.6vw, 112px); line-height: .84; letter-spacing: -.055em; }
+  .foot .lede { font-size: clamp(15px, 1.25vw, 18px); font-weight: 500; max-width: 34ch; }
+  .foot .lede + .mono { margin-top: 14px; }
+
+  @media (max-width: 860px) {
+    .top { grid-template-columns: auto 1fr auto; }
+    .top .bar, .top .hide { display: none; }
+    .stage { grid-template-columns: 1fr; }
+    .stage .col { grid-template-columns: 1fr 1fr; }
+    .stage .col.r { text-align: left; }
+    .stage .col.l { order: 2; } .stage .col.r { order: 3; }
+    .foot { grid-template-columns: 1fr; }
+  }
+
+  /* ================= MANUAL SECTIONS ================= */
+  .sec { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(12px, 2vw, 24px); padding: clamp(56px, 8vw, 110px) var(--g); border-top: 10px solid var(--ink); }
+  .sec .idx { grid-column: 1 / 4; }
+  .sec .idx .n { font-weight: 800; font-size: clamp(48px, 6vw, 96px); line-height: .8; letter-spacing: -.05em; }
+  .sec .idx .mono { margin-top: 14px; }
+  .sec .body { grid-column: 4 / 13; }
+  .sec h2 { font-weight: 800; font-size: clamp(36px, 5vw, 80px); line-height: .9; letter-spacing: -.05em; max-width: 14ch; }
+  .sec .lead { font-size: clamp(19px, 1.7vw, 25px); font-weight: 500; line-height: 1.3; letter-spacing: -.01em; max-width: 36ch; margin-top: 26px; }
+  .sec p { max-width: 58ch; }
+  @media (max-width: 860px) { .sec .idx, .sec .body { grid-column: 1 / -1; } .sec .idx { margin-bottom: 28px; } }
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); margin-top: 44px; }
+  .modes div { padding: 14px 16px 22px 0; border-right: 1px solid var(--line); }
+  .modes div + div { padding-left: 16px; }
+  .modes div:last-child { border-right: 0; }
+  .modes b { display: block; font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin: 26px 0 6px; }
+  @media (max-width: 640px) { .modes { grid-template-columns: 1fr; } .modes div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0 !important; } }
+
+  /* operator: figure on the paper, an orange plate behind */
+  .operator { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(20px, 4vw, 56px); align-items: end; }
+  .plate { position: relative; aspect-ratio: 4 / 5; }
+  .plate::before { content: ""; position: absolute; left: 12%; right: 0; top: 18%; bottom: 0; background: var(--orange); }
+  .plate::after { content: ""; position: absolute; left: 0; right: 30%; top: 46%; height: 10px; background: var(--ink); }
+  .plate img { position: absolute; left: 6%; bottom: 0; height: 100%; filter: grayscale(1) contrast(1.15) brightness(1.15); }
+  .plate .cap { position: absolute; left: 0; bottom: -40px; right: 0; display: flex; justify-content: space-between; }
+  .operator .text p + p { margin-top: 14px; }
+  .operator q { quotes: "“" "”"; }
+  @media (max-width: 860px) { .operator { grid-template-columns: 1fr; } .plate { max-width: 420px; margin-bottom: 50px; } }
+
+  /* procedure */
+  ol.steps { list-style: none; margin-top: 40px; border-top: 1px solid var(--ink); counter-reset: s; }
+  ol.steps li { display: grid; grid-template-columns: 70px 1fr auto; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  ol.steps li b { font-size: clamp(30px, 4vw, 64px); font-weight: 800; letter-spacing: -.05em; line-height: .9; }
+  ol.steps li:last-child b { color: var(--orange); }
+
+  /* spec tables */
+  .specs { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); margin-top: 40px; }
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; padding-bottom: 10px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 0; border-top: 1px solid var(--line); }
+  thead th { border-top: 2px solid var(--ink); font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--grey); }
+  td:first-child { width: 28%; font-family: var(--mono); font-size: 12px; padding-right: 12px; }
+  td b { display: block; font-weight: 700; letter-spacing: -.01em; }
+  td span { color: var(--grey); font-size: 14px; }
+  @media (max-width: 860px) { .specs { grid-template-columns: 1fr; } }
+
+  /* contact */
+  .contact h2 { max-width: none; font-size: clamp(44px, 8vw, 140px); }
+  .contact .row { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; margin-top: 36px; border-top: 1px solid var(--ink); padding-top: 16px; }
+  .contact a { font-weight: 700; font-size: clamp(20px, 2.6vw, 40px); letter-spacing: -.03em; text-decoration: none; }
+  .contact a::after { content: " ↗"; color: var(--orange); }
+  .contact a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  @media (max-width: 640px) { .contact .row { grid-template-columns: 1fr; } }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px var(--g) 22px; border-top: 1px solid var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="top">
+    <span class="big">AT</span>
+    <span class="sub">Artisan<br>Technology</span>
+    <span class="bar"></span>
+    <span class="sub r hide">Custom<br>hardware + software</span>
+    <span class="big">01</span>
+  </div>
+
+  <div class="stage">
+    <div class="col l">
+      <p class="mono"><b>UNIT</b><br>AT-01 / Bespoke<br>Build to order</p>
+      <p class="mono"><b>OPERATOR</b><br>Lindsay Moore<br>Principal Engineer</p>
+      <p class="mono grey">Not available<br>off the shelf.</p>
+    </div>
+    <div class="device">
+      <img src="../img/esp32-cutout.png" alt="A microcontroller development board, photographed as a product shot">
+      <span class="block" aria-hidden="true"></span>
+      <span class="cal mono grey">FIG. 01 — CUSTOM HARDWARE</span>
+    </div>
+    <div class="col r">
+      <p class="mono"><b>LOCATION</b><br>Chicago, IL<br>41.88° N / 87.63° W</p>
+      <p class="mono"><b>SCOPE</b><br>Idea → Prototype<br>→ Production</p>
+      <p class="mono grey">Software · Hardware<br>Systems</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h1>Artisan<br>Technology</h1>
+    <div>
+      <p class="lede">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+      <p class="mono grey">SEC. 1.0 — 5.0 BELOW ↓</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="sec">
+    <div class="idx"><div class="n">1.0</div><p class="mono grey">OVERVIEW</p></div>
+    <div class="body">
+      <h2>When the catalog doesn't have it, build it.</h2>
+      <p class="lead">Three disciplines, one bench. Each project gets exactly the parts it needs.</p>
+      <div class="modes">
+        <div><span class="mono grey">1.1</span><b>Hardware</b><p>Circuits, sensors and devices, from first sketch to working build.</p></div>
+        <div><span class="mono grey">1.2</span><b>Software</b><p>Firmware, tools and applications written for the problem at hand.</p></div>
+        <div><span class="mono grey">1.3</span><b>Systems</b><p>The pieces designed as one, and built to hold up in use.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="idx"><div class="n">2.0</div><p class="mono grey">OPERATOR</p></div>
+    <div class="body operator">
+      <figure class="plate">
+        <img src="../img/lindsay-v2-figure.png" alt="Lindsay Moore seated in an armchair">
+        <figcaption class="cap mono"><span><b>LINDSAY MOORE</b></span><span class="grey">PRINCIPAL ENGINEER</span></figcaption>
+      </figure>
+      <div class="text">
+        <h2>Lindsay Moore</h2>
+        <p class="mono grey" style="margin-top:12px">PRINCIPAL ENGINEER · 10+ YEARS</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <q>what if we did it this way?</q> and then building it.</p>
+        <p style="margin-top:22px">I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="idx"><div class="n">3.0</div><p class="mono grey">PROCEDURE</p></div>
+    <div class="body">
+      <h2>The full arc.</h2>
+      <ol class="steps">
+        <li><span class="mono grey">3.1</span><b>Idea</b><span class="mono grey">Ask the interesting question</span></li>
+        <li><span class="mono grey">3.2</span><b>Prototype</b><span class="mono grey">Build it to find out</span></li>
+        <li><span class="mono grey">3.3</span><b>Production</b><span class="mono grey">Finish together</span></li>
+      </ol>
+      <p style="margin-top:26px">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="idx"><div class="n">4.0</div><p class="mono grey">SPECIFICATIONS</p></div>
+    <div class="body">
+      <h2>Background.</h2>
+      <div class="specs">
+        <table>
+          <caption class="mono"><b>4.1 EDUCATION</b></caption>
+          <thead><tr><th>DEGREE</th><th>FIELD / INSTITUTION</th></tr></thead>
+          <tbody>
+            <tr><td>M.S.</td><td><b>Computer Science</b><span>University of Chicago</span></td></tr>
+            <tr><td>M.S.</td><td><b>Informatics</b><span>University of Minnesota</span></td></tr>
+            <tr><td>B.</td><td><b>Production, Engineering &amp; Business</b><span>McNally Smith College</span></td></tr>
+          </tbody>
+        </table>
+        <table>
+          <caption class="mono"><b>4.2 COMMUNITY &amp; RESEARCH</b></caption>
+          <thead><tr><th>ROLE</th><th>ORGANIZATION</th></tr></thead>
+          <tbody>
+            <tr><td>Board</td><td><b>Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></td></tr>
+            <tr><td>Research</td><td><b>STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></td></tr>
+            <tr><td>Research</td><td><b>Chicago Virtual Production</b><span>An independent virtual production group</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec contact" id="contact">
+    <div class="idx"><div class="n">5.0</div><p class="mono grey">CONTACT</p></div>
+    <div class="body">
+      <h2>Let's build something together.</h2>
+      <div class="row">
+        <a href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+        <p class="mono">CHICAGO, IL<br><span class="grey">41.88° N / 87.63° W</span></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="mono">
+  <span>© ARTISAN TECHNOLOGY LLC</span>
+  <span class="grey">DOC. AT-01 / REV. 11</span>
+</footer>
+</body>
+</html>
