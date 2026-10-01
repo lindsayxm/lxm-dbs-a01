@@ -13,6 +13,10 @@ V03: the background is an off white canvas. you can see the texture of the canva
 
 V04: create an animation of a noisy static filled signal on one side, passing through a filter and on the other side of the filter, a pure sine wave. Give it a glowy, ethereal vibe. Ethereal design captures delicacy and transcendence. It feels weightless and otherworldly — like a design made of mist or light. This style emphasizes openness, airiness, and subtle beauty, often with soft pastels and faint textures.
 
+V05: Brutalist version - a monotone, bold, and brash. Brutalism in design is raw, bold, and purposefully unrefined. Borrowed from architecture, it rejects polish for stark functionality and visual honesty. In digital, it breaks UI norms to stand out. Monospaced fonts, grayscale palettes, harsh edges, solid blocks, default buttons.
+
+
+
 
 TECH STACK: Plain HTML and CSS, and optional JavaScript. No frameworks, no build step, no external APIs, and no data storage. The index GALLERY LANDING PAGE and each SITE version within will be hosted in vercel.
 

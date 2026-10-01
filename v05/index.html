@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARTISAN TECHNOLOGY</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --concrete: #d2d2cd;
+    --paper: #ecece7;
+    --mid: #8d8d88;
+    --ink: #0d0d0d;
+    --rule: 3px solid var(--ink);
+    --mono: "Space Mono", ui-monospace, Menlo, monospace;
+    --block: "Anton", Impact, "Arial Narrow", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--concrete); }
+  body {
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+      var(--concrete);
+    color: var(--ink);
+    font-family: var(--mono); font-size: 15px; line-height: 1.5;
+    cursor: crosshair;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; }
+  .frame { border: var(--rule); margin: 10px; background: transparent; }
+  .up { text-transform: uppercase; }
+  .tiny { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .giant { font-family: var(--block); font-weight: 400; line-height: .8; text-transform: uppercase; white-space: nowrap; letter-spacing: -.01em; }
+  .inv { background: var(--ink); color: var(--paper); }
+  .pad { padding: 14px 16px; }
+
+  /* ---------- top bar: a row of raw cells ---------- */
+  .bar { display: grid; grid-template-columns: auto 2fr 2fr 1fr 1.2fr auto; border-bottom: var(--rule); }
+  .bar > * { padding: 10px 14px; border-right: var(--rule); display: flex; align-items: center; min-height: 48px; }
+  .bar > *:last-child { border-right: 0; }
+  .logo { font-family: var(--block); font-size: 28px; letter-spacing: .02em; background: var(--ink); color: var(--paper); padding: 4px 14px; }
+  .bar nav { gap: 18px; }
+  .bar nav a { text-decoration: none; font-weight: 700; }
+  .bar nav a:hover { background: var(--ink); color: var(--paper); }
+  @media (max-width: 900px) { .bar { grid-template-columns: auto 1fr auto; } .bar .hide-s { display: none; } }
+
+  /* ---------- hero poster ---------- */
+  .hero { overflow: hidden; border-bottom: var(--rule); }
+  .word-a { font-size: 33.6vw; margin: .8vw 0 0 -.6vw; }
+  .word-t { font-size: 22.2vw; margin: 0 0 .4vw -.4vw; }
+  .poster { display: grid; grid-template-columns: 1fr 2.2fr 1fr; border-top: var(--rule); border-bottom: var(--rule); }
+  .poster > * { border-right: var(--rule); }
+  .poster > *:last-child { border-right: 0; }
+  .stamp { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
+  .stamp .no { font-family: var(--block); font-size: clamp(64px, 9vw, 140px); line-height: .85; border: 6px solid var(--ink); display: inline-block; padding: 6px 14px 2px; align-self: flex-start; }
+  .stamp p { font-weight: 700; font-size: clamp(14px, 1.25vw, 18px); line-height: 1.35; }
+
+  /* halftone: blurred grey image × dot screen, pushed through a hard threshold */
+  .halftone { position: relative; height: 100%; min-height: 320px; background: #fff; filter: contrast(24) grayscale(1); overflow: hidden; isolation: isolate; }
+  .halftone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 40%; filter: grayscale(1) blur(1.8px) brightness(1.45) contrast(.85); }
+  .halftone::after { content: ""; position: absolute; inset: 0; background: radial-gradient(closest-side, #000 0%, #fff 100%) 0 0 / 8px 8px; mix-blend-mode: multiply; }
+  .fig { position: relative; }
+  .fig .tag { position: absolute; left: 0; bottom: 0; z-index: 2; }
+
+  .kit { display: grid; grid-template-rows: auto auto 1fr auto; }
+  .kit > * { border-bottom: var(--rule); }
+  .kit > *:last-child { border-bottom: 0; }
+  .barcode { height: 56px; background: repeating-linear-gradient(90deg, var(--ink) 0 3px, transparent 3px 5px, var(--ink) 5px 6px, transparent 6px 10px, var(--ink) 10px 14px, transparent 14px 16px); }
+  .checker { height: 64px; background: repeating-conic-gradient(var(--ink) 0 25%, transparent 0 50%) 0 0 / 16px 16px; }
+  .icons { display: flex; justify-content: space-around; align-items: center; padding: 14px 8px; gap: 8px; }
+  .icons svg { width: clamp(40px, 4.4vw, 70px); height: auto; fill: none; stroke: var(--ink); stroke-width: 3; }
+  .clock { font-weight: 700; font-size: clamp(18px, 1.8vw, 26px); letter-spacing: .02em; }
+
+  .statement { display: grid; grid-template-columns: auto 1fr; border-top: 0; }
+  .statement .label { writing-mode: vertical-rl; transform: rotate(180deg); border-left: var(--rule); padding: 16px 10px; font-weight: 700; }
+  .statement p { font-weight: 700; font-size: clamp(22px, 3.1vw, 48px); line-height: 1.12; text-transform: uppercase; padding: clamp(18px, 3vw, 40px); }
+  .statement p span { background: var(--paper); color: var(--ink); padding: 0 .15em; }
+  @media (max-width: 900px) {
+    .poster { grid-template-columns: 1fr; }
+    .poster > * { border-right: 0; border-bottom: var(--rule); }
+    .poster > *:last-child { border-bottom: 0; }
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker { overflow: hidden; white-space: nowrap; border-bottom: var(--rule); }
+  .ticker div { display: inline-block; font-family: var(--block); font-size: clamp(28px, 4vw, 56px); padding: 6px 0 2px; animation: tick 30s linear infinite; }
+  .ticker b { font-weight: 400; margin: 0 .5em; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+
+  /* ---------- engineer ---------- */
+  .eng { display: grid; grid-template-columns: 1.05fr 1fr; border-bottom: var(--rule); }
+  .eng > * { min-width: 0; }
+  .namecol { border-right: var(--rule); display: flex; flex-direction: column; }
+  .namecol .tiny { border-bottom: var(--rule); padding: 10px 14px; display: flex; justify-content: space-between; }
+  .namecol .giant { font-size: clamp(90px, 15.5vw, 250px); padding: 18px 14px 8px; }
+  .namecol .role { margin-top: auto; border-top: var(--rule); font-family: var(--block); font-size: clamp(34px, 4.2vw, 68px); line-height: 1; padding: 12px 14px 8px; text-transform: uppercase; }
+  .biocol { display: flex; flex-direction: column; }
+  .biocol .lead { font-weight: 700; font-size: clamp(18px, 1.6vw, 24px); line-height: 1.35; border-bottom: var(--rule); }
+  .biocol p { padding: 18px 20px; }
+  .quote {
+    margin: 24px 20px; border: var(--rule); background: var(--paper);
+    box-shadow: 10px 10px 0 var(--ink);
+    font-family: var(--block); font-size: clamp(40px, 5.2vw, 88px); line-height: .9; text-transform: uppercase; padding: 16px 18px 10px;
+  }
+  .biocol .body { border-top: var(--rule); margin-top: auto; }
+  @media (max-width: 900px) { .eng { grid-template-columns: 1fr; } .namecol { border-right: 0; border-bottom: var(--rule); } }
+
+  /* ---------- the arc ---------- */
+  .arc-head { display: flex; justify-content: space-between; gap: 20px; border-bottom: var(--rule); padding: 12px 14px; font-weight: 700; }
+  .stage { display: grid; grid-template-columns: 90px 1fr; border-bottom: var(--rule); overflow: hidden; }
+  .stage .n { border-right: var(--rule); padding: 12px; font-weight: 700; display: flex; flex-direction: column; justify-content: space-between; }
+  .stage .giant { font-size: clamp(80px, 17vw, 300px); padding: 1.2vw 12px 0; }
+  .stage.s1 { background: var(--paper); }
+  .stage.s2 { background: var(--mid); }
+  .stage.s3 { background: var(--ink); color: var(--paper); }
+  .stage.s3 .n { border-color: var(--paper); }
+  .stage .giant::after { content: " »"; opacity: .35; }
+  .stage.s3 .giant::after { content: ""; }
+  .arc-note { padding: 16px 14px; border-bottom: var(--rule); max-width: 900px; font-weight: 700; font-size: clamp(16px, 1.5vw, 21px); }
+
+  /* ---------- spec tables ---------- */
+  .specs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: var(--rule); }
+  .specs > div:first-child { border-right: var(--rule); }
+  .specs h2 { font-family: var(--block); font-weight: 400; font-size: clamp(44px, 5vw, 80px); line-height: 1; padding: 12px 14px 6px; border-bottom: var(--rule); text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--ink); }
+  th { background: var(--ink); color: var(--paper); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  td:first-child { font-weight: 700; width: 26%; }
+  tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--ink); color: var(--paper); }
+  @media (max-width: 900px) { .specs { grid-template-columns: 1fr; } .specs > div:first-child { border-right: 0; border-bottom: var(--rule); } }
+
+  /* ---------- contact ---------- */
+  .cta { overflow: hidden; }
+  .cta .giant { font-size: 21vw; padding: 1vw 0 0 .6vw; }
+  .cta .giant.solid { font-size: 12.2vw; }
+  .cta .giant.solid { background: var(--ink); color: var(--paper); padding-bottom: .6vw; }
+  .cta .row { display: grid; grid-template-columns: 1fr auto auto; gap: 0; border-top: var(--rule); }
+  .cta .row > * { padding: 18px 16px; border-right: var(--rule); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .cta .row > *:last-child { border-right: 0; }
+  .cta .mail { font-weight: 700; font-size: clamp(16px, 2vw, 28px); word-break: break-all; }
+  button { font-family: var(--mono); font-size: 17px; cursor: pointer; } /* otherwise: the browser's own button */
+  @media (max-width: 900px) { .cta .row { grid-template-columns: 1fr; } .cta .row > * { border-right: 0; border-bottom: var(--rule); } .cta .row > *:last-child { border-bottom: 0; } }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-top: var(--rule); }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <header class="bar tiny">
+    <span class="logo">AT</span>
+    <span>Artisan Technology LLC</span>
+    <span class="hide-s">Custom software + custom hardware</span>
+    <span class="hide-s">Chicago, IL</span>
+    <span class="hide-s" id="clock-top">CHI --:--:--</span>
+    <nav><a href="#engineer">Who</a><a href="#arc">How</a><a href="#contact">Contact</a></nav>
+  </header>
+
+  <section class="hero">
+    <h1 class="giant word-a" aria-label="Artisan Technology">Artisan</h1>
+    <div class="poster">
+      <div class="stamp pad">
+        <span class="no">N°05</span>
+        <p class="up">Custom<br>software.<br>Custom<br>hardware.<br>No off-the-<br>shelf.</p>
+        <span class="tiny">Est. Chicago, IL<br>41.88 N / 87.63 W</span>
+      </div>
+      <div class="fig">
+        <div class="halftone"><img src="../img/artisan-technology.jpg" alt="Layered glass circuit die, printed as a coarse halftone"></div>
+        <span class="tag tiny inv pad">Fig. 1 — Layered systems</span>
+      </div>
+      <div class="kit">
+        <div class="barcode" aria-hidden="true"></div>
+        <div class="icons" aria-hidden="true">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26"/><ellipse cx="30" cy="30" rx="11" ry="26"/><path d="M4 30h52M9 17h42M9 43h42"/></svg>
+          <svg viewBox="0 0 60 60"><path d="M30 2v56M2 30h56M10 10l40 40M50 10 10 50"/><circle cx="30" cy="30" r="9" fill="#0d0d0d"/></svg>
+        </div>
+        <div class="checker" aria-hidden="true"></div>
+        <div class="pad"><span class="tiny">Local time</span><div class="clock" id="clock">--:--:--</div></div>
+      </div>
+    </div>
+    <p class="giant word-t" aria-hidden="true">Technology</p>
+    <div class="statement inv">
+      <span class="label tiny">Statement / 01</span>
+      <p>Artisan Technology LLC designs and builds custom software and hardware to solve problems that <span>don't fit off-the-shelf solutions.</span></p>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div>Idea <b>■</b> Prototype <b>■</b> Production <b>■</b> Software <b>■</b> Hardware <b>■</b> Systems <b>■</b> Idea <b>■</b> Prototype <b>■</b> Production <b>■</b> Software <b>■</b> Hardware <b>■</b> Systems <b>■</b></div>
+  </div>
+
+  <section class="eng" id="engineer">
+    <div class="namecol">
+      <div class="tiny"><span>Personnel / 02</span><span>10+ yrs</span></div>
+      <h2 class="giant">Lindsay<br>Moore</h2>
+      <div class="role inv">Principal Engineer</div>
+    </div>
+    <div class="biocol">
+      <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking "what if we did it this way?" and then building it.</p>
+      <div class="quote">"What if we did it this way?"</div>
+      <div class="body">
+        <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="arc">
+    <div class="arc-head tiny"><span>Process / 03</span><span>The full arc</span></div>
+    <div class="stage s1"><div class="n tiny"><span>01</span><span>▲</span></div><p class="giant">Idea</p></div>
+    <div class="stage s2"><div class="n tiny"><span>02</span><span>■</span></div><p class="giant">Prototype</p></div>
+    <div class="stage s3"><div class="n tiny"><span>03</span><span>●</span></div><p class="giant">Production</p></div>
+    <p class="arc-note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+  </section>
+
+  <section class="specs">
+    <div>
+      <h2>Education</h2>
+      <table>
+        <thead><tr><th>Degree</th><th>Field / Institution</th></tr></thead>
+        <tbody>
+          <tr><td>Master's</td><td>Computer Science<br>University of Chicago</td></tr>
+          <tr><td>Master's</td><td>Informatics<br>University of Minnesota</td></tr>
+          <tr><td>Bachelor's</td><td>Production, Engineering &amp; Business<br>McNally Smith College</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>Community</h2>
+      <table>
+        <thead><tr><th>Role</th><th>Organization</th></tr></thead>
+        <tbody>
+          <tr><td>Board</td><td>Pumping Station: One<br>Chicago's oldest and largest hackerspace</td></tr>
+          <tr><td>Research</td><td>STAGE Center<br>A multidisciplinary technology and arts lab at UChicago</td></tr>
+          <tr><td>Research</td><td>Chicago Virtual Production<br>An independent virtual production group</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <p class="giant">Let's build</p>
+    <p class="giant solid">something together.</p>
+    <div class="row">
+      <div><span class="mail">lindsay@artisan.technology</span></div>
+      <div>
+        <button type="button" onclick="location.href='mailto:lindsay@artisan.technology'">Send email</button>
+        <button type="button" id="copy">Copy address</button>
+      </div>
+      <div class="tiny">Chicago, IL</div>
+    </div>
+  </section>
+
+  <footer class="tiny">
+    <span>© Artisan Technology LLC</span>
+    <span>Plain HTML + CSS. No framework. No tracking.</span>
+    <span id="clock-foot">CHI --:--:--</span>
+  </footer>
+</div>
+
+<script>
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const clocks = ['clock', 'clock-top', 'clock-foot'].map(id => document.getElementById(id));
+  const tick = () => { const t = fmt.format(new Date()); clocks.forEach((el, i) => el.textContent = i ? `CHI ${t}` : t); };
+  tick(); setInterval(tick, 1000);
+
+  document.getElementById('copy').addEventListener('click', e => {
+    const b = e.currentTarget;
+    navigator.clipboard.writeText('lindsay@artisan.technology').then(() => {
+      b.textContent = 'Copied.'; setTimeout(() => b.textContent = 'Copy address', 1600);
+    }, () => { b.textContent = 'Copy failed'; });
+  });
+</script>
+</body>
+</html>
