@@ -42,14 +42,16 @@
   .caps { font-family: var(--caps); font-weight: 400; text-transform: uppercase; letter-spacing: .32em; }
   .small { font-size: 11px; letter-spacing: .34em; color: var(--ash); }
 
-  /* ---------- hero: the portrait in a single shaft of light ---------- */
+  /* ---------- hero: the chip in a single shaft of light ---------- */
   .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; background: var(--black); }
   .hero .photo {
-    position: absolute; top: 0; right: 0; height: 100%; aspect-ratio: 1; max-width: 100%;
-    background: url("../img/lindsay-v2.jpg") 50% 20% / cover no-repeat;
-    filter: contrast(1.18) saturate(.8) brightness(.62) sepia(.18);
-    -webkit-mask: linear-gradient(90deg, transparent 0, #000 30%), linear-gradient(0deg, transparent 0, #000 25%);
-    -webkit-mask-composite: source-in; mask-composite: intersect;
+    position: absolute; top: 46%; right: -12%; width: 86%; aspect-ratio: 1294 / 422; transform: translateY(-50%);
+    background: url("../img/artisan-technology.jpg") 50% 50% / cover no-repeat;
+    filter: contrast(1.2) saturate(.75) brightness(.62) sepia(.25);
+    -webkit-mask: linear-gradient(180deg, transparent 0, #000 30%, #000 62%, transparent 100%), linear-gradient(90deg, transparent 0, #000 28%, #000 72%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask: linear-gradient(180deg, transparent 0, #000 30%, #000 62%, transparent 100%), linear-gradient(90deg, transparent 0, #000 28%, #000 72%, transparent 100%);
+    mask-composite: intersect;
   }
   /* darkness everywhere except where the light falls */
   .hero .dark {
@@ -80,8 +82,7 @@
   @keyframes flicker { 0%, 100% { opacity: 1; } 47% { opacity: 1; } 48% { opacity: .86; } 49% { opacity: 1; } 72% { opacity: .93; } 73% { opacity: 1; } }
 
   @media (max-width: 820px) {
-    .hero .photo { height: 72%; width: 100%; aspect-ratio: auto; top: 0; background-position: 52% 10%;
-      -webkit-mask: linear-gradient(0deg, transparent 0, #000 35%); mask: linear-gradient(0deg, transparent 0, #000 35%); }
+    .hero .photo { top: 30%; right: auto; left: -40%; width: 180%; }
     .billing { max-width: none; right: var(--gutter); justify-content: flex-end; gap: 30px; }
     .billing .top { position: absolute; top: 24px; }
   }
@@ -150,7 +151,7 @@
 <div class="oil" aria-hidden="true"></div>
 
 <header class="hero" id="hero">
-  <div class="photo" role="img" aria-label="Lindsay Moore seated in a dark armchair against a brick wall, lit by a single light"></div>
+  <div class="photo" role="img" aria-label="A stacked glass circuit die, lit by a single light in the dark"></div>
   <div class="shaft" aria-hidden="true"></div>
   <div class="dark" aria-hidden="true"></div>
   <div class="warm flicker" aria-hidden="true"></div>
@@ -242,11 +243,14 @@
   const hero = document.getElementById('hero');
   const photo = hero.querySelector('.photo');
 
-  // Rest the light on the face; let the cursor carry it, then drift back.
-  // Face sits at ~51% across and ~14% down the source photo.
+  // Rest the light on the gold-rimmed die; let the cursor carry it, then drift back.
+  // The die sits at ~43% across and ~22% down the 1294×422 source, drawn with background-size: cover.
   function facePoint() {
     const h = hero.getBoundingClientRect(), p = photo.getBoundingClientRect();
-    return { x: (p.left - h.left + p.width * .51) / h.width * 100, y: (p.top - h.top + p.height * .16) / h.height * 100 };
+    const iw = 1294, ih = 422, s = Math.max(p.width / iw, p.height / ih), dw = iw * s, dh = ih * s;
+    const pos = getComputedStyle(photo).backgroundPosition.split(' ').map(v => parseFloat(v) / 100);
+    const ox = (p.width - dw) * pos[0], oy = (p.height - dh) * pos[1];
+    return { x: (p.left - h.left + ox + dw * .43) / h.width * 100, y: (p.top - h.top + oy + dh * .22) / h.height * 100 };
   }
   let cur = facePoint(), target = { ...cur }, idle = 0;
   const set = () => { hero.style.setProperty('--lx', cur.x + '%'); hero.style.setProperty('--ly', cur.y + '%'); };

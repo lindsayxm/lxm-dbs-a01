@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #e8e8e4;
+    --ink: #111;
+    --grid: rgba(17,17,17,.13);
+    --magenta: #ff3fb5;
+    --blue: #2f6bff;
+    --dot: "Doto", ui-monospace, monospace;
+    --sans: "Space Grotesk", system-ui, sans-serif;
+    --g: clamp(16px, 3vw, 44px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: clamp(16px, 1.15vw, 18px); line-height: 1.45; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--magenta); color: #fff; }
+  a { color: inherit; }
+  .dot { font-family: var(--dot); font-weight: 800; letter-spacing: .02em; }
+  .ruled { border-left: 2px solid var(--ink); padding-left: 10px; }
+
+  /* modular type, drawn by script */
+  svg.mod { display: block; width: 100%; height: auto; overflow: visible; }
+  svg.mod .gridline { stroke: var(--grid); stroke-width: .03; }
+  svg.mod .m { fill: var(--ink); transform-box: fill-box; transform-origin: center; transition: fill .5s; }
+  svg.mod .m.hot { fill: var(--magenta); transition: fill 0s; }
+  svg.mod .m.hot2 { fill: var(--blue); transition: fill 0s; }
+  svg.mod .m.pink { fill: var(--magenta); }
+  svg.mod .m.blue { fill: var(--blue); }
+  svg.mod .m.ghost { fill: none; stroke: var(--ink); stroke-width: .05; }
+  .assemble .m { animation: snap .6s cubic-bezier(.3,1.6,.5,1) both; animation-delay: var(--d); }
+  @keyframes snap { from { opacity: 0; transform: scale(.2) rotate(90deg); } }
+
+  /* ================= HERO ================= */
+  .hero { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; gap: clamp(18px, 3vw, 36px); padding: var(--g); }
+  .top { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-size: clamp(18px, 1.6vw, 24px); }
+  .brand svg { width: 40px; height: 40px; }
+  .brand span + span { border-left: 2px solid var(--ink); padding-left: 12px; }
+  .top .meta { text-align: right; font-size: 14px; line-height: 1.5; }
+  .word { align-self: center; position: relative; }
+  .bottom { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(12px, 2vw, 28px); align-items: end; }
+  .bottom p { font-size: clamp(13px, 1vw, 15px); }
+  .bottom .lede { grid-column: span 2; font-size: clamp(18px, 1.6vw, 24px); font-weight: 500; line-height: 1.25; }
+  button.relayout { font: inherit; font-family: var(--dot); font-weight: 800; font-size: 15px; background: var(--ink); color: var(--paper); border: 0; padding: 10px 14px; border-radius: 999px; cursor: pointer; justify-self: end; }
+  button.relayout:hover { background: var(--magenta); }
+  @media (max-width: 760px) { .bottom { grid-template-columns: 1fr 1fr; } .bottom .lede { grid-column: 1 / -1; } .top .meta { display: none; } }
+
+  /* ================= SECTIONS on a 12-col grid ================= */
+  section { padding: clamp(70px, 10vw, 140px) var(--g); position: relative; }
+  .cols { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(12px, 2vw, 28px); }
+  .label { grid-column: 1 / 4; font-size: clamp(16px, 1.4vw, 20px); }
+  .label small { display: block; font-family: var(--sans); font-weight: 400; font-size: 13px; margin-top: 6px; opacity: .7; }
+  .body { grid-column: 4 / 13; }
+  @media (max-width: 860px) { .label, .body { grid-column: 1 / -1; } .label { margin-bottom: 20px; } }
+  .gridbg { background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: calc(100% / 12) 80px; background-position: var(--g) 0; }
+
+  .statement p.big { font-size: clamp(28px, 3.6vw, 58px); font-weight: 500; line-height: 1.08; letter-spacing: -.02em; max-width: 20ch; }
+  .statement p.big em { font-style: normal; background: var(--blue); color: #fff; padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: clamp(36px, 5vw, 60px); }
+  .trio div { padding-top: 12px; border-top: 2px solid var(--ink); }
+  .trio b { display: block; font-size: 22px; margin: 12px 0 6px; }
+  .trio .dot { font-size: 14px; }
+  @media (max-width: 640px) { .trio { grid-template-columns: 1fr; } }
+
+  .engineer { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(20px, 4vw, 60px); align-items: start; }
+  .matrix { position: relative; aspect-ratio: 4 / 5; background: var(--paper); }
+  .matrix canvas, .matrix img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .matrix img { object-fit: cover; opacity: 0; transition: opacity .5s; filter: grayscale(1) contrast(1.1); }
+  .matrix:hover img { opacity: 1; }
+  .matrix .tag { position: absolute; left: 0; bottom: -28px; font-size: 13px; }
+  .engineer .name { margin-bottom: 20px; }
+  .engineer .lead { font-size: clamp(20px, 1.9vw, 28px); font-weight: 500; line-height: 1.3; margin: 20px 0 16px; letter-spacing: -.01em; }
+  .engineer .lead mark { background: var(--magenta); color: #fff; padding: 0 .1em; }
+  @media (max-width: 860px) { .engineer { grid-template-columns: 1fr; } .matrix { max-width: 420px; } }
+
+  .arc .stage { display: grid; grid-template-columns: 3fr 9fr; gap: clamp(12px, 2vw, 28px); align-items: end; padding: 18px 0; border-top: 2px solid var(--ink); }
+  .arc .stage:last-of-type { border-bottom: 2px solid var(--ink); }
+  .arc .stage .dot { font-size: 14px; }
+  .arc .stage p { font-size: 14px; margin-top: 4px; }
+  .arc .note { margin-top: 30px; max-width: 46ch; font-size: clamp(18px, 1.5vw, 22px); }
+  @media (max-width: 640px) { .arc .stage { grid-template-columns: 1fr; } }
+
+  .record .tables { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 60px); }
+  .record h3 { font-family: var(--dot); font-weight: 800; font-size: 20px; margin-bottom: 12px; }
+  .record ul { list-style: none; display: grid; gap: 10px; }
+  .record li { display: grid; grid-template-columns: 2.4em 1fr; gap: 10px; padding: 12px; background: rgba(255,255,255,.55); border: 1px solid var(--grid); }
+  .record li .dot { font-size: 18px; color: var(--blue); }
+  .record li b { display: block; font-weight: 500; }
+  .record li span span { font-size: 14px; opacity: .7; }
+  @media (max-width: 760px) { .record .tables { grid-template-columns: 1fr; } }
+
+  .contact .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: clamp(30px, 4vw, 50px); align-items: end; }
+  .contact a.mail { grid-column: span 2; font-family: var(--dot); font-weight: 800; font-size: clamp(18px, 2.7vw, 44px); text-decoration: none; overflow-wrap: anywhere; }
+  .contact a.mail:hover { color: var(--magenta); }
+  @media (max-width: 760px) { .contact .row { grid-template-columns: 1fr; } .contact a.mail { grid-column: auto; } }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 16px var(--g) 24px; border-top: 2px solid var(--ink); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) { .assemble .m { animation: none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="top">
+    <div class="brand dot"><svg viewBox="0 0 2 2" aria-hidden="true"><path d="M1 1 L0 1 A1 1 0 0 1 1 0Z M1 0 H2 V1 H1Z M0 1 H1 V2 H0Z" fill="#111"/><path d="M1 1 H2 A1 1 0 0 1 1 2Z" fill="#ff3fb5"/></svg><span>AT</span><span>Artisan Technology</span></div>
+    <p class="meta dot">Custom software<br>Custom hardware<br>Chicago, IL</p>
+  </div>
+
+  <div class="word">
+    <svg class="mod" id="hero" role="img" aria-label="Artisan Technology"></svg>
+  </div>
+
+  <div class="bottom">
+    <p class="lede">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+    <p class="ruled dot">Principal<br>Lindsay Moore</p>
+    <button class="relayout" id="relayout" type="button">Rearrange ⟲</button>
+  </div>
+</header>
+
+<main>
+  <section class="statement gridbg">
+    <div class="cols">
+      <p class="label dot">01 / Practice<small>What we make</small></p>
+      <div class="body">
+        <p class="big">Systems built from <em>the right pieces</em>, in the right order, for the problem in front of us.</p>
+        <div class="trio">
+          <div><span class="dot">01.1</span><b>Software</b><p>Firmware, tools and applications written for the problem at hand.</p></div>
+          <div><span class="dot">01.2</span><b>Hardware</b><p>Circuits, sensors and devices, from first sketch to working build.</p></div>
+          <div><span class="dot">01.3</span><b>Systems</b><p>Every module designed to fit with the rest, and to hold up in use.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cols">
+      <p class="label dot">02 / Principal<small>Who builds it</small></p>
+      <div class="body engineer">
+        <figure class="matrix" id="matrix">
+          <canvas id="dots" aria-hidden="true"></canvas>
+          <img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore, drawn as a grid of dots">
+          <figcaption class="tag dot">Hover to resolve</figcaption>
+        </figure>
+        <div>
+          <svg class="mod name" id="name" role="img" aria-label="Lindsay Moore"></svg>
+          <p class="dot">Principal Engineer · 10+ yrs</p>
+          <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <mark>"what if we did it this way?"</mark> and then building it.</p>
+          <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="arc gridbg">
+    <div class="cols">
+      <p class="label dot">03 / Process<small>The full arc</small></p>
+      <div class="body">
+        <div class="stage"><div><span class="dot">03.1 → wireframe</span><p>The question, sketched.</p></div><svg class="mod" data-word="IDEA" data-mode="ghost" role="img" aria-label="Idea"></svg></div>
+        <div class="stage"><div><span class="dot">03.2 → assembling</span><p>Half built, tested, rebuilt.</p></div><svg class="mod" data-word="PROTOTYPE" data-mode="half" role="img" aria-label="Prototype"></svg></div>
+        <div class="stage"><div><span class="dot">03.3 → solid</span><p>Finished, together.</p></div><svg class="mod" data-word="PRODUCTION" data-mode="solid" role="img" aria-label="Production"></svg></div>
+        <p class="note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="record">
+    <div class="cols">
+      <p class="label dot">04 / Record<small>Training &amp; community</small></p>
+      <div class="body tables">
+        <div>
+          <h3>Education</h3>
+          <ul>
+            <li><span class="dot">A</span><span><b>Master's, Computer Science</b><span>University of Chicago</span></span></li>
+            <li><span class="dot">B</span><span><b>Master's, Informatics</b><span>University of Minnesota</span></span></li>
+            <li><span class="dot">C</span><span><b>Bachelor's, Production, Engineering &amp; Business</b><span>McNally Smith College</span></span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><span class="dot">D</span><span><b>Board, Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></span></li>
+            <li><span class="dot">E</span><span><b>Research, STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></span></li>
+            <li><span class="dot">F</span><span><b>Research, Chicago Virtual Production</b><span>An independent virtual production group</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact gridbg" id="contact">
+    <div class="cols">
+      <p class="label dot">05 / Contact<small>Start a build</small></p>
+      <div class="body">
+        <svg class="mod" id="cta" role="img" aria-label="Let's build something together."></svg>
+        <div class="row">
+          <a class="mail" href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+          <p class="ruled dot">Chicago, IL</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="dot">
+  <span>© Artisan Technology LLC</span>
+  <span>Set in AT Modular, a 5×5 grid face</span>
+</footer>
+
+<script>
+(() => {
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // AT Modular: each glyph is a grid of modules.
+  //  # square   1 ◜ rounded top-left   2 ◝ top-right   3 ◞ bottom-right   4 ◟ bottom-left
+  const G = {
+    A: ['1###2', '#...#', '#####', '#...#', '#...#'],
+    B: ['####2', '#...#', '#####', '#...#', '####3'],
+    C: ['1####', '#....', '#....', '#....', '4####'],
+    D: ['####2', '#...#', '#...#', '#...#', '####3'],
+    E: ['1####', '#....', '####.', '#....', '4####'],
+    G: ['1####', '#....', '#..##', '#...#', '4###3'],
+    H: ['#...#', '#...#', '#####', '#...#', '#...#'],
+    I: ['###', '.#.', '.#.', '.#.', '###'],
+    L: ['#....', '#....', '#....', '#....', '4####'],
+    M: ['1###2', '#.#.#', '#.#.#', '#.#.#', '#.#.#'],
+    N: ['1###2', '#...#', '#...#', '#...#', '#...#'],
+    O: ['1###2', '#...#', '#...#', '#...#', '4###3'],
+    P: ['####2', '#...#', '####3', '#....', '#....'],
+    R: ['####2', '#...#', '####3', '#..2.', '#...#'],
+    S: ['1####', '#....', '4###2', '....#', '####3'],
+    T: ['#####', '..#..', '..#..', '..#..', '..#..'],
+    U: ['#...#', '#...#', '#...#', '#...#', '4###3'],
+    Y: ['#...#', '#...#', '4###3', '..#..', '..#..'],
+    "'": ['#', '#', '.', '.', '.'],
+    '.': ['.', '.', '.', '.', '#'],
+    ' ': ['..', '..', '..', '..', '..'],
+  };
+  const SHAPE = {
+    '#': 'M0 0H1V1H0Z',
+    '1': 'M1 1H0A1 1 0 0 1 1 0Z',
+    '2': 'M0 1V0A1 1 0 0 1 1 1Z',
+    '3': 'M0 0H1A1 1 0 0 1 0 1Z',
+    '4': 'M1 0V1A1 1 0 0 1 0 0Z',
+  };
+
+  // lay out lines of text into module coordinates
+  function layout(lines) {
+    const mods = [], gap = 1, lead = 1;
+    let maxW = 0;
+    lines.forEach((line, li) => {
+      let x = 0; const y0 = li * (5 + lead);
+      [...line].forEach((ch, ci) => {
+        const g = G[ch] || G[' '];
+        g.forEach((row, r) => [...row].forEach((c, k) => { if (c !== '.') mods.push({ c, x: x + k, y: y0 + r }); }));
+        x += g[0].length + (ci < line.length - 1 ? gap : 0);
+      });
+      maxW = Math.max(maxW, x);
+    });
+    return { mods, w: maxW, h: lines.length * 5 + (lines.length - 1) * lead };
+  }
+
+  function render(svg, lines, { mode = 'solid', grid = false, animate = true, seed = 1 } = {}) {
+    const { mods, w, h } = layout(lines);
+    svg.setAttribute('viewBox', `-.5 -.5 ${w + 1} ${h + 1}`);
+    let rnd = seed;
+    const rand = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647;
+    let out = '';
+    if (grid) {
+      for (let x = 0; x <= w; x++) out += `<line class="gridline" x1="${x}" y1="0" x2="${x}" y2="${h}"/>`;
+      for (let y = 0; y <= h; y++) out += `<line class="gridline" x1="0" y1="${y}" x2="${w}" y2="${y}"/>`;
+      for (let y = 0; y < h; y += 6) for (let x = 0; x + 5 <= w; x += 6) out += `<path class="gridline" fill="none" d="M${x} ${y}L${x + 5} ${y + 5}M${x + 5} ${y}L${x} ${y + 5}"/>`;
+    }
+    mods.forEach((m, i) => {
+      const ghost = mode === 'ghost' || (mode === 'half' && rand() < .45);
+      const tint = grid && rand() < .035 ? (rand() < .5 ? ' pink' : ' blue') : '';
+      out += `<path class="m${ghost ? ' ghost' : ''}${tint}" data-x="${m.x}" data-y="${m.y}" style="--d:${(m.x * 14 + m.y * 30 + rand() * 120) | 0}ms" transform="translate(${m.x} ${m.y})" d="${SHAPE[m.c]}"/>`;
+    });
+    svg.innerHTML = out;
+    if (animate && !REDUCE) { svg.classList.remove('assemble'); void svg.offsetWidth; svg.classList.add('assemble'); }
+  }
+
+  // ---------- hero, with switchable layouts ----------
+  const hero = document.getElementById('hero');
+  const wide = [['ARTISAN', 'TECHNOLOGY'], ['ART', 'ISAN', 'TECH', 'NOLOGY'], ['TECHNOLOGY', 'ARTISAN']];
+  const tall = [['ARTI', 'SAN', 'TECH', 'NOLO', 'GY'], ['ART', 'ISAN', 'TECH', 'NOLOGY']];
+  let li = 0;
+  const pick = () => (innerWidth / innerHeight < .9 ? tall : wide);
+  const drawHero = () => { const set = pick(); render(hero, set[li % set.length], { grid: true, seed: li + 3 }); };
+  drawHero();
+  document.getElementById('relayout').addEventListener('click', () => { li++; drawHero(); });
+  let lastTall = innerWidth / innerHeight < .9;
+  addEventListener('resize', () => { const t = innerWidth / innerHeight < .9; if (t !== lastTall) { lastTall = t; li = 0; drawHero(); } });
+
+  // modules near the cursor light up
+  hero.addEventListener('pointermove', e => {
+    const pt = hero.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(hero.getScreenCTM().inverse());
+    hero.querySelectorAll('.m').forEach(el => {
+      const d = Math.hypot(+el.dataset.x + .5 - p.x, +el.dataset.y + .5 - p.y);
+      el.classList.toggle('hot', d < 2.2);
+      el.classList.toggle('hot2', d >= 2.2 && d < 3.6);
+    });
+  });
+  hero.addEventListener('pointerleave', () => hero.querySelectorAll('.m').forEach(el => el.classList.remove('hot', 'hot2')));
+
+  // ---------- other modular words, built when they scroll into view ----------
+  const jobs = [
+    [document.getElementById('name'), () => ['LINDSAY', 'MOORE'], {}],
+    [document.getElementById('cta'), () => innerWidth < 760 ? ["LET'S", 'BUILD', 'SOMETHING', 'TOGETHER.'] : ["LET'S BUILD", 'SOMETHING', 'TOGETHER.'], {}],
+    ...[...document.querySelectorAll('[data-word]')].map((s, i) => [s, () => [s.dataset.word], { mode: s.dataset.mode, seed: 7 + i }]),
+  ];
+  jobs.forEach(([svg, lines, opts]) => render(svg, lines(), { ...opts, animate: false }));
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const j = jobs.find(j => j[0] === e.target); render(j[0], j[1](), j[2]); io.unobserve(e.target);
+  }), { threshold: .4 });
+  jobs.forEach(j => io.observe(j[0]));
+
+  // ---------- portrait as a dot matrix ----------
+  const cv = document.getElementById('dots'), fig = document.getElementById('matrix'), img = fig.querySelector('img');
+  function dots() {
+    const W = fig.clientWidth, H = fig.clientHeight, dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = W * dpr; cv.height = H * dpr;
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cols = 34, step = W / cols, rows = Math.round(H / step);
+    const s = document.createElement('canvas'); s.width = cols; s.height = rows;
+    const sc = s.getContext('2d');
+    const iw = img.naturalWidth, ih = img.naturalHeight, r = cols / rows;
+    let sw = iw, sh = iw / r; if (sh > ih) { sh = ih; sw = ih * r; }
+    sc.drawImage(img, (iw - sw) / 2, (ih - sh) * .2, sw, sh, 0, 0, cols, rows);
+    let data;
+    try { data = sc.getImageData(0, 0, cols, rows).data; } catch (e) { img.style.opacity = 1; return; }
+    ctx.clearRect(0, 0, W, H);
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const i = (y * cols + x) * 4, lum = (data[i] * .3 + data[i + 1] * .59 + data[i + 2] * .11) / 255;
+      const rad = step * .5 * Math.pow(1 - lum, .9) * 1.05;
+      if (rad < .6) continue;
+      ctx.fillStyle = (x + y * 3) % 23 === 0 ? '#ff3fb5' : '#111';
+      ctx.beginPath(); ctx.arc((x + .5) * step, (y + .5) * step, rad, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  if (img.complete) dots(); else img.addEventListener('load', dots);
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(dots, 150); });
+})();
+</script>
+</body>
+</html>

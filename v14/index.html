@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology — Chicago, Lake Michigan</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eee5cf;
+    --ink: #2f261d;
+    --ink-soft: #6b5c48;
+    --rule: #8f7d63;
+    --navy: #1f2c44;
+    --brass: #9a7737;
+    --display: "Bodoni Moda", "Didot", "Bodoni 72", serif;
+    --text: "Old Standard TT", "Times New Roman", serif;
+    --g: clamp(18px, 4.5vw, 72px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--text); font-size: clamp(17px, 1.25vw, 20px); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; }
+  .sc { text-transform: uppercase; letter-spacing: .22em; font-size: 12px; }
+  .soft { color: var(--ink-soft); }
+
+  /* aged stock: fibre, foxing and darkened edges */
+  .stock { position: fixed; inset: 0; z-index: 40; pointer-events: none; mix-blend-mode: multiply;
+    background:
+      radial-gradient(ellipse 95% 85% at 50% 45%, transparent 60%, rgba(110,80,40,.22)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='s'><feTurbulence type='fractalNoise' baseFrequency='.01' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 .6  0 0 0 0 .45  0 0 0 0 .25  0 0 0 .2 -.05'/></filter><rect width='100%' height='100%' filter='url(%23s)'/></svg>"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .28  0 0 0 .3 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"); }
+
+  /* silver-gelatin plates, toned sepia */
+  .plate img { display: block; width: 100%; height: 100%; object-fit: cover; filter: sepia(.6) contrast(1.06) brightness(.97) saturate(.9); }
+  .plate figcaption { display: flex; justify-content: space-between; gap: 16px; padding-top: 10px; font-style: italic; font-size: 15px; color: var(--ink-soft); }
+  .plate figcaption b { font-style: normal; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; font-size: 11px; color: var(--ink); white-space: nowrap; }
+  .frame { box-shadow: 0 0 0 1px rgba(47,38,29,.35); }
+
+  /* ================= MASTHEAD + COVER PLATE ================= */
+  .cover { min-height: 100vh; height: 100vh; display: grid; grid-template-rows: auto auto 1fr; padding: clamp(16px, 2.6vw, 34px) var(--g) clamp(18px, 3vw, 36px); }
+  .dateline { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+  .masthead { text-align: center; border-bottom: 4px double var(--ink); padding: clamp(4px, 1vw, 12px) 0 clamp(8px, 1.4vw, 16px); }
+  .masthead h1 { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 9.6vw, 168px); line-height: .95; letter-spacing: -.01em; white-space: nowrap; }
+  .masthead h1 em { font-style: italic; }
+  .masthead p { margin-top: 4px; font-style: italic; font-size: clamp(15px, 1.6vw, 22px); color: var(--ink-soft); }
+  .cover .plate { margin-top: clamp(14px, 2vw, 24px); display: grid; grid-template-rows: 1fr auto; min-height: 0; }
+  .cover .frame { position: relative; overflow: hidden; min-height: 0; }
+  .cover .frame img { position: absolute; inset: 0; object-position: 50% 78%; animation: drift 40s ease-in-out infinite alternate; }
+  @keyframes drift { from { transform: scale(1.01); } to { transform: scale(1.05) translate(-1%, 0); } }
+
+  /* ================= SECTIONS ================= */
+  section { padding: clamp(80px, 11vw, 150px) var(--g); }
+  .section-head { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 18px; border-top: 1px solid var(--ink); padding-top: 12px; margin-bottom: clamp(30px, 5vw, 60px); }
+  .section-head .n { font-family: var(--display); font-style: italic; font-size: clamp(22px, 2vw, 30px); }
+  h2 { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 5.8vw, 96px); line-height: 1; letter-spacing: -.01em; }
+  h2 em { font-style: italic; }
+
+  .editorial { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(30px, 5vw, 80px); align-items: start; }
+  .editorial .lead { font-size: clamp(23px, 2.3vw, 34px); line-height: 1.32; margin-top: 26px; }
+  .editorial .lead::first-letter { font-family: var(--display); float: left; font-size: 3.4em; line-height: .78; padding: .06em .08em 0 0; }
+  .editorial .cols { columns: 2; column-gap: 32px; margin-top: 30px; color: var(--ink-soft); font-size: .95em; }
+  .editorial .cols p { break-inside: avoid; margin-bottom: 12px; }
+  .editorial .cols b { color: var(--ink); font-weight: 400; letter-spacing: .14em; text-transform: uppercase; font-size: 12px; }
+  .editorial .plate .frame { aspect-ratio: 4 / 5; overflow: hidden; }
+  .editorial .plate img { object-position: 46% 50%; }
+  @media (max-width: 860px) { .editorial { grid-template-columns: 1fr; } .editorial .cols { columns: 1; } }
+
+  /* cabinet card */
+  .engineer { display: grid; grid-template-columns: minmax(240px, 4fr) 7fr; gap: clamp(30px, 6vw, 100px); align-items: center; }
+  .card { background: #2a2620; padding: 18px 18px 54px; box-shadow: 0 24px 40px -18px rgba(47,38,29,.55); position: relative; transform: rotate(-1.5deg); }
+  .card .oval { aspect-ratio: 4 / 5; border-radius: 50%; overflow: hidden; background: #d9cdb0; box-shadow: inset 0 0 0 2px #b59a5e; }
+  .card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; filter: grayscale(1) sepia(.7) contrast(1.1) brightness(1.02); }
+  .card .studio { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; color: #c8ad6f; font-family: var(--display); font-style: italic; font-size: 17px; }
+  .engineer .role { margin: 10px 0 26px; }
+  .engineer .lead { font-size: clamp(21px, 2vw, 29px); line-height: 1.38; margin-bottom: 18px; }
+  .engineer .lead em { font-family: var(--display); }
+  @media (max-width: 860px) { .engineer { grid-template-columns: 1fr; } .card { max-width: 320px; } }
+
+  /* the race: three yachts, labelled */
+  .race .plate .frame { position: relative; aspect-ratio: 2400 / 1748; overflow: hidden; }
+  .race .plate img { position: absolute; inset: 0; }
+  .tag { position: absolute; transform: translate(-50%, -100%); text-align: center; color: var(--ink); }
+  .tag i { display: block; width: 1px; height: clamp(20px, 5vw, 60px); margin: 0 auto; background: var(--ink); }
+  .tag span { display: inline-block; background: var(--paper); border: 1px solid var(--ink); padding: 4px 12px 3px; font-family: var(--display); font-size: clamp(12px, 1.4vw, 20px); white-space: nowrap; }
+  .tag span small { font-style: italic; margin-right: 6px; }
+  .race .legs { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 4px double var(--ink); margin-top: 30px; }
+  .race .legs div { padding: 16px 18px 0 0; }
+  .race .legs div + div { padding-left: 18px; border-left: 1px solid var(--rule); }
+  .race .legs b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(28px, 3vw, 46px); line-height: 1.05; }
+  .race .legs b em { font-size: .6em; margin-right: 8px; }
+  .race .note { max-width: 44em; margin-top: 30px; font-size: clamp(18px, 1.5vw, 22px); }
+  @media (max-width: 700px) { .race .legs { grid-template-columns: 1fr; } .race .legs div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); } }
+
+  /* regatta results */
+  .results { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 6vw, 90px); }
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; font-family: var(--display); font-size: clamp(26px, 2.4vw, 36px); padding-bottom: 8px; }
+  thead th { font-weight: 400; text-align: left; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; }
+  td { padding: 12px 0; border-bottom: 1px dotted var(--rule); vertical-align: top; }
+  td:first-child { width: 2.6em; font-family: var(--display); font-style: italic; }
+  td i { display: block; color: var(--ink-soft); }
+  @media (max-width: 860px) { .results { grid-template-columns: 1fr; } }
+
+  /* the signal */
+  .signal { text-align: center; border-top: 4px double var(--ink); margin: 0 var(--g); padding-left: 0; padding-right: 0; }
+  .signal h2 { font-size: clamp(48px, 8vw, 140px); }
+  .burgee { width: 90px; margin: 0 auto 26px; display: block; }
+  .signal .box { display: inline-block; margin-top: 40px; border: 1px solid var(--ink); padding: 6px; }
+  .signal .box a { display: block; border: 1px solid var(--ink); padding: 14px 28px; text-decoration: none; font-size: clamp(17px, 1.8vw, 24px); letter-spacing: .06em; transition: background .3s, color .3s; }
+  .signal .box a:hover { background: var(--ink); color: var(--paper); }
+  .signal .where { margin-top: 18px; }
+
+  footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px var(--g) 28px; border-top: 1px solid var(--ink); margin-top: clamp(60px, 8vw, 100px); font-size: 13px; color: var(--ink-soft); }
+  footer a { text-underline-offset: 3px; }
+
+  @media (max-width: 700px) { .dateline .hide { display: none; } .masthead h1 { white-space: normal; } .masthead h1 em { display: block; } }
+  @media (prefers-reduced-motion: reduce) { .cover .frame img { animation: none; } }
+</style>
+</head>
+<body>
+<div class="stock" aria-hidden="true"></div>
+
+<header class="cover">
+  <div class="dateline sc">
+    <span>No. 14</span>
+    <span class="hide">Chicago, on Lake Michigan</span>
+    <span>Custom Software &amp; Hardware</span>
+  </div>
+  <div class="masthead">
+    <h1>Artisan <em>Technology</em></h1>
+    <p>Problems that don't fit off the shelf, built to order.</p>
+  </div>
+  <figure class="plate">
+    <div class="frame"><img src="../img/yacht-emerald-1894.jpg" alt="The schooner yacht Emerald under full sail, photographed in 1894"></div>
+    <figcaption><b>Plate I</b><span>Under full canvas. The schooner <i>Emerald</i>, 1894.</span></figcaption>
+  </figure>
+</header>
+
+<main>
+  <section>
+    <div class="section-head"><span class="n">i.</span><span class="sc">The Practice</span></div>
+    <div class="editorial">
+      <div>
+        <h2>Built to order, <em>rigged for the weather.</em></h2>
+        <p class="lead">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+        <div class="cols">
+          <p><b>Software.</b> Written for the problem at hand, from firmware to the tools people use every day.</p>
+          <p><b>Hardware.</b> Devices and circuits drawn from first sketch to a working build.</p>
+          <p><b>Systems.</b> Every part designed to serve the whole, and to hold up in real use.</p>
+        </div>
+      </div>
+      <figure class="plate">
+        <div class="frame"><img src="../img/yacht-grayling-1890.jpg" alt="The schooner Grayling sailing through a chop, 1890"></div>
+        <figcaption><b>Plate II</b><span>The <i>Grayling</i>, 1890.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="n">ii.</span><span class="sc">At the Helm</span></div>
+    <div class="engineer">
+      <figure class="card">
+        <div class="oval"><img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore"></div>
+        <figcaption class="studio">Lindsay Moore · Chicago</figcaption>
+      </figure>
+      <div>
+        <h2>Lindsay Moore</h2>
+        <p class="role sc soft">Principal Engineer</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <em>"what if we did it this way?"</em> and then building it.</p>
+        <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="race">
+    <div class="section-head"><span class="n">iii.</span><span class="sc">The Course</span></div>
+    <h2 style="margin-bottom:clamp(26px,4vw,46px)">From first idea <em>to the finish line.</em></h2>
+    <figure class="plate">
+      <div class="frame">
+        <img src="../img/yachts-1901-trials.jpg" alt="Three racing yachts in a line, smallest to largest, during the 1901 America's Cup trials">
+        <span class="tag" style="left:18%;top:47%"><span><small>I.</small>Idea</span><i></i></span>
+        <span class="tag" style="left:44.5%;top:38%"><span><small>II.</small>Prototype</span><i></i></span>
+        <span class="tag" style="left:75%;top:22%"><span><small>III.</small>Production</span><i></i></span>
+      </div>
+      <figcaption><b>Plate III</b><span><i>Constitution</i>, <i>Columbia</i> and <i>Independence</i>, America's Cup trials, 1901.</span></figcaption>
+    </figure>
+    <div class="legs">
+      <div><span class="sc soft">First leg</span><b><em>I.</em>Idea</b></div>
+      <div><span class="sc soft">Second leg</span><b><em>II.</em>Prototype</b></div>
+      <div><span class="sc soft">Final leg</span><b><em>III.</em>Production</b></div>
+    </div>
+    <p class="note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="n">iv.</span><span class="sc">Record</span></div>
+    <div class="results">
+      <table>
+        <caption>Education</caption>
+        <thead><tr><th class="sc">No.</th><th class="sc">Degree &amp; institution</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Master's, Computer Science<i>University of Chicago</i></td></tr>
+          <tr><td>2</td><td>Master's, Informatics<i>University of Minnesota</i></td></tr>
+          <tr><td>3</td><td>Bachelor's, Production, Engineering &amp; Business<i>McNally Smith College</i></td></tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>Community &amp; Research</caption>
+        <thead><tr><th class="sc">No.</th><th class="sc">Post &amp; organization</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Board, Pumping Station: One<i>Chicago's oldest and largest hackerspace</i></td></tr>
+          <tr><td>2</td><td>Research, STAGE Center<i>A multidisciplinary technology and arts lab at UChicago</i></td></tr>
+          <tr><td>3</td><td>Research, Chicago Virtual Production<i>An independent virtual production group</i></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="signal" id="contact">
+    <svg class="burgee" viewBox="0 0 90 50" aria-hidden="true"><path d="M2 4 L88 25 L2 46Z" fill="#1f2c44"/><path d="M2 4 L88 25 L2 25Z" fill="#9a7737" opacity=".9"/><circle cx="24" cy="25" r="5" fill="#eee5cf"/></svg>
+    <h2>Let's build <em>something together.</em></h2>
+    <div class="box"><a href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a></div>
+    <p class="where sc soft">Chicago, Illinois</p>
+  </section>
+</main>
+
+<footer>
+  <span>© Artisan Technology LLC · Chicago, IL</span>
+  <span>Photographs: Detroit Photographic Co., 1890–1901. Public domain, via the <a href="https://commons.wikimedia.org/wiki/File:Schooner_Emerald-1.jpg">Library of Congress &amp; Wikimedia Commons</a>.</span>
+</footer>
+</body>
+</html>
