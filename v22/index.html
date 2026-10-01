@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology — AT-22 Console</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Inter+Tight:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --panel: #1c2128;
+    --panel-2: #232930;
+    --cowl: #0b0c0e;
+    --silk: #e9e4d6;
+    --red: #8e1717;
+    --cream: #f2e2a6;
+    --amber: #ffcf6b;
+    --pink: #ff8fb2;
+    --led: #ff3b2f;
+    --label: "Barlow Semi Condensed", "Arial Narrow", sans-serif;
+    --disp: "Inter Tight", "Helvetica Neue", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #0e0f11; }
+  body { background: radial-gradient(ellipse at 50% 20%, #26282c, #0e0f11 70%); color: var(--silk); font-family: var(--label); min-height: 100vh; display: grid; place-items: center; padding: clamp(10px, 2vw, 28px); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--amber); color: #000; }
+  a { color: inherit; }
+  .lbl { font-family: var(--label); font-weight: 500; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--silk); }
+
+  /* ================= THE DESK ================= */
+  .desk { position: relative; width: min(100%, 1400px); display: grid; grid-template-columns: clamp(10px, 2vw, 30px) minmax(0, 1fr) clamp(10px, 2vw, 30px); border-radius: 10px; box-shadow: 0 40px 80px -30px #000, 0 0 0 1px #000; }
+  .cheek { border-radius: 10px 0 0 10px; background:
+      repeating-linear-gradient(178deg, rgba(0,0,0,.0) 0 7px, rgba(60,25,8,.28) 7px 9px, rgba(0,0,0,0) 9px 15px),
+      linear-gradient(90deg, #8a4a1f, #b8692c 40%, #9a5222 70%, #6b3514); }
+  .cheek.r { border-radius: 0 10px 10px 0; transform: scaleX(-1); }
+  .unit { background: var(--cowl); padding-top: clamp(20px, 3.2vw, 46px); }
+  .face { position: relative; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border-top: 1px solid #3a414b; padding: clamp(14px, 2vw, 26px); display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(12px, 1.8vw, 24px); }
+  .face::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"); }
+  .screw { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #777, #2a2a2a 70%); box-shadow: inset 0 0 0 1px #111; }
+  .screw::after { content: ""; position: absolute; left: 2px; right: 2px; top: 5px; height: 1.5px; background: #111; transform: rotate(var(--r, 30deg)); }
+  .box { border: 1.5px solid var(--silk); border-radius: 10px; }
+  .boxlbl { text-align: center; margin-top: 6px; }
+
+  /* header strip */
+  .brand { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; gap: 14px; }
+  .brand .name { font-weight: 500; font-size: clamp(15px, 1.5vw, 20px); letter-spacing: .06em; text-transform: uppercase; }
+  .brand .model { text-align: right; }
+  .brand .model b { display: block; font-weight: 600; font-size: clamp(15px, 1.5vw, 20px); letter-spacing: .02em; }
+  .brand .model span { letter-spacing: .14em; font-size: 12px; }
+  .brand .badge { border: 1.5px solid var(--silk); border-radius: 4px; padding: 1px 6px; font-size: 13px; font-weight: 600; line-height: 1.05; text-align: center; }
+  .brand .badge small { display: block; font-size: 7px; letter-spacing: .06em; }
+
+  /* rotary row */
+  .knobs { padding: 10px 14px 4px; display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+  .knob { display: grid; justify-items: center; gap: 4px; }
+  .knob .k { width: clamp(28px, 3.4vw, 48px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 32%, #c63a3a, var(--red) 55%, #4d0b0b); box-shadow: 0 3px 4px rgba(0,0,0,.6), inset 0 -2px 3px rgba(0,0,0,.4); position: relative; cursor: grab; transform: rotate(var(--a, 0deg)); touch-action: none; }
+  .knob .k::after { content: ""; position: absolute; left: 50%; top: 6%; width: 2px; height: 32%; background: #fff; translate: -50% 0; border-radius: 2px; }
+  .knob .k:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  /* VU meters */
+  .meters { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(8px, 1.4vw, 18px); align-content: start; }
+  .vu { position: relative; aspect-ratio: 2 / 1.05; background: #111; padding: 8px; border-radius: 6px; box-shadow: inset 0 0 0 2px #000, 0 2px 0 #3a414b; }
+  .vu .glass { position: relative; width: 100%; height: 100%; background: radial-gradient(ellipse at 50% 120%, #fff3c4, var(--cream) 50%, #d8c27e); border-radius: 3px; overflow: hidden; }
+  .vu svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .vu .needle { transform-origin: 100px 118px; transition: transform .08s linear; }
+  .vu .peak { position: absolute; right: -14px; bottom: 6px; width: 8px; height: 8px; border-radius: 50%; background: #5a1410; box-shadow: inset 0 0 0 1px #000; }
+  .vu .peak.on { background: var(--led); box-shadow: 0 0 10px var(--led); }
+
+  /* ================= CHANNEL STRIPS ================= */
+  .strips { display: grid; grid-template-columns: repeat(4, 1fr) 14px 1fr; align-items: stretch; }
+  .strip { border: 1.5px solid var(--silk); border-radius: 8px; padding: 10px 6px 10px; display: grid; grid-template-rows: auto auto 1fr; justify-items: center; gap: 8px; margin-right: -1.5px; }
+  .strip.master { margin-right: 0; }
+  .btns { display: flex; gap: 8px; }
+  .btn { font-family: var(--label); font-size: 11px; font-weight: 500; width: clamp(30px, 3vw, 40px); aspect-ratio: 1; border-radius: 3px; border: 0; cursor: pointer; background: linear-gradient(#f4f1ea, #cfcac0); color: #555; box-shadow: 0 3px 0 #000, inset 0 0 0 1px rgba(0,0,0,.25); transition: background .15s, color .15s, transform .08s, box-shadow .08s; }
+  .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #000; }
+  .btn.sel.on { background: radial-gradient(circle, #fffbd0, #f3e47a); color: #9a8a10; box-shadow: 0 3px 0 #000, 0 0 16px rgba(255,236,120,.7); }
+  .btn.mute.on { background: radial-gradient(circle, #ffe0ea, var(--pink)); color: #b0003a; box-shadow: 0 3px 0 #000, 0 0 16px rgba(255,120,170,.75); }
+  .btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  .chname { font-size: clamp(17px, 1.6vw, 22px); font-weight: 500; letter-spacing: .02em; text-align: center; line-height: 1; }
+  .chname small { display: block; font-size: 10px; letter-spacing: .12em; margin-top: 4px; opacity: .75; }
+  .fader { position: relative; width: 100%; min-height: clamp(200px, 30vh, 380px); touch-action: none; cursor: ns-resize; outline: none; }
+  .fader .slot { position: absolute; left: 50%; top: 4%; bottom: 4%; width: 8px; translate: -50% 0; background: #050505; border-radius: 4px; box-shadow: inset 0 1px 2px #000, 0 1px 0 #3a414b; }
+  .fader .scale { position: absolute; inset: 4% 0; pointer-events: none; }
+  .fader .scale span { position: absolute; left: 0; right: 0; translate: 0 -50%; display: flex; align-items: center; gap: 4px; font-size: 10px; line-height: 1; }
+  .fader .scale span::before { content: ""; position: absolute; left: 32%; right: 32%; top: 50%; height: 1px; background: var(--silk); opacity: .8; }
+  .fader .scale span em { font-style: normal; width: 22%; text-align: right; }
+  .fader .cap { position: absolute; left: 50%; width: clamp(30px, 3.2vw, 42px); height: clamp(44px, 6.4vh, 64px); translate: -50% -50%; top: var(--y, 50%); border-radius: 4px;
+    background: linear-gradient(180deg, #fbfbf8 0%, #d9d8d2 44%, #555 47%, #e7e6e0 50%, #cfcec8 100%); box-shadow: 0 6px 8px rgba(0,0,0,.6), inset 0 0 0 1px rgba(0,0,0,.25); cursor: grab; }
+  .fader.dragging .cap { cursor: grabbing; }
+  .fader:focus-visible .cap { outline: 2px solid var(--amber); outline-offset: 3px; }
+  .master .cap { background: linear-gradient(180deg, #e04040 0%, #b51e1e 44%, #3a0606 47%, #c52626 50%, #941414 100%); }
+  .strips-lbl { display: grid; grid-template-columns: 4fr 14px 1fr; text-align: center; margin-top: 8px; }
+
+  /* ================= THE SCREEN ================= */
+  .right { display: grid; grid-template-rows: auto 1fr auto; gap: clamp(10px, 1.4vw, 18px); min-width: 0; }
+  .screen { position: relative; border-radius: 10px; background: #0a0a0a; padding: 10px; box-shadow: inset 0 0 0 2px #000, 0 2px 0 #3a414b; min-height: clamp(280px, 40vh, 500px); }
+  .screen .glass { position: relative; height: 100%; border-radius: 4px; overflow: hidden; background: radial-gradient(ellipse at 50% 110%, #fff4cc, var(--cream) 55%, #cdb874); color: #2a2110; filter: brightness(var(--bright, 1)); transition: filter .15s; }
+  .screen .glass::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(80,50,0,.25)); }
+  .screen .head { position: absolute; left: 14px; right: 14px; top: 10px; display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #6b5a28; z-index: 3; }
+  .ch { position: absolute; inset: 0; padding: clamp(36px, 4vw, 48px) clamp(16px, 2vw, 28px) clamp(16px, 2vw, 24px); opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; display: flex; flex-direction: column; justify-content: center; }
+  .ch.show { opacity: 1; visibility: visible; }
+  .ch .sig { filter: blur(calc(max(0, .45 - var(--lv, 1)) * 14px)); opacity: calc(.3 + min(1, var(--lv, 1) * 1.6) * .7); transition: filter .1s; }
+  .ch h2 { font-family: var(--disp); font-variation-settings: "wght" var(--w, 600); font-weight: 600; font-size: clamp(30px, calc(2vw + var(--lv, 1) * 3vw), 78px); line-height: .92; letter-spacing: -.035em; }
+  .ch p { font-family: var(--disp); font-size: clamp(14px, 1.15vw, 18px); line-height: 1.4; max-width: 46ch; margin-top: 12px; }
+  .ch .muted { position: absolute; inset: 0; display: none; place-items: center; font-family: var(--disp); font-weight: 800; font-size: clamp(30px, 4vw, 60px); letter-spacing: .1em; color: #b0003a; background: rgba(242,226,166,.75); }
+  .ch.is-muted .muted { display: grid; }
+  .eng { display: grid; grid-template-columns: auto 1fr; gap: clamp(12px, 1.6vw, 22px); align-items: center; }
+  .eng .ph { width: calc(70px + var(--lv, 1) * 120px); aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; background: #c9a24a; transition: width .1s; }
+  .eng .ph img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+  .eng h2 { font-size: clamp(26px, 3.4vw, 58px); }
+  .eng .q { color: #8e1717; }
+  .arcv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+  .arcv div { border: 2px solid #2a2110; border-radius: 6px; padding: 10px 8px; text-align: center; opacity: .3; transition: opacity .2s, background .2s, transform .2s; }
+  .arcv div.on { opacity: 1; background: #2a2110; color: var(--cream); transform: translateY(-4px); }
+  .arcv b { display: block; font-family: var(--disp); font-weight: 800; font-size: clamp(16px, 1.8vw, 26px); letter-spacing: -.02em; }
+  .arcv small { font-size: 12px; }
+  .recl { list-style: none; columns: 2; column-gap: 24px; margin-top: 12px; font-family: var(--disp); font-size: clamp(13px, 1vw, 16px); }
+  .recl li { break-inside: avoid; padding: 6px 0; border-top: 1px solid rgba(42,33,16,.3); transition: opacity .2s; }
+  .recl li b { display: block; font-weight: 700; }
+  .recl li.off { opacity: .12; }
+  .cta a { font-family: var(--disp); font-weight: 700; font-size: clamp(18px, 2vw, 30px); text-decoration: none; border-bottom: 3px solid #8e1717; }
+  .hint { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #6b5a28; z-index: 3; }
+
+  /* monitor + transport */
+  .monitor { display: grid; grid-template-columns: auto 1fr; gap: clamp(12px, 1.8vw, 24px); align-items: center; }
+  .mon { display: grid; justify-items: center; gap: 6px; }
+  .mon .k { width: clamp(64px, 6.4vw, 96px); }
+  .mon .k::after { height: 36%; width: 3px; }
+  .transport { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; border: 1.5px solid var(--silk); border-radius: 10px; padding: 12px; }
+  .transport .btn { width: 100%; height: auto; aspect-ratio: 1.7; font-size: 18px; color: #111; display: grid; place-items: center; text-decoration: none; }
+  .transport .btn.rec { color: #d01818; }
+  .transport .btn.talk, .transport .btn.dim { grid-column: span 2; aspect-ratio: auto; height: 38px; font-size: 13px; letter-spacing: .06em; }
+  .transport .btn.talk:hover { background: radial-gradient(circle, #fffbd0, #f3e47a); }
+
+  .below { width: min(100%, 1400px); margin-top: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: #8a8f96; font-size: 13px; }
+
+  @media (max-width: 980px) {
+    .face { grid-template-columns: 1fr; }
+    .left, .right { display: contents; }
+    .brand { order: 0; } .meters { order: 1; } .screen { order: 2; min-height: 300px; }
+    .strips { order: 3; } .strips-lbl { order: 4; } .left > .box { order: 6; } .boxlbl { order: 7; } .monitor { order: 5; }
+    .fader { min-height: 230px; }
+    .face { grid-template-columns: minmax(0, 1fr); } .unit { min-width: 0; } .strips { grid-template-columns: repeat(4, minmax(0,1fr)) 6px minmax(0,1fr); }
+    .knobs { grid-template-columns: repeat(4, 1fr); }
+    .knobs .knob:nth-child(n+5) { display: none; }
+    .monitor { grid-template-columns: 1fr; justify-items: center; }
+    .transport { width: 100%; }
+    .recl { columns: 1; }
+  }
+  @media (max-width: 520px) { .strip { padding: 8px 2px; min-width: 0; } .strip .btns { gap: 3px; } .strip .btn { width: 25px; font-size: 7.5px; } .chname { font-size: 15px; } .chname small { font-size: 8px; letter-spacing: .04em; } .fader .scale span em { display: none; } .strips { grid-template-columns: repeat(4, 1fr) 6px 1fr; } .meters .vu .peak { display: none; } }
+</style>
+</head>
+<body>
+<div class="desk">
+  <div class="cheek" aria-hidden="true"></div>
+  <div class="unit">
+    <div class="face">
+      <span class="screw" style="left:8px;top:8px"></span><span class="screw" style="right:8px;top:8px;--r:120deg"></span>
+      <span class="screw" style="left:8px;bottom:8px;--r:70deg"></span><span class="screw" style="right:8px;bottom:8px;--r:10deg"></span>
+
+      <div class="brand">
+        <span class="name">Artisan Technology</span>
+        <span class="model"><b>AT-22 CENTERPIECE</b><span>4 × 1 Portfolio Mixer</span></span>
+        <span class="badge">±24V<small>CUSTOM RAILS</small></span>
+      </div>
+
+      <!-- LEFT: rotaries + strips -->
+      <div class="left">
+        <div class="box">
+          <div class="knobs" id="knobs"></div>
+        </div>
+        <p class="lbl boxlbl">Aux inputs · software · hardware · systems</p>
+
+        <div class="strips" style="margin-top:14px">
+          <div class="strip" data-ch="0"><div class="btns"><button class="btn sel" aria-label="Select channel 1">SEL</button><button class="btn mute" aria-label="Mute channel 1">MUTE</button></div><div class="chname">1-2<small>COMPANY</small></div><div class="fader" role="slider" tabindex="0" aria-label="Company fader" aria-valuemin="0" aria-valuemax="100"><div class="slot"></div><div class="scale"></div><div class="cap"></div></div></div>
+          <div class="strip" data-ch="1"><div class="btns"><button class="btn sel" aria-label="Select channel 2">SEL</button><button class="btn mute" aria-label="Mute channel 2">MUTE</button></div><div class="chname">3-4<small>ENGINEER</small></div><div class="fader" role="slider" tabindex="0" aria-label="Engineer fader" aria-valuemin="0" aria-valuemax="100"><div class="slot"></div><div class="scale"></div><div class="cap"></div></div></div>
+          <div class="strip" data-ch="2"><div class="btns"><button class="btn sel" aria-label="Select channel 3">SEL</button><button class="btn mute" aria-label="Mute channel 3">MUTE</button></div><div class="chname">5-6<small>THE ARC</small></div><div class="fader" role="slider" tabindex="0" aria-label="Arc fader" aria-valuemin="0" aria-valuemax="100"><div class="slot"></div><div class="scale"></div><div class="cap"></div></div></div>
+          <div class="strip" data-ch="3"><div class="btns"><button class="btn sel" aria-label="Select channel 4">SEL</button><button class="btn mute" aria-label="Mute channel 4">MUTE</button></div><div class="chname">7-8<small>RECORD</small></div><div class="fader" role="slider" tabindex="0" aria-label="Record fader" aria-valuemin="0" aria-valuemax="100"><div class="slot"></div><div class="scale"></div><div class="cap"></div></div></div>
+          <span></span>
+          <div class="strip master" data-ch="m"><div class="btns"><button class="btn sel" aria-label="Show contact" id="mixbtn">MIX</button></div><div class="chname">MIX<small>CONTACT</small></div><div class="fader" role="slider" tabindex="0" aria-label="Master fader" aria-valuemin="0" aria-valuemax="100"><div class="slot"></div><div class="scale"></div><div class="cap"></div></div></div>
+        </div>
+        <div class="strips-lbl lbl"><span>Stereo input channels 1 – 8</span><span></span><span>Master</span></div>
+      </div>
+
+      <!-- RIGHT: meters, screen, monitor -->
+      <div class="right">
+        <div class="meters">
+          <div class="vu"><div class="glass"><svg viewBox="0 0 200 105" aria-hidden="true" class="vuface"></svg></div><span class="peak" id="pk0"></span></div>
+          <div class="vu"><div class="glass"><svg viewBox="0 0 200 105" aria-hidden="true" class="vuface"></svg></div><span class="peak" id="pk1"></span></div>
+        </div>
+
+        <div class="screen">
+          <div class="glass" id="glass" aria-live="polite">
+            <div class="head"><span id="chlabel">CH 1-2 · COMPANY</span><span id="dbv">0 dB</span></div>
+
+            <div class="ch" data-ch="0">
+              <div class="sig">
+                <h2>Artisan Technology</h2>
+                <p>Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+              </div>
+              <div class="muted">MUTED</div>
+            </div>
+
+            <div class="ch" data-ch="1">
+              <div class="sig eng">
+                <div class="ph"><img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore"></div>
+                <div>
+                  <h2>Lindsay Moore</h2>
+                  <p><b>Principal Engineer.</b> I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <span class="q">"what if we did it this way?"</span> and then building it.</p>
+                  <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+                </div>
+              </div>
+              <div class="muted">MUTED</div>
+            </div>
+
+            <div class="ch" data-ch="2">
+              <div class="sig">
+                <h2 id="arch">Idea</h2>
+                <div class="arcv" id="arcv"><div><b>Idea</b><small>−∞ to −15</small></div><div><b>Prototype</b><small>−15 to 0</small></div><div><b>Production</b><small>0 to +10</small></div></div>
+                <p>I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+              </div>
+              <div class="muted">MUTED</div>
+            </div>
+
+            <div class="ch" data-ch="3">
+              <div class="sig">
+                <h2>On the record</h2>
+                <ul class="recl" id="recl">
+                  <li><b>M.S. Computer Science</b>University of Chicago</li>
+                  <li><b>M.S. Informatics</b>University of Minnesota</li>
+                  <li><b>B. Production, Engineering &amp; Business</b>McNally Smith College</li>
+                  <li><b>Board, Pumping Station: One</b>Chicago's oldest and largest hackerspace</li>
+                  <li><b>Research, STAGE Center</b>Multidisciplinary technology and arts lab, UChicago</li>
+                  <li><b>Research, Chicago Virtual Production</b>Independent virtual production group</li>
+                </ul>
+              </div>
+              <div class="muted">MUTED</div>
+            </div>
+
+            <div class="ch cta" data-ch="m">
+              <div class="sig">
+                <h2>Let's build something together.</h2>
+                <p style="margin:18px 0 10px"><a href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a></p>
+                <p>Chicago, IL</p>
+              </div>
+            </div>
+
+            <p class="hint" id="hint">↕ push a fader</p>
+          </div>
+        </div>
+
+        <div class="monitor">
+          <div class="mon"><div class="knob"><div class="k" id="monk" tabindex="0" role="slider" aria-label="Monitor level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"></div></div><span class="lbl">Monitor</span></div>
+          <div class="transport" aria-label="Transport">
+            <button class="btn" data-go="-1" aria-label="Previous channel">⏮</button>
+            <button class="btn" id="play" aria-label="Auto-mix: sweep the faders">▶</button>
+            <button class="btn" id="stop" aria-label="Pull all faders down">■</button>
+            <button class="btn" data-go="1" aria-label="Next channel">⏭</button>
+            <button class="btn dim" id="dim">DIM</button>
+            <a class="btn talk" href="mailto:lindsay@artisan.technology">TALK</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cheek r" aria-hidden="true"></div>
+</div>
+<p class="below"><span>© Artisan Technology LLC · Chicago, IL</span><span>drag faders · arrow keys work too · SEL picks a channel · ▶ runs an auto-mix</span></p>
+
+<script>
+(() => {
+  const THUMB = location.search.includes('thumb');
+  const MARKS = [['+10', 0], ['+5', .1], ['0', .22], ['-5', .33], ['-10', .44], ['-15', .54], ['-30', .68], ['-40', .78], ['-50', .88], ['∞', 1]];
+  const toDb = l => { // level 0..1 (bottom..top) → dB label via the scale marks
+    const p = 1 - l;
+    for (let i = 0; i < MARKS.length - 1; i++) { const [a, pa] = MARKS[i], [b, pb] = MARKS[i + 1];
+      if (p <= pb) { if (b === '∞' && p > .95) return '−∞'; const va = parseFloat(a), vb = b === '∞' ? -70 : parseFloat(b); const v = va + (vb - va) * (p - pa) / (pb - pa); return (v > 0 ? '+' : '') + v.toFixed(0) + ' dB'; } }
+    return '−∞';
+  };
+
+  // scales
+  document.querySelectorAll('.fader .scale').forEach(s => s.innerHTML = MARKS.map(([t, p]) => `<span style="top:${p * 100}%"><em>${t}</em></span>`).join(''));
+
+  // rotaries
+  const kn = document.getElementById('knobs');
+  const knobNames = ['SW', 'HW', 'SYS', 'RIGOR', 'IMAG', 'CRAFT', 'CHI', '10+'];
+  kn.innerHTML = knobNames.map((n, i) => `<div class="knob"><span class="lbl" style="font-size:10px">${n}</span><div class="k" tabindex="0" role="slider" aria-label="${n} knob" style="--a:${-120 + i * 31 % 220}deg"></div></div>`).join('');
+  function spin(k, onChange) {
+    let a = parseFloat(getComputedStyle(k).getPropertyValue('--a')) || 0, sy;
+    const set = v => { a = Math.max(-140, Math.min(140, v)); k.style.setProperty('--a', a + 'deg'); onChange && onChange((a + 140) / 280); };
+    k.addEventListener('pointerdown', e => { sy = e.clientY; k.setPointerCapture(e.pointerId); });
+    k.addEventListener('pointermove', e => { if (sy == null) return; set(a + (sy - e.clientY) * 1.6); sy = e.clientY; });
+    k.addEventListener('pointerup', () => sy = null);
+    k.addEventListener('wheel', e => { e.preventDefault(); set(a - e.deltaY * .3); }, { passive: false });
+    k.addEventListener('keydown', e => { if (e.key === 'ArrowUp' || e.key === 'ArrowRight') set(a + 10); if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') set(a - 10); });
+    return set;
+  }
+  kn.querySelectorAll('.k').forEach(k => spin(k));
+
+  // VU faces
+  document.querySelectorAll('.vuface').forEach(svg => {
+    let ticks = '';
+    const lab = ['20', '10', '7', '5', '3', '2', '1', '0', '1', '2', '3'];
+    lab.forEach((t, i) => { const a = (-48 + i * 9.6) * Math.PI / 180, x1 = 100 + Math.sin(a) * 88, y1 = 118 - Math.cos(a) * 88, x2 = 100 + Math.sin(a) * 96, y2 = 118 - Math.cos(a) * 96, tx = 100 + Math.sin(a) * 76, ty = 118 - Math.cos(a) * 76;
+      const red = i >= 7; ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${red ? '#b01010' : '#2a2110'}" stroke-width="1.4"/><text x="${tx}" y="${ty + 3}" font-size="8" text-anchor="middle" fill="${red ? '#b01010' : '#2a2110'}" font-family="Barlow Semi Condensed">${t}</text>`; });
+    svg.innerHTML = `<path d="M${100 + Math.sin(-.84) * 92} ${118 - Math.cos(-.84) * 92} A92 92 0 0 1 ${100 + Math.sin(.84) * 92} ${118 - Math.cos(.84) * 92}" fill="none" stroke="#2a2110" stroke-width="1"/>
+      <path d="M${100 + Math.sin(.33) * 92} ${118 - Math.cos(.33) * 92} A92 92 0 0 1 ${100 + Math.sin(.84) * 92} ${118 - Math.cos(.84) * 92}" fill="none" stroke="#b01010" stroke-width="4"/>
+      ${ticks}<text x="16" y="24" font-size="13" font-weight="600" fill="#2a2110" font-family="Barlow Semi Condensed">VU</text>
+      <text x="100" y="96" font-size="6" text-anchor="middle" fill="#6b5a28" font-family="Barlow Semi Condensed" letter-spacing="1">ARTISAN TECHNOLOGY</text>
+      <line class="needle" x1="100" y1="118" x2="100" y2="22" stroke="#111" stroke-width="1.3"/>`;
+  });
+  const needles = [...document.querySelectorAll('.needle')], peaks = [document.getElementById('pk0'), document.getElementById('pk1')];
+
+  // state
+  const strips = [...document.querySelectorAll('.strip')];
+  const chans = [...document.querySelectorAll('.ch')];
+  const level = { 0: .78, 1: .2, 2: .2, 3: .2, m: .82 };
+  const muted = { 0: false, 1: false, 2: false, 3: false };
+  let active = '0', monitor = .8;
+
+  const label = document.getElementById('chlabel'), dbv = document.getElementById('dbv'), hint = document.getElementById('hint'), glass = document.getElementById('glass');
+  const NAMES = { 0: 'CH 1-2 · COMPANY', 1: 'CH 3-4 · ENGINEER', 2: 'CH 5-6 · THE ARC', 3: 'CH 7-8 · RECORD', m: 'MASTER · CONTACT' };
+
+  function render() {
+    strips.forEach(s => {
+      const c = s.dataset.ch, f = s.querySelector('.fader');
+      f.style.setProperty('--y', (4 + (1 - level[c]) * 92) + '%');
+      f.querySelector('.cap').style.top = (4 + (1 - level[c]) * 92) + '%';
+      f.setAttribute('aria-valuenow', Math.round(level[c] * 100)); f.setAttribute('aria-valuetext', toDb(level[c]));
+      s.querySelector('.sel').classList.toggle('on', c === active);
+      const m = s.querySelector('.mute'); if (m) m.classList.toggle('on', muted[c]);
+    });
+    chans.forEach(ch => {
+      const c = ch.dataset.ch, on = c === active; ch.classList.toggle('show', on);
+      const lv = c === 'm' ? level.m : level[c];
+      ch.style.setProperty('--lv', Math.max(.05, lv).toFixed(3));
+      ch.style.setProperty('--w', Math.round(150 + lv * 750));
+      ch.classList.toggle('is-muted', !!muted[c]);
+    });
+    // channel-specific visuals
+    const arcLv = level[2], stage = arcLv < .46 ? 0 : arcLv < .78 ? 1 : 2;
+    document.querySelectorAll('#arcv div').forEach((d, i) => d.classList.toggle('on', i <= stage));
+    document.getElementById('arch').textContent = ['Idea', 'Prototype', 'Production'][stage];
+    const items = [...document.querySelectorAll('#recl li')], shown = Math.ceil(level[3] * items.length);
+    items.forEach((li, i) => li.classList.toggle('off', i >= Math.max(1, shown)));
+    label.textContent = NAMES[active]; dbv.textContent = muted[active] ? 'MUTE' : toDb(level[active]);
+    glass.style.setProperty('--bright', (.35 + .65 * Math.min(1, level.m * 1.15) * (.55 + monitor * .45)).toFixed(3));
+  }
+
+  // faders
+  strips.forEach(s => {
+    const c = s.dataset.ch, f = s.querySelector('.fader');
+    const fromY = e => { const r = f.getBoundingClientRect(); return Math.max(0, Math.min(1, 1 - ((e.clientY - r.top) / r.height - .04) / .92)); };
+    f.addEventListener('pointerdown', e => { f.setPointerCapture(e.pointerId); f.classList.add('dragging'); active = c; level[c] = fromY(e); hint.style.opacity = 0; render(); });
+    f.addEventListener('pointermove', e => { if (!f.classList.contains('dragging')) return; level[c] = fromY(e); render(); });
+    const end = () => f.classList.remove('dragging'); f.addEventListener('pointerup', end); f.addEventListener('pointercancel', end);
+    f.addEventListener('wheel', e => { e.preventDefault(); active = c; level[c] = Math.max(0, Math.min(1, level[c] - e.deltaY * .0015)); render(); }, { passive: false });
+    f.addEventListener('keydown', e => { const step = e.shiftKey ? .1 : .03; if (['ArrowUp', 'ArrowRight'].includes(e.key)) level[c] = Math.min(1, level[c] + step); else if (['ArrowDown', 'ArrowLeft'].includes(e.key)) level[c] = Math.max(0, level[c] - step); else return; e.preventDefault(); active = c; render(); });
+    f.addEventListener('focus', () => { active = c; render(); });
+    s.querySelector('.sel').addEventListener('click', () => { active = c; render(); });
+    const m = s.querySelector('.mute'); if (m) m.addEventListener('click', () => { muted[c] = !muted[c]; active = c; render(); });
+  });
+
+  // monitor knob dims the whole screen
+  const monk = document.getElementById('monk'); monk.style.setProperty('--a', '84deg');
+  spin(monk, v => { monitor = v; monk.setAttribute('aria-valuenow', Math.round(v * 100)); render(); });
+  document.getElementById('dim').addEventListener('click', e => { e.currentTarget.classList.toggle('mute'); e.currentTarget.classList.toggle('on'); monitor = e.currentTarget.classList.contains('on') ? .1 : .8; render(); });
+
+  // transport
+  const order = ['0', '1', '2', '3', 'm'];
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => { active = order[(order.indexOf(active) + +b.dataset.go + order.length) % order.length]; render(); }));
+  let auto = null;
+  document.getElementById('play').addEventListener('click', () => {
+    if (auto) { cancelAnimationFrame(auto); auto = null; return; }
+    const t0 = performance.now();
+    (function step(now) {
+      const t = (now - t0) / 1000, i = Math.floor(t / 3.2) % 5, k = (t % 3.2) / 3.2;
+      active = order[i]; const c = active; level[c] = Math.min(1, .15 + Math.sin(k * Math.PI) * .95);
+      render(); auto = requestAnimationFrame(step);
+    })(t0);
+  });
+  document.getElementById('stop').addEventListener('click', () => { if (auto) { cancelAnimationFrame(auto); auto = null; } order.forEach(c => level[c] = c === 'm' ? .82 : .05); render(); });
+
+  // VU ballistics: left = active channel, right = master
+  const vu = [0, 0];
+  (function meter(now) {
+    const t = now / 1000, lvA = muted[active] ? 0 : level[active], lvM = level.m;
+    const tgt = [lvA * (.82 + .18 * Math.sin(t * 9) * Math.sin(t * 3.1)), lvM * (.8 + .2 * Math.sin(t * 7.3 + 1) * Math.sin(t * 2.3))];
+    for (let i = 0; i < 2; i++) { vu[i] += (tgt[i] - vu[i]) * .18; needles[i].style.transform = `rotate(${-48 + vu[i] * 96}deg)`; peaks[i].classList.toggle('on', vu[i] > .9); }
+    requestAnimationFrame(meter);
+  })(0);
+
+  render();
+  if (THUMB) { hint.style.opacity = 0; }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600&family=Libre+Caslon+Text:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0f0e0d;
+    --paper: #efe6d2;
+    --ink: #1a1714;
+    --dim: #a59c8b;
+    --rust: #c9532e;
+    --black: "Archivo Black", "Arial Black", sans-serif;
+    --sans: "Archivo", "Helvetica Neue", sans-serif;
+    --serif: "Libre Caslon Text", Georgia, serif;
+    --g: clamp(16px, 4vw, 64px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--night); }
+  body { background: var(--night); color: var(--paper); font-family: var(--sans); font-size: clamp(16px, 1.2vw, 19px); line-height: 1.55; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--rust); color: var(--paper); }
+  a { color: inherit; }
+  .caps { font-family: var(--sans); font-weight: 600; text-transform: uppercase; letter-spacing: .18em; font-size: 12px; }
+
+  /* old print: halftone grain + fold creases + worn edges over everything */
+  .print { position: fixed; inset: 0; z-index: 60; pointer-events: none; mix-blend-mode: multiply; opacity: .5;
+    background:
+      linear-gradient(90deg, transparent 49.85%, rgba(0,0,0,.25) 50%, rgba(255,255,255,.06) 50.15%, transparent 50.4%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' seed='5'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .36  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"); }
+
+  /* a cut-out: paper shadow, slightly lifted */
+  .cut { position: absolute; display: block; filter: drop-shadow(4px 7px 6px rgba(0,0,0,.45)) sepia(.12) contrast(1.04); will-change: transform; }
+  .float { animation: float 9s ease-in-out infinite alternate; }
+  @keyframes float { to { translate: 0 -14px; rotate: 1.5deg; } }
+
+  /* ================= HERO: the surreal plate ================= */
+  .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; background: var(--night); }
+  .plate { position: absolute; inset: clamp(14px, 2vw, 28px); overflow: hidden; background: #050505 url("../img/v18/stars.jpg") center / cover; box-shadow: inset 0 0 0 1px rgba(239,230,210,.12); }
+  .plate::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 45%, transparent 50%, rgba(0,0,0,.6)); pointer-events: none; z-index: 20; }
+  .p-moon   { width: min(17vw, 26vh); right: 7%; top: 6%; z-index: 1; }
+  .p-saturn { width: min(34vw, 50vh); left: -6%; top: 14%; z-index: 1; rotate: -14deg; }
+  .p-mount  { width: 112%; left: -6%; bottom: -14%; z-index: 3; }
+  .p-apple  { width: min(36vw, 58vh); left: 52%; bottom: 11%; translate: -46% 0; z-index: 5; }
+  .p-eye    { width: min(15vw, 24vh); left: 56%; top: 6%; translate: -60% 0; z-index: 4; }
+  .p-astro  { width: min(22vw, 34vh); right: 4%; bottom: 30%; z-index: 6; rotate: 18deg; }
+  .p-lady   { height: min(40vh, 28vw); left: 26%; bottom: 6%; z-index: 7; rotate: -3deg; }
+  .title { position: absolute; z-index: 25; left: clamp(40px, 5vw, 80px); top: clamp(40px, 6vh, 70px); pointer-events: none; }
+  .title h1 { font-family: var(--black); font-weight: 400; text-transform: uppercase; color: var(--ink); font-size: clamp(34px, 5.6vw, 100px); line-height: .9; letter-spacing: -.01em; }
+  .title h1 span { display: table; background: var(--paper); padding: .06em .18em .02em; box-shadow: 4px 6px 8px rgba(0,0,0,.45); }
+  .title h1 span:first-child { transform: rotate(-3deg); }
+  .title h1 span:last-child { transform: rotate(1.5deg) translateX(.5em); margin-top: .1em; background: var(--rust); color: var(--paper); }
+  .ticket { position: absolute; z-index: 26; left: clamp(26px, 3.4vw, 50px); bottom: clamp(26px, 3.4vw, 50px); background: var(--paper); color: var(--ink); padding: 8px 12px 7px; transform: rotate(-3deg); box-shadow: 3px 4px 0 rgba(0,0,0,.4); max-width: 280px; }
+  .ticket b { display: block; font-family: var(--black); font-weight: 400; font-size: 15px; text-transform: uppercase; letter-spacing: .02em; }
+  .ticket span { font-family: var(--serif); font-style: italic; font-size: 14px; }
+  .credit { position: absolute; z-index: 26; right: clamp(26px, 3.4vw, 50px); bottom: clamp(26px, 3.4vw, 50px); text-align: right; color: var(--ink); background: var(--paper); padding: 8px 12px; transform: rotate(2deg); box-shadow: 3px 4px 0 rgba(0,0,0,.4); }
+  @media (max-aspect-ratio: 4/5) {
+    .p-apple { width: 70vw; bottom: 16%; }
+    .p-eye { width: 28vw; top: 9%; }
+    .p-moon { width: 30vw; top: 4%; right: 2%; }
+    .p-saturn { width: 62vw; top: 26%; left: -22%; }
+    .p-astro { width: 40vw; bottom: 46%; right: -6%; }
+    .p-lady { height: 20vh; left: 4%; bottom: 5%; }
+    .p-mount { width: 220%; left: -60%; }
+    .title { top: 40%; left: 24px; }
+    .credit { display: none; }
+    .ticket { max-width: 210px; }
+  }
+
+  /* ================= SPREADS ================= */
+  section { position: relative; padding: clamp(80px, 11vw, 160px) var(--g); }
+  .label { color: var(--rust); margin-bottom: 18px; display: block; }
+  h2 { font-family: var(--black); font-weight: 400; text-transform: uppercase; font-size: clamp(40px, 6vw, 100px); line-height: .9; letter-spacing: -.01em; }
+  .serif { font-family: var(--serif); }
+
+  .spread { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 6vw, 100px); align-items: center; }
+  .stage { position: relative; aspect-ratio: 1; }
+  @media (max-width: 860px) { .spread { grid-template-columns: 1fr; } .stage { max-width: 520px; width: 100%; justify-self: center; } }
+
+  .s1 { background: var(--paper); color: var(--ink); }
+  .s1 .stage .bg { position: absolute; inset: 8% 6% 14% 10%; background: url("../img/v18/canyon.jpg") 50% 60% / cover; box-shadow: 4px 6px 10px rgba(0,0,0,.3); clip-path: polygon(0 3%, 97% 0, 100% 96%, 2% 100%); }
+  .s1 .c-earth { width: 46%; left: 30%; top: 0; z-index: 2; }
+  .s1 .c-ibm { width: 48%; left: 4%; bottom: 0; z-index: 3; rotate: -5deg; }
+  .s1 .c-hand { width: 30%; right: 0; bottom: 10%; z-index: 4; rotate: 8deg; }
+  .s1 p.big { font-family: var(--serif); font-size: clamp(24px, 2.6vw, 40px); line-height: 1.25; margin-top: 26px; }
+  .s1 p.big em { color: var(--rust); }
+  .s1 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .s1 .tags span { border: 2px solid var(--ink); padding: 6px 12px 5px; font-family: var(--black); font-size: 14px; text-transform: uppercase; }
+
+  .s2 .stage .mag { position: absolute; width: 56%; box-shadow: 6px 10px 18px rgba(0,0,0,.55); }
+  .s2 .m1 { left: 0; top: 4%; rotate: -8deg; }
+  .s2 .m2 { right: 0; top: 18%; rotate: 6deg; }
+  .s2 .portrait { position: absolute; z-index: 3; width: 52%; left: 24%; top: 22%; aspect-ratio: 4/5; overflow: hidden; border-radius: 50% 50% 46% 46%; box-shadow: 6px 10px 18px rgba(0,0,0,.6); outline: 8px solid var(--paper); }
+  .s2 .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; filter: sepia(.35) saturate(.85) contrast(1.05); }
+  .s2 .c-moon2 { width: 26%; right: 6%; bottom: 2%; z-index: 4; }
+  .s2 .lead { font-family: var(--serif); font-size: clamp(22px, 2.1vw, 32px); line-height: 1.35; margin: 22px 0 16px; }
+  .s2 .lead em { color: var(--rust); }
+  .s2 .role { color: var(--dim); }
+
+  .s3 { background: var(--paper); color: var(--ink); overflow: hidden; }
+  .s3 h2 { text-align: center; }
+  .orbit { position: relative; height: clamp(360px, 46vw, 620px); margin-top: 30px; }
+  .orbit .c { text-align: center; position: absolute; width: 30%; }
+  .orbit .c img { width: 100%; filter: drop-shadow(4px 7px 6px rgba(0,0,0,.4)); }
+  .orbit .c b { display: block; font-family: var(--black); font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 3vw, 46px); line-height: .9; margin-top: 8px; }
+  .orbit .c i { font-family: var(--serif); }
+  .orbit .o1 { left: 2%; top: 30%; } .orbit .o1 img { width: 70%; }
+  .orbit .o2 { left: 35%; top: 4%; } .orbit .o2 img { width: 80%; }
+  .orbit .o3 { right: 2%; top: 26%; }
+  .orbit svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .s3 .note { max-width: 44ch; margin: 30px auto 0; text-align: center; font-family: var(--serif); font-size: clamp(18px, 1.5vw, 22px); }
+  @media (max-width: 760px) { .orbit { height: auto; display: grid; gap: 30px; } .orbit .c { position: static; width: 70%; justify-self: center; } .orbit svg { display: none; } }
+
+  .s4 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 6vw, 90px); margin-top: 40px; }
+  .s4 h3 { font-family: var(--black); font-weight: 400; text-transform: uppercase; font-size: clamp(22px, 2vw, 30px); margin-bottom: 14px; color: var(--rust); }
+  .s4 li { list-style: none; padding: 14px 0; border-top: 1px solid rgba(239,230,210,.18); }
+  .s4 li b { display: block; font-weight: 600; font-size: 1.05em; }
+  .s4 li span { font-family: var(--serif); font-style: italic; color: var(--dim); }
+  @media (max-width: 760px) { .s4 .cols { grid-template-columns: 1fr; } }
+
+  .s5 { position: relative; min-height: 90vh; display: grid; place-items: center; text-align: center; overflow: hidden; background: #050505 url("../img/v18/stars.jpg") center / cover; }
+  .s5::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,5,5,.55), rgba(5,5,5,.15) 70%); }
+  .s5 .inner { position: relative; z-index: 3; }
+  .s5 h2 { font-size: clamp(50px, 9vw, 160px); }
+  .s5 .c-earth2 { width: min(40vw, 520px); left: 50%; bottom: -26%; translate: -50% 0; z-index: 1; }
+  .s5 .c-astro2 { width: min(18vw, 220px); left: 8%; top: 14%; z-index: 2; rotate: -24deg; }
+  .s5 .c-sat2 { width: min(24vw, 320px); right: 4%; top: 10%; z-index: 2; rotate: 12deg; }
+  .s5 a.mail { display: inline-block; margin-top: 40px; background: var(--paper); color: var(--ink); padding: 12px 22px 11px; font-family: var(--black); font-size: clamp(16px, 1.8vw, 24px); text-transform: uppercase; text-decoration: none; transform: rotate(-2deg); box-shadow: 4px 5px 0 var(--rust); transition: transform .2s; }
+  .s5 a.mail:hover { transform: rotate(1deg) scale(1.04); }
+  .s5 .where { margin-top: 18px; color: var(--dim); }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 18px var(--g) 26px; color: var(--dim); font-size: 13px; }
+  footer a { text-underline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) { .float { animation: none; } }
+</style>
+</head>
+<body>
+<div class="print" aria-hidden="true"></div>
+
+<header class="hero" id="hero">
+  <div class="plate" role="img" aria-label="A surreal collage: an Apple II computer showing the Earth on its screen, set in an Alpine valley under a starry sky, with a giant eye, the Moon, Saturn, a floating astronaut and a woman in Victorian dress">
+    <img class="cut p-saturn float" data-depth="0.25" src="../img/v18/saturn.png" alt="">
+    <img class="cut p-moon float" data-depth="0.2" style="animation-delay:-3s" src="../img/v18/moon.png" alt="">
+    <img class="cut p-mount" data-depth="0.08" src="../img/v18/mountains.png" alt="">
+    <img class="cut p-eye float" data-depth="0.3" style="animation-delay:-5s" src="../img/v18/eye.png" alt="">
+    <img class="cut p-apple" data-depth="0.15" src="../img/v18/apple2.png" alt="">
+    <img class="cut p-astro float" data-depth="0.45" style="animation-delay:-2s" src="../img/v18/astronaut.png" alt="">
+    <img class="cut p-lady" data-depth="0.12" src="../img/v18/engraving.png" alt="">
+  </div>
+  <div class="title"><h1><span>Artisan</span><span>Technology</span></h1></div>
+  <p class="credit caps">Custom software<br>&amp; hardware<br>Chicago, IL</p>
+  <div class="ticket"><b>Lindsay Moore, Principal Engineer</b><span>for problems that don't fit off the shelf.</span></div>
+</header>
+
+<main>
+  <section class="s1">
+    <div class="spread">
+      <div class="stage">
+        <div class="bg" aria-hidden="true"></div>
+        <img class="cut c-earth float" src="../img/v18/earth.png" alt="" aria-hidden="true">
+        <img class="cut c-ibm" src="../img/v18/ibmpc.png" alt="An early personal computer, cut out and set at the rim of a canyon under a giant Earth">
+        <img class="cut c-hand float" style="animation-delay:-4s" src="../img/v18/astronaut.png" alt="" aria-hidden="true">
+      </div>
+      <div>
+        <span class="label caps">Plate I — the practice</span>
+        <h2>Nothing on the shelf fits.</h2>
+        <p class="big">Artisan Technology LLC designs and builds custom software and hardware to solve problems that <em>don't fit off-the-shelf solutions.</em></p>
+        <div class="tags"><span>Software</span><span>Hardware</span><span>Systems</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s2">
+    <div class="spread">
+      <div>
+        <span class="label caps">Plate II — the engineer</span>
+        <h2>Lindsay Moore</h2>
+        <p class="role caps" style="margin-top:12px">Principal Engineer · 10+ years</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <em>"what if we did it this way?"</em> and then building it.</p>
+        <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
+      <div class="stage">
+        <img class="mag m1" src="../img/v18/pm-1928-03.jpg" alt="Popular Mechanics magazine cover, March 1928">
+        <img class="mag m2" src="../img/v18/pm-1928-12.jpg" alt="Popular Mechanics magazine cover, December 1928">
+        <div class="portrait"><img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore"></div>
+        <img class="cut c-moon2 float" src="../img/v18/moon.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
+  <section class="s3">
+    <span class="label caps" style="text-align:center">Plate III — the full arc</span>
+    <h2>Idea » Prototype » Production</h2>
+    <div class="orbit">
+      <svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true"><path d="M150 260 C260 60 400 40 500 120 S760 300 860 220" fill="none" stroke="#1a1714" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round"/></svg>
+      <div class="c o1"><img src="../img/v18/eye.png" alt=""><b>Idea</b><i>see it first</i></div>
+      <div class="c o2"><img src="../img/v18/apple2.png" alt=""><b>Prototype</b><i>build it to find out</i></div>
+      <div class="c o3"><img src="../img/v18/saturn.png" alt=""><b>Production</b><i>launch it, together</i></div>
+    </div>
+    <p class="note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+  </section>
+
+  <section class="s4">
+    <span class="label caps">Plate IV — field notes</span>
+    <h2>Where it all came from.</h2>
+    <div class="cols">
+      <div>
+        <h3>Education</h3>
+        <ul>
+          <li><b>Master's, Computer Science</b><span>University of Chicago</span></li>
+          <li><b>Master's, Informatics</b><span>University of Minnesota</span></li>
+          <li><b>Bachelor's, Production, Engineering &amp; Business</b><span>McNally Smith College</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Community &amp; research</h3>
+        <ul>
+          <li><b>Board, Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></li>
+          <li><b>Research, STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></li>
+          <li><b>Research, Chicago Virtual Production</b><span>An independent virtual production group</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="s5" id="contact">
+    <img class="cut c-earth2" src="../img/v18/earth.png" alt="" aria-hidden="true">
+    <img class="cut c-astro2 float" src="../img/v18/astronaut.png" alt="" aria-hidden="true">
+    <img class="cut c-sat2 float" style="animation-delay:-4s" src="../img/v18/saturn.png" alt="" aria-hidden="true">
+    <div class="inner">
+      <span class="label caps">Plate V</span>
+      <h2>Let's build something together.</h2>
+      <a class="mail" href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+      <p class="where caps">Chicago, IL</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© Artisan Technology LLC</span>
+  <span>Collage from public-domain sources: NASA, Library of Congress / Detroit Publishing Co., Popular Mechanics (1928), Wikimedia Commons.</span>
+</footer>
+
+<script>
+  // gentle parallax: each cut-out drifts by its own depth as the pointer moves
+  (() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(pointer: coarse)').matches) return;
+    const els = [...document.querySelectorAll('.hero [data-depth]')];
+    let tx = 0, ty = 0, x = 0, y = 0;
+    addEventListener('pointermove', e => { tx = e.clientX / innerWidth - .5; ty = e.clientY / innerHeight - .5; });
+    (function loop() {
+      x += (tx - x) * .06; y += (ty - y) * .06;
+      els.forEach(el => { const d = +el.dataset.depth; el.style.transform = `translate(${-x * d * 120}px, ${-y * d * 80}px)`; });
+      requestAnimationFrame(loop);
+    })();
+  })();
+</script>
+</body>
+</html>

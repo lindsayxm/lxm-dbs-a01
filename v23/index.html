@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARTISAN // 2049</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --red: #ff1f1f; --black: #0a0000; --blue: #2b6bff; --ice: #9fc2ff; --sans: "Space Grotesk", "Helvetica Neue", sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--red); overflow: hidden; }
+  body { color: var(--black); font-family: var(--mono); -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--blue); color: #fff; }
+  #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .ui { position: fixed; inset: 0; pointer-events: none; padding: clamp(14px, 2.4vw, 30px); display: grid; grid-template-rows: auto 1fr auto; }
+  .row { display: flex; justify-content: space-between; align-items: start; gap: 16px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .row > span, .bottom p { background: var(--red); padding: 3px 6px; }
+  .row > .lights { background: none; padding: 0; }
+  .mark { font-family: var(--sans); font-weight: 700; font-size: clamp(14px, 1.4vw, 18px); letter-spacing: -.01em; text-transform: none; }
+  .blue { color: var(--blue); }
+  .lights { display: flex; gap: 6px; }
+  .lights i { width: 9px; height: 9px; background: var(--blue); box-shadow: 0 0 10px var(--blue); animation: fl 1.3s steps(1) infinite; }
+  .lights i:nth-child(2) { animation-delay: -.4s; } .lights i:nth-child(3) { animation-delay: -.9s; } .lights i:nth-child(4) { animation-delay: -.2s; }
+  @keyframes fl { 0%, 40% { opacity: 1; } 41%, 55% { opacity: .15; } 56% { opacity: 1; } 80% { opacity: .4; } }
+  h1 { align-self: end; font-family: var(--sans); font-weight: 700; font-size: clamp(56px, 13vw, 240px); line-height: .82; letter-spacing: -.06em; text-transform: uppercase; mix-blend-mode: multiply; }
+  h1 { mix-blend-mode: normal; }
+  h1 span { display: table; background: var(--red); padding: .04em .06em 0; }
+  h1 .b { color: var(--blue); background: var(--black); }
+  .bottom { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; margin-top: clamp(14px, 2vw, 24px); }
+  .bottom p { font-size: clamp(13px, 1.1vw, 16px); max-width: 44ch; text-transform: none; letter-spacing: 0; }
+  .cta { pointer-events: auto; display: inline-flex; align-items: center; gap: 14px; background: var(--black); color: var(--red); text-decoration: none; font-family: var(--mono); font-weight: 700; font-size: clamp(14px, 1.3vw, 18px); padding: 14px 20px; letter-spacing: .02em; transition: background .1s, color .1s; }
+  .cta i { width: 10px; height: 10px; background: var(--blue); box-shadow: 0 0 10px var(--blue); animation: fl 1s steps(1) infinite; }
+  .cta:hover { background: var(--blue); color: #fff; }
+  .cta:hover i { background: #fff; }
+  .cta:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  #log { position: fixed; pointer-events: none; font-size: 12px; line-height: 1.35; color: var(--red); background: rgba(10,0,0,.85); padding: 6px 8px; white-space: pre; }
+  #log:empty { display: none; }
+  #log b { background: var(--blue); color: #fff; font-weight: 400; padding: 0 3px; }
+  @media (max-width: 640px) { .bottom { grid-template-columns: 1fr; } .row .hide { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .lights i, .cta i { animation: none; } }
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<pre id="log" aria-hidden="true"></pre>
+<div class="ui">
+  <div class="row">
+    <span class="mark">Artisan Technology</span>
+    <span class="hide">node: chicago_il // 41.88N 87.63W</span>
+    <span class="lights" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </div>
+  <h1><span>Built,</span><span class="b">not bought.</span></h1>
+  <div class="bottom row">
+    <p>Custom software &amp; hardware for problems that don't fit off-the-shelf solutions. — Lindsay Moore, Principal Engineer</p>
+    <a class="cta" href="mailto:lindsay@artisan.technology"><i></i>lindsay@artisan.technology →</a>
+  </div>
+</div>
+
+<script>
+(() => {
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const THUMB = location.search.includes('thumb');
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  const off = document.createElement('canvas'), oc = off.getContext('2d', { willReadFrequently: true });
+  const log = document.getElementById('log');
+
+  // frames: src, focus point (fraction) for the blue pixel block, block size
+  const FRAMES = [
+    { src: '../img/lindsay.jpg', fx: .5, fy: .36, fw: .46, fh: .1, pos: [.5, .3] },
+    { src: '../img/artisan-technology.jpg', fx: .45, fy: .2, fw: .3, fh: .3, pos: [.42, .4] },
+    { src: '../img/lindsay-v2.jpg', fx: .5, fy: .13, fw: .2, fh: .06, pos: [.5, .25] },
+    { src: '../img/esp32-cutout.png', fx: .66, fy: .38, fw: .26, fh: .26, pos: [.5, .5] },
+    { src: '../img/v18/eye.png', fx: .38, fy: .45, fw: .3, fh: .3, pos: [.5, .5] },
+    { src: '../img/v18/apple2.png', fx: .5, fy: .26, fw: .44, fh: .34, pos: [.5, .45] },
+    { src: '../img/v18/earth.png', fx: .55, fy: .5, fw: .4, fh: .2, pos: [.5, .5] },
+  ];
+  const imgs = FRAMES.map(f => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = f.src; }));
+
+  let W, H, dpr, PX;
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.imageSmoothingEnabled = false;
+    PX = Math.max(4, Math.round(Math.min(W, H) / 110));   // base pixel
+    off.width = Math.ceil(W / PX); off.height = Math.ceil(H / PX);
+  }
+  size(); addEventListener('resize', size);
+
+  // cover-fit an image into the low-res buffer, then threshold to red/black with blue in the focus block
+  function render(img, f, opts) {
+    const w = off.width, h = off.height;
+    oc.fillStyle = '#fff'; oc.fillRect(0, 0, w, h);
+    const s = Math.max(w / img.naturalWidth, h / img.naturalHeight) * (opts.zoom || 1);
+    const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+    const ox = (w - dw) * f.pos[0] + (opts.jx || 0), oy = (h - dh) * f.pos[1];
+    oc.drawImage(img, ox, oy, dw, dh);
+    const d = oc.getImageData(0, 0, w, h), p = d.data;
+    // focus rect in buffer px
+    const fx0 = ox + dw * (f.fx - f.fw / 2), fx1 = ox + dw * (f.fx + f.fw / 2), fy0 = oy + dh * (f.fy - f.fh / 2), fy1 = oy + dh * (f.fy + f.fh / 2);
+    const thr = opts.thr;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const i = (y * w + x) * 4, L = (p[i] * .3 + p[i + 1] * .59 + p[i + 2] * .11) / 255;
+      const dither = ((x * 7 + y * 13) % 8) / 8 * .14 - .07;
+      const dark = L + dither < thr;
+      const inF = x >= fx0 && x <= fx1 && y >= fy0 && y <= fy1;
+      if (inF) { p[i] = dark ? 18 : 43; p[i + 1] = dark ? 40 : 107; p[i + 2] = dark ? 140 : 255; }
+      else { p[i] = dark ? 10 : 255; p[i + 1] = dark ? 0 : 31; p[i + 2] = dark ? 0 : 31; }
+    }
+    oc.putImageData(d, 0, 0);
+    return [fx0, fy0, fx1, fy1];
+  }
+
+  // coarse pixelation patches: re-draw small regions at a much bigger pixel size
+  function patches(n) {
+    for (let k = 0; k < n; k++) {
+      const bw = (2 + Math.random() * 10) | 0, bh = (1 + Math.random() * 6) | 0;
+      const x = (Math.random() * (off.width - bw)) | 0, y = (Math.random() * (off.height - bh)) | 0, s = 3 + (Math.random() * 4 | 0);
+      const c = oc.getImageData(x + (bw >> 1), y + (bh >> 1), 1, 1).data;
+      oc.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`;
+      for (let yy = y; yy < y + bh * s / 2; yy += s) for (let xx = x; xx < x + bw * s / 2; xx += s) if (Math.random() < .7) oc.fillRect(xx, yy, s, s);
+    }
+  }
+
+  const LINES = ['> scan --shelf', '  0 matches', '> build --custom', '  compiling software', '  routing hardware', '  linking systems', '> idea >> prototype >> production', '> operator: l.moore', '> rigor=1.0 imagination=1.0', '> handshake chicago_il', '> status: READY_', '> diff shelf/ problem/', '  CONFLICT: does not fit', '> fork --artisan', '> flash firmware.bin', '  ████████████ 100%'];
+  function flashLog(f) {
+    if (Math.random() < .55) { log.textContent = ''; return; }
+    const n = 2 + (Math.random() * 4 | 0), s = (Math.random() * LINES.length) | 0;
+    let out = ''; for (let i = 0; i < n; i++) { const L = LINES[(s + i) % LINES.length]; out += (Math.random() < .2 ? `<b>${L}</b>` : L) + '\n'; }
+    log.innerHTML = out;
+    log.style.left = (6 + Math.random() * 60) + 'vw'; log.style.top = (10 + Math.random() * 40) + 'vh';
+  }
+
+  Promise.all(imgs).then(list => {
+    const ok = FRAMES.map((f, i) => [f, list[i]]).filter(x => x[1]);
+    let idx = 0, next = 0, hold = 0, burst = 0;
+    function draw(now) {
+      if (now >= next) {
+        // rhythm: rapid bursts of swaps, then a longer hold
+        if (burst > 0) { burst--; next = now + 70 + Math.random() * 90; idx = (idx + 1 + (Math.random() * 2 | 0)) % ok.length; }
+        else { burst = 4 + (Math.random() * 6 | 0); next = now + 900 + Math.random() * 900; }
+        const [f, img] = ok[idx];
+        const r = render(img, f, { thr: .42 + Math.random() * .12, zoom: 1 + (burst > 0 ? Math.random() * .25 : 0), jx: burst > 0 ? (Math.random() - .5) * 6 : 0 });
+        patches(burst > 0 ? 18 : 6);
+        flashLog();
+        ctx.clearRect(0, 0, W, H);
+        ctx.drawImage(off, 0, 0, off.width * PX, off.height * PX);
+        // scanline + occasional tear
+        if (burst > 0 && Math.random() < .5) { const y = Math.random() * H, h = 8 + Math.random() * 40; ctx.drawImage(cv, 0, y * dpr, W * dpr, h * dpr, (Math.random() - .5) * 60, y, W, h); }
+      }
+      if (!THUMB && !REDUCE) requestAnimationFrame(draw);
+    }
+    if (THUMB || REDUCE) { idx = 0; next = 0; burst = 0; draw(0); log.innerHTML = '> scan --shelf\n  0 matches\n<b>> build --custom</b>\n'; log.style.left = '58vw'; log.style.top = '18vh'; }
+    else requestAnimationFrame(draw);
+  });
+})();
+</script>
+</body>
+</html>

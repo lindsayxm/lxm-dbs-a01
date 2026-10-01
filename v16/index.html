@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf2e2;
+    --ink: #121212;
+    --lilac: #c4b0ff;
+    --yellow: #ffe066;
+    --coral: #ff7a59;
+    --sky: #86c8ff;
+    --mint: #7fe0b6;
+    --pink: #ff9bd4;
+    --white: #fffdf7;
+    --display: "Bricolage Grotesque", "Arial Black", sans-serif;
+    --mono: "Space Mono", ui-monospace, monospace;
+    --b: 3px solid var(--ink);
+    --sh: 6px 6px 0 var(--ink);
+    --g: clamp(16px, 3.5vw, 56px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); }
+  body {
+    color: var(--ink); font-family: var(--display); font-weight: 500; font-size: clamp(17px, 1.25vw, 20px); line-height: 1.45; overflow-x: hidden;
+    background: var(--bg);
+    background-image: linear-gradient(rgba(18,18,18,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,18,.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  ::selection { background: var(--yellow); color: var(--ink); }
+  a { color: inherit; }
+  .mono { font-family: var(--mono); font-size: 13px; letter-spacing: .02em; }
+
+  /* ---------- the kit ---------- */
+  .win { background: var(--white); border: var(--b); border-radius: 12px; box-shadow: var(--sh); overflow: hidden; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 10px; border-bottom: var(--b); background: var(--yellow); font-family: var(--mono); font-weight: 700; font-size: 13px; }
+  .bar .dots { display: flex; gap: 6px; }
+  .bar .dots i { width: 12px; height: 12px; border: 2px solid var(--ink); border-radius: 50%; background: var(--white); }
+  .bar .x { width: 22px; height: 22px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 6px; background: var(--white); font-size: 14px; line-height: 1; cursor: pointer; }
+  .pad { padding: clamp(16px, 2vw, 26px); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; font: inherit; font-weight: 800; font-size: clamp(16px, 1.4vw, 20px); color: var(--ink); text-decoration: none; background: var(--lilac); border: var(--b); border-radius: 999px; padding: 12px 22px; box-shadow: 4px 4px 0 var(--ink); cursor: pointer; transition: transform .08s, box-shadow .08s; }
+  .btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+  .btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+  .pill { display: inline-block; border: var(--b); border-radius: 999px; padding: 6px 14px; font-weight: 700; background: var(--white); box-shadow: 3px 3px 0 var(--ink); white-space: nowrap; }
+  .star { display: inline-block; width: 1em; height: 1em; background: var(--ink); clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); }
+  .burst { display: grid; place-items: center; text-align: center; font-weight: 800; line-height: 1; background: var(--yellow);
+    clip-path: polygon(50% 0, 59% 18%, 79% 7%, 77% 29%, 98% 31%, 84% 48%, 100% 64%, 79% 69%, 84% 90%, 63% 83%, 50% 100%, 37% 83%, 16% 90%, 21% 69%, 0 64%, 16% 48%, 2% 31%, 23% 29%, 21% 7%, 41% 18%); }
+  .bubble { position: relative; display: inline-block; background: var(--white); border: var(--b); border-radius: 14px; padding: 10px 18px; font-weight: 800; box-shadow: var(--sh); }
+  .bubble::after { content: ""; position: absolute; left: 26px; bottom: -17px; width: 22px; height: 22px; background: var(--white); border-right: var(--b); border-bottom: var(--b); transform: skewY(40deg) rotate(20deg); }
+
+  /* ================= HERO DESKTOP ================= */
+  .hero { position: relative; min-height: 100vh; padding: var(--g); }
+  .menu { position: relative; z-index: 50; display: flex; justify-content: space-between; align-items: center; gap: 12px; border: var(--b); border-radius: 12px; background: var(--white); padding: 8px 10px 8px 16px; box-shadow: 4px 4px 0 var(--ink); }
+  .menu b { font-weight: 800; }
+  .menu nav { display: flex; gap: 8px; }
+  .menu nav a { text-decoration: none; font-family: var(--mono); font-weight: 700; font-size: 13px; padding: 6px 12px; border: 2px solid var(--ink); border-radius: 999px; }
+  .menu nav a:hover { background: var(--yellow); }
+  .menu .clock { font-family: var(--mono); font-size: 13px; }
+  .desk { position: relative; height: calc(100vh - 2 * var(--g) - 60px); min-height: 560px; margin-top: 20px; }
+  .desk > * { position: absolute; }
+  .drag .bar { cursor: grab; touch-action: none; user-select: none; }
+  .drag.dragging .bar { cursor: grabbing; }
+  .w-title { left: 0; top: 7%; width: min(62%, 860px); z-index: 4; }
+  .w-title h1 { font-weight: 800; font-size: clamp(54px, 8.4vw, 150px); line-height: .86; letter-spacing: -.04em; }
+  .w-title h1 span { display: block; color: var(--lilac); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--ink); }
+  .w-title p { margin-top: 18px; font-size: clamp(18px, 1.6vw, 24px); max-width: 30ch; }
+  .w-title .bar { background: var(--mint); }
+  .w-chip { right: 3%; top: 2%; width: min(34%, 460px); z-index: 3; }
+  .w-chip .bar { background: var(--sky); }
+  .w-chip .shot { background: var(--sky); background-image: linear-gradient(rgba(18,18,18,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,18,.12) 1px, transparent 1px); background-size: 22px 22px; padding: 18px; }
+  .w-chip img { display: block; width: 100%; filter: drop-shadow(5px 6px 0 rgba(18,18,18,.85)); }
+  .w-chip .cap { display: flex; justify-content: space-between; padding: 10px 14px; border-top: var(--b); font-family: var(--mono); font-size: 12px; }
+  .w-me { right: 14%; bottom: 0; width: min(24%, 300px); z-index: 5; }
+  .w-me .bar { background: var(--pink); }
+  .w-me img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 30%; }
+  .w-me .cap { padding: 10px 14px; border-top: var(--b); font-weight: 800; line-height: 1.15; }
+  .w-me .cap small { display: block; font-family: var(--mono); font-weight: 400; font-size: 12px; }
+  .hello { left: 46%; top: 0; z-index: 6; font-size: clamp(20px, 2vw, 28px); transform: rotate(-4deg); }
+  .sticker { left: 38%; bottom: 14%; width: clamp(110px, 11vw, 160px); aspect-ratio: 1; z-index: 6; font-size: clamp(16px, 1.5vw, 22px); transform: rotate(10deg); }
+  .tags { left: 0; bottom: 2%; display: flex; flex-wrap: wrap; gap: 10px; z-index: 2; max-width: 46%; }
+  .tags .pill:nth-child(1) { background: var(--yellow); }
+  .tags .pill:nth-child(2) { background: var(--sky); }
+  .tags .pill:nth-child(3) { background: var(--mint); }
+  .sparkle { font-size: 28px; z-index: 1; }
+  .hint { right: 0; bottom: -34px; font-family: var(--mono); font-size: 12px; }
+  @media (max-width: 960px) {
+    .desk { height: auto; min-height: 0; display: grid; gap: 22px; }
+    .desk > * { position: relative; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; width: auto !important; transform: none !important; }
+    .w-title { order: 1; } .hello { order: 0; justify-self: start; } .w-chip { order: 2; } .w-me { order: 3; max-width: 320px; } .sticker { display: none; } .tags { order: 4; max-width: none; } .sparkle, .hint { display: none; }
+    .menu nav, .menu .clock { display: none; }
+  }
+
+  /* ================= SECTIONS ================= */
+  section { padding: clamp(60px, 9vw, 130px) var(--g); }
+  .label { display: inline-block; margin-bottom: 18px; }
+  h2 { font-weight: 800; font-size: clamp(42px, 6.4vw, 108px); line-height: .9; letter-spacing: -.04em; }
+
+  .statement { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(20px, 3vw, 44px); align-items: start; }
+  .statement .win .bar { background: var(--coral); }
+  .statement .big { font-size: clamp(26px, 3vw, 46px); font-weight: 700; line-height: 1.12; letter-spacing: -.02em; }
+  .statement .big mark { background: var(--yellow); padding: 0 .1em; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .cards { display: grid; gap: 14px; margin-top: 40px; }
+  .card { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: center; border: var(--b); border-radius: 14px; padding: 14px; box-shadow: 4px 4px 0 var(--ink); background: var(--white); }
+  .card:nth-child(1) { background: var(--sky); } .card:nth-child(2) { background: var(--mint); } .card:nth-child(3) { background: var(--pink); }
+  .card .ic { width: 56px; height: 56px; border: var(--b); border-radius: 12px; background: var(--white); display: grid; place-items: center; font-size: 26px; }
+  .card b { display: block; font-size: 22px; font-weight: 800; }
+  @media (max-width: 860px) { .statement { grid-template-columns: 1fr; } }
+
+  .engineer { display: grid; grid-template-columns: 4fr 7fr; gap: clamp(20px, 4vw, 60px); align-items: start; }
+  .engineer .photo .bar { background: var(--lilac); }
+  .engineer .photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 25%; }
+  .engineer .quote { margin: 26px 0 30px; font-size: clamp(22px, 2.3vw, 34px); }
+  .engineer .role { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
+  .engineer .role .pill:first-child { background: var(--yellow); }
+  .engineer .bio .bar { background: var(--sky); }
+  .engineer .bio p + p { margin-top: 12px; }
+  .engineer .bio .lead { font-size: clamp(20px, 1.8vw, 26px); font-weight: 700; line-height: 1.3; }
+  @media (max-width: 860px) { .engineer { grid-template-columns: 1fr; } .engineer .photo { max-width: 380px; } }
+
+  /* installer */
+  .installer { max-width: 980px; margin: 0 auto; }
+  .installer .bar { background: var(--lilac); }
+  .installer h2 { font-size: clamp(36px, 5vw, 80px); }
+  .progress { margin-top: 26px; height: 40px; border: var(--b); border-radius: 999px; background: var(--white); overflow: hidden; position: relative; }
+  .progress i { position: absolute; inset: 0 auto 0 0; width: var(--p, 0%); background: repeating-linear-gradient(-45deg, var(--mint) 0 16px, #5fcf9e 16px 32px); border-right: var(--b); transition: width .2s; }
+  .progress b { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 14px; }
+  .steps { list-style: none; margin-top: 22px; display: grid; gap: 12px; }
+  .steps li { display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center; border: var(--b); border-radius: 12px; padding: 12px 16px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); }
+  .steps .box { width: 32px; height: 32px; border: var(--b); border-radius: 8px; display: grid; place-items: center; font-weight: 800; background: var(--white); }
+  .steps li.done .box { background: var(--yellow); }
+  .steps li.done .box::after { content: "✓"; }
+  .steps b { font-size: clamp(24px, 2.6vw, 38px); font-weight: 800; letter-spacing: -.02em; }
+  .steps .mono { opacity: .75; }
+  .installer .note { margin-top: 22px; }
+  @media (max-width: 640px) { .steps li { grid-template-columns: 40px 1fr; } .steps li .mono { grid-column: 2; } }
+
+  .record { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); }
+  .record .win:nth-child(1) .bar { background: var(--mint); }
+  .record .win:nth-child(2) .bar { background: var(--pink); }
+  .record ul { list-style: none; display: grid; gap: 10px; }
+  .record li { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; }
+  .record li b { display: block; font-weight: 800; }
+  .record li span { font-family: var(--mono); font-size: 13px; }
+  @media (max-width: 860px) { .record { grid-template-columns: 1fr; } }
+
+  .cta .win { max-width: 1100px; margin: 0 auto; background: var(--coral); position: relative; }
+  .cta .bar { background: var(--yellow); }
+  .cta .pad { padding: clamp(28px, 5vw, 70px); }
+  .cta h2 { font-size: clamp(48px, 8vw, 140px); color: var(--white); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 6px 6px 0 var(--ink); }
+  .cta .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: center; }
+  .cta .btn.alt { background: var(--white); }
+  .cta .addr { font-family: var(--mono); font-weight: 700; font-size: clamp(15px, 1.5vw, 19px); }
+  .cta .burst { position: absolute; right: -24px; top: 30px; width: 130px; height: 130px; font-size: 18px; transform: rotate(-10deg); background: var(--yellow); }
+  .toast { position: fixed; left: 50%; bottom: 24px; z-index: 100; transform: translate(-50%, 220%); visibility: hidden; transition: transform .3s cubic-bezier(.3,1.5,.5,1), visibility 0s .3s; background: var(--mint); }
+  .toast.show { transform: translate(-50%, 0); visibility: visible; transition: transform .3s cubic-bezier(.3,1.5,.5,1); }
+  @media (max-width: 640px) { .cta .burst { display: none; } }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 18px var(--g) 26px; font-family: var(--mono); font-size: 13px; }
+
+  @media (prefers-reduced-motion: reduce) { .btn, .toast, .progress i { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="menu">
+    <span><b>✦ Artisan Technology</b> <span class="mono">&nbsp;v16</span></span>
+    <nav><a href="#about">About</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
+    <span class="clock" id="clock">CHI --:--</span>
+  </div>
+
+  <div class="desk" id="desk">
+    <span class="bubble hello">HELLO! 👋</span>
+
+    <div class="win drag w-title">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>artisan_technology.exe</span><span class="x" aria-hidden="true">✕</span></div>
+      <div class="pad">
+        <h1>Artisan <span>Technology</span></h1>
+        <p>Custom software and hardware for the problems that don't fit off the shelf.</p>
+      </div>
+    </div>
+
+    <div class="win drag w-chip">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>hardware.png</span><span class="x" aria-hidden="true">✕</span></div>
+      <div class="shot"><img src="../img/esp32-cutout.png" alt="A microcontroller development board"></div>
+      <div class="cap"><span>custom hardware</span><span>1 of 1</span></div>
+    </div>
+
+    <div class="win drag w-me">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>lindsay.jpg</span><span class="x" aria-hidden="true">✕</span></div>
+      <img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore">
+      <div class="cap">Lindsay Moore<small>Principal Engineer</small></div>
+    </div>
+
+    <div class="burst sticker">Made<br>to<br>fit!</div>
+    <div class="tags"><span class="pill">Software</span><span class="pill">Hardware</span><span class="pill">Systems</span><span class="pill">Chicago, IL</span></div>
+    <span class="star sparkle" style="left:58%;top:70%"></span>
+    <span class="star sparkle" style="left:64%;top:6%;font-size:18px"></span>
+    <span class="star sparkle" style="left:3%;top:64%;font-size:20px"></span>
+    <span class="hint">psst — the windows drag ↖</span>
+  </div>
+</header>
+
+<main>
+  <section class="statement" id="about">
+    <div class="win">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>about.txt</span><span class="x" aria-hidden="true">✕</span></div>
+      <div class="pad">
+        <span class="pill label">01 — What we do</span>
+        <p class="big">Artisan Technology LLC designs and builds custom software and hardware to solve problems that <mark>don't fit off-the-shelf solutions.</mark></p>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="card"><span class="ic">⌨</span><span><b>Software</b>Written for the problem at hand.</span></div>
+      <div class="card"><span class="ic">⚙</span><span><b>Hardware</b>From first sketch to working build.</span></div>
+      <div class="card"><span class="ic">◎</span><span><b>Systems</b>Every part designed to fit the rest.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="engineer">
+      <div class="win photo">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>principal.jpg</span><span class="x" aria-hidden="true">✕</span></div>
+        <img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore">
+      </div>
+      <div>
+        <span class="pill label" style="background:var(--lilac)">02 — Who builds it</span>
+        <h2>Lindsay Moore</h2>
+        <div class="role"><span class="pill">Principal Engineer</span><span class="pill">10+ years</span></div>
+        <p class="bubble quote">"What if we did it this way?"</p>
+        <div class="win bio">
+          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>bio.md</span><span class="x" aria-hidden="true">✕</span></div>
+          <div class="pad">
+            <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking "what if we did it this way?" and then building it.</p>
+            <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="win installer">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>install_your_idea.app</span><span class="x" aria-hidden="true">✕</span></div>
+      <div class="pad">
+        <span class="pill label" style="background:var(--yellow)">03 — The full arc</span>
+        <h2>Installing your idea…</h2>
+        <div class="progress" id="progress"><i></i><b id="pct">0%</b></div>
+        <ol class="steps" id="steps">
+          <li><span class="box"></span><b>Idea</b><span class="mono">ask the interesting question</span></li>
+          <li><span class="box"></span><b>Prototype</b><span class="mono">build it to find out</span></li>
+          <li><span class="box"></span><b>Production</b><span class="mono">finish together</span></li>
+        </ol>
+        <p class="note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="record">
+      <div class="win">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>education.list</span><span class="x" aria-hidden="true">✕</span></div>
+        <div class="pad">
+          <ul>
+            <li><b>Master's, Computer Science</b><span>University of Chicago</span></li>
+            <li><b>Master's, Informatics</b><span>University of Minnesota</span></li>
+            <li><b>Bachelor's, Production, Engineering &amp; Business</b><span>McNally Smith College</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="win">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>community.list</span><span class="x" aria-hidden="true">✕</span></div>
+        <div class="pad">
+          <ul>
+            <li><b>Board, Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></li>
+            <li><b>Research, STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></li>
+            <li><b>Research, Chicago Virtual Production</b><span>An independent virtual production group</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="win">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>new_project.msg</span><span class="x" aria-hidden="true">✕</span></div>
+      <div class="pad">
+        <h2>Let's build something together.</h2>
+        <div class="actions">
+          <a class="btn" href="mailto:lindsay@artisan.technology">✉ Send an email</a>
+          <button class="btn alt" id="copy" type="button">Copy address</button>
+          <span class="addr">lindsay@artisan.technology · Chicago, IL</span>
+        </div>
+      </div>
+      <div class="burst">Say<br>hi!</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© Artisan Technology LLC</span>
+  <span>Chicago, IL</span>
+</footer>
+<div class="pill toast" id="toast" role="status">Copied! ✓</div>
+
+<script>
+(() => {
+  // clock
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit' });
+  const clock = document.getElementById('clock');
+  const tick = () => clock.textContent = 'CHI ' + fmt.format(new Date());
+  tick(); setInterval(tick, 15000);
+
+  // draggable windows on the hero desktop
+  const desk = document.getElementById('desk');
+  let z = 10;
+  desk.querySelectorAll('.drag').forEach(w => {
+    const bar = w.querySelector('.bar');
+    let sx, sy, ox = 0, oy = 0;
+    w.addEventListener('pointerdown', () => { w.style.zIndex = ++z; });
+    bar.addEventListener('pointerdown', e => {
+      if (innerWidth <= 960) return;
+      sx = e.clientX - ox; sy = e.clientY - oy;
+      w.classList.add('dragging'); bar.setPointerCapture(e.pointerId);
+    });
+    bar.addEventListener('pointermove', e => {
+      if (!w.classList.contains('dragging')) return;
+      ox = e.clientX - sx; oy = e.clientY - sy;
+      w.style.transform = `translate(${ox}px, ${oy}px) rotate(${Math.max(-3, Math.min(3, e.movementX * .4))}deg)`;
+    });
+    const end = () => { w.classList.remove('dragging'); w.style.transform = `translate(${ox}px, ${oy}px)`; };
+    bar.addEventListener('pointerup', end); bar.addEventListener('pointercancel', end);
+  });
+
+  // the installer fills as it scrolls through the viewport
+  const prog = document.getElementById('progress'), pct = document.getElementById('pct'), steps = [...document.querySelectorAll('#steps li')];
+  const thumb = location.search.includes('thumb');
+  function fill() {
+    const r = prog.getBoundingClientRect();
+    let p = thumb ? 1 : (innerHeight * .9 - r.top) / (innerHeight * .6);
+    p = Math.max(0, Math.min(1, p));
+    prog.style.setProperty('--p', (p * 100).toFixed(1) + '%');
+    pct.textContent = Math.round(p * 100) + '%';
+    steps.forEach((s, i) => s.classList.toggle('done', p >= (i + 1) / 3 - .001));
+  }
+  fill(); addEventListener('scroll', () => requestAnimationFrame(fill), { passive: true }); addEventListener('resize', fill);
+
+  // copy address
+  const toast = document.getElementById('toast');
+  document.getElementById('copy').addEventListener('click', () => {
+    navigator.clipboard.writeText('lindsay@artisan.technology').then(() => { toast.textContent = 'Copied! ✓'; }, () => { toast.textContent = 'lindsay@artisan.technology'; })
+      .finally(() => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800); });
+  });
+})();
+</script>
+</body>
+</html>

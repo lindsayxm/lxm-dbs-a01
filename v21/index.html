@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology — AT-21</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ece8df;
+    --ink: #22231f;
+    --grey: #7a7a72;
+    --line: #c8c3b6;
+    --olive: #8c9478;
+    --ochre: #c4a061;
+    --slate: #61707f;
+    --clay: #b27c63;
+    --sand: #d8cdb8;
+    --sans: "Jost", "Futura", "Helvetica Neue", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --g: clamp(16px, 3vw, 44px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: clamp(16px, 1.15vw, 18px); line-height: 1.5; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--ochre); color: var(--ink); }
+  a { color: inherit; }
+  .mono { font-family: var(--mono); font-size: 11px; line-height: 1.55; letter-spacing: .03em; text-transform: uppercase; }
+  .grey { color: var(--grey); }
+  .paper { position: fixed; inset: 0; z-index: 30; pointer-events: none; mix-blend-mode: multiply; opacity: .35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='2'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .46  0 0 0 0 .4  0 0 0 .3 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"); }
+
+  /* ---------- modular tiles: each cell holds one geometric form ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+  .tile { position: relative; aspect-ratio: 1; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); overflow: hidden; background: var(--paper); }
+  .tile i { position: absolute; display: block; transition: transform .7s cubic-bezier(.6,0,.2,1), background .7s; }
+  .tile:hover i { transform: rotate(90deg); }
+  .t-qc i { inset: 0; border-radius: 0 0 0 100%; }                 /* quarter circle */
+  .t-half i { inset: 0 0 50% 0; border-radius: 0 0 999px 999px; }  /* half disc */
+  .t-arch i { inset: 18% 22% 0; border-radius: 999px 999px 0 0; }  /* arch */
+  .t-dot i { inset: 22%; border-radius: 50%; }
+  .t-ring i { inset: 18%; border-radius: 50%; background: none !important; border: clamp(8px, 1.6vw, 22px) solid; }
+  .t-bars i { inset: 0; background: repeating-linear-gradient(90deg, currentColor 0 12%, transparent 12% 25%) !important; }
+  .t-tri i { inset: 0; clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+  .t-leaf i { inset: 8%; border-radius: 0 100% 0 100%; }
+  .t-img { background: var(--sand); }
+  .t-img img { position: absolute; inset: 8%; width: 84%; height: 84%; object-fit: contain; filter: grayscale(1) contrast(1.1); mix-blend-mode: multiply; }
+  .t-txt { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(8px, 1vw, 14px); }
+  .c-olive i { background: var(--olive); color: var(--olive); border-color: var(--olive); }
+  .c-ochre i { background: var(--ochre); color: var(--ochre); border-color: var(--ochre); }
+  .c-slate i { background: var(--slate); color: var(--slate); border-color: var(--slate); }
+  .c-clay i { background: var(--clay); color: var(--clay); border-color: var(--clay); }
+  .c-ink i { background: var(--ink); color: var(--ink); border-color: var(--ink); }
+  .bg-sand { background: var(--sand); } .bg-ink { background: var(--ink); color: var(--paper); } .bg-olive { background: var(--olive); }
+
+  /* ================= HERO ================= */
+  .hero { min-height: 100vh; padding: var(--g); display: grid; grid-template-columns: 5fr 6fr; grid-template-rows: auto 1fr auto; gap: clamp(16px, 2.4vw, 32px) clamp(20px, 3vw, 48px); }
+  .top { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: start; gap: 20px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+  .top b { font-weight: 600; font-size: clamp(16px, 1.3vw, 19px); letter-spacing: .02em; }
+  .top .r { text-align: right; }
+  .hero .copy { display: flex; flex-direction: column; justify-content: space-between; gap: 30px; }
+  .hero h1 { font-weight: 600; font-size: clamp(58px, 8.4vw, 150px); line-height: .86; letter-spacing: -.035em; }
+  .hero h1 span { display: block; }
+  .hero h1 .t2 { color: var(--slate); }
+  .hero .lede { font-size: clamp(18px, 1.5vw, 23px); line-height: 1.35; max-width: 30ch; }
+  .hero .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; border-top: 1px solid var(--ink); padding-top: 12px; }
+  .hero .specs b { display: block; font-family: var(--mono); font-weight: 500; font-size: 11px; color: var(--ink); }
+  .hero .tiles { align-self: center; }
+  .foot { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--ink); padding-top: 10px; }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero .tiles { grid-template-columns: repeat(4, 1fr); } .hero .tiles .hide-s { display: none; } }
+
+  /* ================= SECTIONS ================= */
+  section { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(12px, 2vw, 28px); padding: clamp(70px, 9vw, 130px) var(--g); border-top: 2px solid var(--ink); }
+  .idx { grid-column: 1 / 4; }
+  .idx .n { font-weight: 600; font-size: clamp(44px, 5vw, 80px); line-height: .85; letter-spacing: -.03em; }
+  .idx .mono { margin-top: 12px; }
+  .idx .sw { display: flex; gap: 6px; margin-top: 18px; }
+  .idx .sw i { width: 22px; height: 22px; border-radius: 50%; }
+  .body { grid-column: 4 / 13; }
+  h2 { font-weight: 600; font-size: clamp(34px, 4.4vw, 70px); line-height: .95; letter-spacing: -.03em; max-width: 16ch; }
+  .lead { font-size: clamp(20px, 1.8vw, 27px); line-height: 1.32; max-width: 34ch; margin-top: 22px; }
+  @media (max-width: 860px) { .idx, .body { grid-column: 1 / -1; } .idx { margin-bottom: 26px; } }
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 44px; border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+  .modes div { border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 18px; }
+  .modes .shape { display: block; width: 64px; height: 64px; margin-bottom: 30px; }
+  .modes b { display: block; font-weight: 600; font-size: 22px; margin-bottom: 4px; }
+  @media (max-width: 640px) { .modes { grid-template-columns: 1fr; } }
+
+  .eng { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(20px, 4vw, 56px); align-items: start; }
+  .frame { position: relative; aspect-ratio: 4 / 5; }
+  .frame .arch { position: absolute; inset: 0; border-radius: 999px 999px 0 0; overflow: hidden; background: var(--olive); }
+  .frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; filter: grayscale(1) contrast(1.08) brightness(1.05); mix-blend-mode: multiply; }
+  .frame .sun { position: absolute; width: 30%; aspect-ratio: 1; border-radius: 50%; background: var(--ochre); right: -8%; top: 10%; mix-blend-mode: multiply; }
+  .frame .cap { position: absolute; left: 0; right: 0; bottom: -30px; display: flex; justify-content: space-between; }
+  .eng .lead q { quotes: "“" "”"; color: var(--clay); }
+  @media (max-width: 860px) { .eng { grid-template-columns: 1fr; } .frame { max-width: 380px; margin-bottom: 40px; } }
+
+  .steps { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+  .steps div { padding: 16px 16px 0 0; }
+  .steps div + div { border-left: 1px solid var(--line); padding-left: 16px; }
+  .steps svg { width: 100%; height: 90px; display: block; margin-bottom: 14px; }
+  .steps b { display: block; font-weight: 600; font-size: clamp(26px, 2.6vw, 40px); letter-spacing: -.02em; line-height: 1; }
+  .arcnote { margin-top: 30px; max-width: 58ch; }
+  @media (max-width: 640px) { .steps { grid-template-columns: 1fr; } .steps div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); } }
+
+  .tables { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); margin-top: 36px; }
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; padding-bottom: 10px; }
+  thead th { text-align: left; font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--grey); border-top: 2px solid var(--ink); padding: 6px 0; }
+  td { padding: 11px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { width: 28%; font-family: var(--mono); font-size: 12px; padding-right: 10px; }
+  td b { display: block; font-weight: 600; }
+  td span { color: var(--grey); font-size: 15px; }
+  @media (max-width: 860px) { .tables { grid-template-columns: 1fr; } }
+
+  .contact { background: var(--ink); color: var(--paper); border-top: 0; }
+  .contact .idx .mono { color: #a6a59c; }
+  .contact h2 { max-width: none; font-size: clamp(44px, 7vw, 120px); }
+  .contact .row { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; margin-top: 30px; border-top: 1px solid #55564f; padding-top: 16px; }
+  .contact a { font-weight: 500; font-size: clamp(20px, 2.6vw, 40px); text-decoration: none; letter-spacing: -.01em; }
+  .contact a::after { content: " →"; color: var(--ochre); }
+  .contact a:hover { color: var(--ochre); }
+  .contact .shapes { display: flex; gap: 10px; margin-top: 46px; }
+  .contact .shapes i { width: clamp(40px, 6vw, 90px); aspect-ratio: 1; }
+  @media (max-width: 640px) { .contact .row { grid-template-columns: 1fr; } }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px var(--g) 22px; background: var(--ink); color: #a6a59c; border-top: 1px solid #55564f; }
+</style>
+</head>
+<body>
+<div class="paper" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="top">
+    <b>Artisan Technology</b>
+    <span class="mono grey">Model AT-21 · Custom hardware + software</span>
+    <span class="mono r">Chicago, IL<br><span class="grey">41.88° N / 87.63° W</span></span>
+  </div>
+
+  <div class="copy">
+    <h1><span>Artisan</span><span class="t2">Technology</span></h1>
+    <div>
+      <p class="lede">Custom software and hardware, designed and built for the problems that don't fit off-the-shelf solutions.</p>
+      <div class="specs" style="margin-top:22px">
+        <p class="mono grey"><b>Principal</b>Lindsay Moore</p>
+        <p class="mono grey"><b>Scope</b>Idea → prototype → production</p>
+        <p class="mono grey"><b>Disciplines</b>Software · hardware · systems</p>
+        <p class="mono grey"><b>Experience</b>10+ years</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tiles" aria-hidden="true">
+    <div class="tile t-qc c-olive"><i></i></div>
+    <div class="tile t-dot c-ochre bg-sand"><i></i></div>
+    <div class="tile t-arch c-slate"><i></i></div>
+    <div class="tile t-bars c-ink"><i></i></div>
+    <div class="tile t-half c-clay hide-s"><i></i></div>
+    <div class="tile t-ring c-olive hide-s"><i></i></div>
+
+    <div class="tile t-img" style="grid-column: span 2; aspect-ratio: auto"><img src="../img/esp32-cutout.png" alt=""></div>
+    <div class="tile t-leaf c-ochre"><i></i></div>
+    <div class="tile t-tri c-slate bg-sand"><i></i></div>
+    <div class="tile t-txt bg-ink hide-s"><span class="mono">Fig. 01</span><span class="mono">Custom<br>hardware</span></div>
+    <div class="tile t-dot c-clay hide-s"><i></i></div>
+
+    <div class="tile t-half c-ink bg-olive"><i></i></div>
+    <div class="tile t-ring c-clay"><i></i></div>
+    <div class="tile t-qc c-slate bg-sand" style="transform: scaleX(-1)"><i></i></div>
+    <div class="tile t-arch c-ochre"><i></i></div>
+    <div class="tile t-leaf c-olive hide-s"><i></i></div>
+    <div class="tile t-bars c-slate hide-s"><i></i></div>
+  </div>
+
+  <div class="foot mono grey"><span>Sec. 1.0 – 5.0 below</span><span>Hover a tile ↻</span></div>
+</header>
+
+<main>
+  <section>
+    <div class="idx"><div class="n">1.0</div><p class="mono grey">Overview</p><div class="sw"><i style="background:var(--olive)"></i><i style="background:var(--ochre)"></i><i style="background:var(--slate)"></i><i style="background:var(--clay)"></i></div></div>
+    <div class="body">
+      <h2>Built to fit the problem, not the catalog.</h2>
+      <p class="lead">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+      <div class="modes">
+        <div><svg class="shape" viewBox="0 0 64 64" aria-hidden="true"><path d="M0 64 A64 64 0 0 1 64 0 V64Z" fill="#8c9478"/></svg><span class="mono grey">1.1</span><b>Software</b><p>Firmware, tools and applications written for the problem at hand.</p></div>
+        <div><svg class="shape" viewBox="0 0 64 64" aria-hidden="true"><rect x="0" y="0" width="64" height="64" fill="#d8cdb8"/><circle cx="32" cy="32" r="22" fill="#c4a061"/></svg><span class="mono grey">1.2</span><b>Hardware</b><p>Circuits, sensors and devices, from first sketch to working build.</p></div>
+        <div><svg class="shape" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 64 V32 A24 24 0 0 1 56 32 V64Z" fill="#61707f"/></svg><span class="mono grey">1.3</span><b>Systems</b><p>The pieces designed as one, and built to hold up in use.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="idx"><div class="n">2.0</div><p class="mono grey">Principal</p></div>
+    <div class="body eng">
+      <figure class="frame">
+        <div class="arch"><img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore"></div>
+        <span class="sun" aria-hidden="true"></span>
+        <figcaption class="cap mono"><span>Lindsay Moore</span><span class="grey">Principal Engineer</span></figcaption>
+      </figure>
+      <div>
+        <h2>Lindsay Moore</h2>
+        <p class="mono grey" style="margin-top:12px">Principal Engineer · 10+ years</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <q>what if we did it this way?</q> and then building it.</p>
+        <p style="margin-top:20px;max-width:52ch">I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="idx"><div class="n">3.0</div><p class="mono grey">Procedure</p></div>
+    <div class="body">
+      <h2>The full arc.</h2>
+      <div class="steps">
+        <div><svg viewBox="0 0 200 90" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><circle cx="45" cy="45" r="40" fill="none" stroke="#22231f" stroke-width="1.5" stroke-dasharray="4 5"/><circle cx="45" cy="45" r="8" fill="#c4a061"/></svg><span class="mono grey">3.1</span><b>Idea</b><p>Ask the interesting question.</p></div>
+        <div><svg viewBox="0 0 200 90" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><path d="M5 85 A40 40 0 0 1 85 85Z" fill="#8c9478"/><circle cx="45" cy="45" r="40" fill="none" stroke="#22231f" stroke-width="1.5"/></svg><span class="mono grey">3.2</span><b>Prototype</b><p>Build it to find out.</p></div>
+        <div><svg viewBox="0 0 200 90" preserveAspectRatio="xMinYMid meet" aria-hidden="true"><circle cx="45" cy="45" r="40" fill="#61707f"/><circle cx="105" cy="45" r="40" fill="#b27c63" style="mix-blend-mode:multiply"/></svg><span class="mono grey">3.3</span><b>Production</b><p>Finish together.</p></div>
+      </div>
+      <p class="arcnote">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="idx"><div class="n">4.0</div><p class="mono grey">Specifications</p></div>
+    <div class="body">
+      <h2>Background.</h2>
+      <div class="tables">
+        <table>
+          <caption class="mono">4.1 Education</caption>
+          <thead><tr><th>Degree</th><th>Field / institution</th></tr></thead>
+          <tbody>
+            <tr><td>M.S.</td><td><b>Computer Science</b><span>University of Chicago</span></td></tr>
+            <tr><td>M.S.</td><td><b>Informatics</b><span>University of Minnesota</span></td></tr>
+            <tr><td>B.</td><td><b>Production, Engineering &amp; Business</b><span>McNally Smith College</span></td></tr>
+          </tbody>
+        </table>
+        <table>
+          <caption class="mono">4.2 Community &amp; research</caption>
+          <thead><tr><th>Role</th><th>Organization</th></tr></thead>
+          <tbody>
+            <tr><td>Board</td><td><b>Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></td></tr>
+            <tr><td>Research</td><td><b>STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></td></tr>
+            <tr><td>Research</td><td><b>Chicago Virtual Production</b><span>An independent virtual production group</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="idx"><div class="n">5.0</div><p class="mono">Contact</p></div>
+    <div class="body">
+      <h2>Let's build something together.</h2>
+      <div class="row">
+        <a href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+        <p class="mono">Chicago, IL</p>
+      </div>
+      <div class="shapes" aria-hidden="true">
+        <i style="background:var(--olive);border-radius:0 0 0 100%"></i>
+        <i style="background:var(--ochre);border-radius:50%"></i>
+        <i style="background:var(--slate);border-radius:999px 999px 0 0"></i>
+        <i style="background:var(--clay);clip-path:polygon(0 100%,100% 0,100% 100%)"></i>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="mono"><span>© Artisan Technology LLC</span><span>Doc. AT-21 / Rev. 1</span></footer>
+</body>
+</html>

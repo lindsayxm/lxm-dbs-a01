@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology — engineering notebook</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f0ebdd;
+    --blue: #1d3a8f;
+    --pencil: #4b4a47;
+    --red: #c0392b;
+    --grid: rgba(60, 120, 110, .17);
+    --grid-major: rgba(60, 120, 110, .3);
+    --draft: "Architects Daughter", "Bradley Hand", cursive;
+    --hand: "Caveat", cursive;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --g: clamp(16px, 4vw, 64px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); }
+  body {
+    color: var(--pencil); font-family: var(--draft); font-size: clamp(17px, 1.3vw, 21px); line-height: 1.55; overflow-x: hidden;
+    background:
+      linear-gradient(var(--grid-major) 1px, transparent 1px), linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px), var(--paper);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px, auto;
+  }
+  ::selection { background: var(--blue); color: var(--paper); }
+  a { color: inherit; }
+  .blue { color: var(--blue); }
+  .red { color: var(--red); font-family: var(--hand); font-size: 1.25em; }
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+
+  .grit { position: fixed; inset: 0; z-index: 50; pointer-events: none; mix-blend-mode: multiply; opacity: .5;
+    background: radial-gradient(ellipse 95% 85% at 50% 45%, transparent 62%, rgba(80,60,30,.18)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='3'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .22  0 0 0 .28 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"); }
+
+  /* sketches */
+  svg.sk { display: block; width: 100%; height: auto; overflow: visible; }
+  .ln { fill: none; stroke: var(--blue); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .ln.p { stroke: var(--pencil); stroke-width: 1.3; }
+  .ln.r { stroke: var(--red); stroke-width: 2.2; }
+  .ln.dash { stroke-dasharray: 6 6; }
+  .dot { fill: var(--blue); }
+  .t { font-family: var(--draft); font-size: 18px; fill: var(--blue); }
+  .t.p { fill: var(--pencil); font-size: 15px; }
+  .t.r { fill: var(--red); font-family: var(--hand); font-size: 24px; }
+  .draw .ln:not(.dash) { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .draw.on .ln:not(.dash) { animation: write 1.2s ease forwards; animation-delay: var(--d, 0s); }
+  .draw .t, .draw .dot { opacity: 0; transition: opacity .6s; transition-delay: var(--d, .8s); }
+  .draw.on .t, .draw.on .dot { opacity: 1; }
+  @keyframes write { to { stroke-dashoffset: 0; } }
+
+  .strike { position: relative; white-space: nowrap; }
+  .strike::after { content: ""; position: absolute; left: -3%; right: -3%; top: 54%; height: 2px; background: var(--red); transform: rotate(-4deg); }
+  .boxed { border: 2px solid var(--blue); padding: 0 .3em; }
+  .tape { position: absolute; width: 100px; height: 28px; background: rgba(232,224,196,.78); box-shadow: 0 1px 3px rgba(0,0,0,.18); z-index: 2; }
+
+  /* ================= TITLE BLOCK + HERO ================= */
+  .hero { position: relative; min-height: 100vh; padding: clamp(18px, 2.6vw, 34px) var(--g) 30px; display: grid; grid-template-rows: auto 1fr auto; gap: clamp(16px, 2.6vw, 32px); }
+  .tblock { display: grid; grid-template-columns: 2.4fr 1fr 1fr 1fr; border: 2px solid var(--pencil); background: rgba(240,235,221,.85); }
+  .tblock div { padding: 6px 12px 8px; border-left: 1px solid var(--pencil); }
+  .tblock div:first-child { border-left: 0; }
+  .tblock small { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
+  .tblock b { font-weight: 400; color: var(--blue); font-size: clamp(16px, 1.4vw, 20px); }
+  @media (max-width: 700px) { .tblock { grid-template-columns: 1fr 1fr; } .tblock div:nth-child(3) { border-left: 0; } .tblock div:nth-child(n+3) { border-top: 1px solid var(--pencil); } }
+
+  .bench { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(20px, 4vw, 60px); align-items: center; }
+  .bench h1 { font-family: var(--draft); font-weight: 400; color: var(--blue); font-size: clamp(46px, 6.8vw, 116px); line-height: .95; letter-spacing: .01em; text-transform: uppercase; }
+  .bench h1 span { display: block; border-bottom: 3px double var(--blue); padding-bottom: .05em; margin-bottom: .08em; width: fit-content; }
+  .bench .obj { margin-top: 20px; font-size: clamp(19px, 1.7vw, 25px); max-width: 32ch; }
+  .bench .obj b { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .1em; margin-right: 8px; }
+  .fig { position: relative; padding: 40px 0 34px; }
+  .fig .ph { position: relative; transform: rotate(1.2deg); background: #f7f3e8; padding: 10px; box-shadow: 0 10px 22px -10px rgba(0,0,0,.4); }
+  .fig .ph img { display: block; width: 100%; aspect-ratio: 1294 / 560; object-fit: cover; object-position: 40% 20%; filter: grayscale(.85) contrast(1.15) sepia(.15); }
+  .fig .tape.a { left: -24px; top: 8px; transform: rotate(-30deg); }
+  .fig .tape.b { right: -20px; bottom: 6px; transform: rotate(-26deg); }
+  .fig svg.sk { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .fig .figcap { margin-top: 44px; font-size: 16px; text-align: center; }
+  @media (max-width: 900px) { .bench { grid-template-columns: 1fr; } }
+
+  .schem { border-top: 1px solid var(--pencil); padding-top: 10px; }
+  .schem .head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+
+  /* ================= PAGES ================= */
+  section { position: relative; padding: clamp(70px, 9vw, 130px) var(--g); }
+  .sh { display: flex; align-items: baseline; gap: 16px; border-bottom: 2px solid var(--pencil); padding-bottom: 6px; margin-bottom: clamp(26px, 4vw, 46px); }
+  .sh h2 { font-family: var(--draft); font-weight: 400; color: var(--blue); font-size: clamp(30px, 4vw, 60px); line-height: 1; text-transform: uppercase; }
+  .sh .mono { margin-left: auto; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 5vw, 80px); align-items: start; }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr !important; } }
+
+  .statement { font-size: clamp(24px, 2.4vw, 36px); line-height: 1.35; color: var(--blue); }
+  .reqs { list-style: none; margin-top: 28px; }
+  .reqs li { display: grid; grid-template-columns: 2.4em 1fr; padding: 6px 0; border-bottom: 1px dashed rgba(75,74,71,.35); }
+  .reqs li b { font-family: var(--mono); font-weight: 500; font-size: 13px; padding-top: .3em; }
+
+  .snap { position: relative; transform: rotate(-2deg); background: #f7f3e8; padding: 10px 10px 40px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.4); max-width: 360px; }
+  .snap img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 30%; filter: grayscale(1) contrast(1.15); }
+  .snap .tape { left: 50%; top: -12px; transform: translateX(-50%) rotate(-3deg); }
+  .snap .cap { position: absolute; left: 14px; bottom: 8px; font-size: 16px; }
+  .person .lead { font-size: clamp(22px, 2vw, 30px); line-height: 1.4; color: var(--blue); margin: 14px 0 16px; }
+  .person .role { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+
+  .arc .note { max-width: 46ch; margin-top: 30px; }
+
+  table.bom { width: 100%; border-collapse: collapse; font-size: clamp(16px, 1.25vw, 19px); }
+  .bom caption { text-align: left; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; padding-bottom: 8px; }
+  .bom th { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-align: left; border-bottom: 2px solid var(--pencil); padding: 6px 8px; }
+  .bom td { border-bottom: 1px solid rgba(75,74,71,.3); padding: 9px 8px; vertical-align: top; }
+  .bom td:first-child { font-family: var(--mono); color: var(--blue); width: 3.4em; }
+  .bom td:nth-child(2) { color: var(--blue); }
+
+  .next h3 { font-family: var(--draft); font-weight: 400; color: var(--blue); font-size: clamp(40px, 6.4vw, 108px); line-height: 1; text-transform: uppercase; }
+  .next .mail { display: inline-block; margin-top: 30px; font-size: clamp(20px, 2.6vw, 38px); color: var(--blue); text-decoration: none; border-bottom: 2px solid var(--red); overflow-wrap: anywhere; }
+  .next .mail:hover { color: var(--red); }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; max-width: 760px; }
+  .sign div { border-top: 1.5px solid var(--pencil); padding-top: 6px; }
+  .sign .sig { font-family: var(--hand); font-size: 40px; color: var(--blue); line-height: 1; margin-top: -44px; margin-bottom: 8px; }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 16px var(--g) 24px; border-top: 2px solid var(--pencil); }
+
+  .thumb .draw .ln { stroke-dashoffset: 0 !important; animation: none !important; }
+  .thumb .draw .t, .thumb .draw .dot { opacity: 1; transition: none; }
+  @media (prefers-reduced-motion: reduce) { .draw .ln { stroke-dashoffset: 0 !important; animation: none !important; } .draw .t, .draw .dot { opacity: 1; transition: none; } }
+</style>
+</head>
+<body>
+<div class="grit" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter>
+</svg>
+
+<header class="hero">
+  <div class="tblock">
+    <div><small>Project</small><b>Artisan Technology LLC</b></div>
+    <div><small>Notebook</small><b>No. 017</b></div>
+    <div><small>Engineer</small><b>L. Moore</b></div>
+    <div><small>Location</small><b>Chicago, IL</b></div>
+  </div>
+
+  <div class="bench">
+    <div>
+      <h1><span>Artisan</span>Technology</h1>
+      <p class="obj"><b>OBJ.</b>Design &amp; build custom software + hardware for problems that <span class="strike">fit</span> <span class="red">don't fit</span> off-the-shelf solutions.</p>
+    </div>
+    <figure class="fig">
+      <div class="ph">
+        <span class="tape a" aria-hidden="true"></span>
+        <img src="../img/artisan-technology.jpg" alt="Photo of a stacked glass circuit die, taped into the notebook">
+        <span class="tape b" aria-hidden="true"></span>
+      </div>
+      <svg class="sk draw" viewBox="0 0 600 340" preserveAspectRatio="none" aria-hidden="true" filter="url(#rough)">
+        <ellipse class="ln r" pathLength="1" style="--d:.3s" cx="260" cy="88" rx="74" ry="44"/>
+        <path class="ln" pathLength="1" style="--d:.6s" d="M330 70 L430 22 L590 22"/>
+        <text class="t" x="438" y="14" style="--d:1.2s">die + seal ring</text>
+        <path class="ln" pathLength="1" style="--d:.9s" d="M110 220 L60 322 L10 322"/>
+        <text class="t" x="72" y="330" style="--d:1.5s">4-layer glass stack</text>
+        <path class="ln p" pathLength="1" style="--d:1.2s" d="M560 90 L560 280 M550 90 h20 M550 280 h20"/>
+        <text class="t p" x="566" y="190" style="--d:1.8s">≈8mm</text>
+      </svg>
+      <figcaption class="figcap">fig. 1 — rev C, layered build. <span class="red">clean. ship it?</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="schem">
+    <div class="head"><span class="mono">sch. 1 — status indicator, first pass</span><span class="mono">sheet 1 / 6</span></div>
+    <svg class="sk draw" viewBox="0 0 1200 170" aria-label="Hand-drawn schematic: a microcontroller driving an LED through a resistor, with a decoupling capacitor" role="img" filter="url(#rough)">
+      <rect class="ln" pathLength="1" x="60" y="30" width="170" height="110" rx="4"/>
+      <text class="t" x="98" y="80" style="--d:.6s">U1 MCU</text>
+      <text class="t p" x="78" y="108" style="--d:.7s">ESP32-WROOM</text>
+      <path class="ln" pathLength="1" style="--d:.2s" d="M230 60 H330 M230 110 H280"/>
+      <text class="t p" x="238" y="52" style="--d:.8s">GPIO2</text>
+      <path class="ln" pathLength="1" style="--d:.4s" d="M330 60 l12 -14 l16 28 l16 -28 l16 28 l16 -28 l16 28 l12 -14 H520"/>
+      <text class="t" x="356" y="30" style="--d:.9s">R1</text>
+      <text class="t r" x="350" y="108" style="--d:1s"><tspan text-decoration="line-through">10k</tspan> 330Ω</text>
+      <path class="ln" pathLength="1" style="--d:.6s" d="M520 36 L520 84 L560 60 Z M560 36 V84 M560 60 H640"/>
+      <path class="ln" pathLength="1" style="--d:.8s" d="M534 30 l14 -16 m-10 0 l10 0 l0 10 M552 34 l14 -16 m-10 0 l10 0 l0 10"/>
+      <text class="t" x="528" y="112" style="--d:1.1s">D1</text>
+      <path class="ln" pathLength="1" style="--d:.9s" d="M640 60 V120 M618 120 h44 M626 130 h28 M634 140 h12"/>
+      <path class="ln" pathLength="1" style="--d:1s" d="M280 110 V140 M262 140 h36 M262 150 h36 M280 150 V160"/>
+      <text class="t" x="304" y="152" style="--d:1.2s">C1 100nF</text>
+      <circle class="dot" cx="330" cy="60" r="4" style="--d:1.2s"/>
+      <text class="t r" x="720" y="52" style="--d:1.4s">← too dim at 10k. swapped. ✓</text>
+      <text class="t p" x="720" y="96" style="--d:1.5s">I = (3.3 − 2.0) / 330 ≈ 4 mA</text>
+      <text class="t p" x="720" y="130" style="--d:1.6s">TODO: PWM fade, low-batt blink</text>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="sh"><h2>1. Problem statement</h2><span class="mono">p. 2</span></div>
+    <div class="two">
+      <div>
+        <p class="statement">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+        <ul class="reqs">
+          <li><b>R1</b><span><span class="strike">use an off-the-shelf part</span> <span class="red">doesn't exist</span></span></li>
+          <li><b>R2</b><span><span class="strike">adapt the closest product</span> <span class="red">still doesn't fit</span></span></li>
+          <li><b>R3</b><span>design it to the actual requirements ✓</span></li>
+          <li><b>R4</b><span>software, hardware &amp; the system around them ✓</span></li>
+        </ul>
+      </div>
+      <figure>
+        <svg class="sk draw" viewBox="-20 -10 540 440" role="img" aria-label="Exploded isometric sketch of an enclosure: lid, circuit board, battery and base, with a dimension" filter="url(#rough)">
+          <path class="ln p dash" d="M100 84 V340 M420 84 V340 M260 134 V160"/>
+          <path class="ln" pathLength="1" d="M100 70 L260 20 L420 70 L260 120 Z M100 70 v14 L260 134 L420 84 v-14 M260 120 v14"/>
+          <path class="ln" pathLength="1" style="--d:.3s" d="M120 170 L260 126 L400 170 L260 214 Z"/>
+          <path class="ln" pathLength="1" style="--d:.45s" d="M230 168 L262 158 L294 168 L262 178 Z"/>
+          <path class="ln" pathLength="1" style="--d:.5s" d="M170 166 l14 -4 M196 180 l14 -4 M320 162 l14 4 M340 176 l14 4"/>
+          <path class="ln" pathLength="1" style="--d:.6s" d="M170 252 L260 224 L350 252 L260 280 Z M170 252 v20 L260 300 L350 272 v-20 M260 280 v20"/>
+          <path class="ln" pathLength="1" style="--d:.8s" d="M100 340 L260 290 L420 340 L260 390 Z M100 340 v20 L260 410 L420 360 v-20 M260 390 v20"/>
+          <text class="t" x="432" y="64" style="--d:1s">lid</text>
+          <text class="t" x="410" y="176" style="--d:1.1s">PCB</text>
+          <text class="t" x="362" y="262" style="--d:1.2s">LiPo</text>
+          <text class="t" x="432" y="356" style="--d:1.3s">base</text>
+          <path class="ln p" pathLength="1" style="--d:1.2s" d="M60 342 L60 70 M50 342 h20 M50 70 h20"/>
+          <text class="t p" x="-6" y="214" style="--d:1.4s">42mm</text>
+          <text class="t r" x="0" y="10" style="--d:1.6s">fig. 2 — exploded view</text>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="person">
+    <div class="sh"><h2>2. Personnel</h2><span class="mono">p. 3</span></div>
+    <div class="two" style="grid-template-columns: minmax(220px, 4fr) 7fr">
+      <figure class="snap">
+        <span class="tape" aria-hidden="true"></span>
+        <img src="../img/lindsay.jpg" alt="Lindsay Moore">
+        <figcaption class="cap">L. Moore, principal eng.</figcaption>
+      </figure>
+      <div>
+        <p class="role">Lindsay Moore · Principal Engineer · 10+ yrs</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <span class="boxed">"what if we did it this way?"</span> and then building it.</p>
+        <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+        <p class="red" style="margin-top:14px">→ rigor + imagination, equal parts</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="arc">
+    <div class="sh"><h2>3. Build log — the full arc</h2><span class="mono">p. 4</span></div>
+    <svg class="sk draw" viewBox="0 -20 1100 250" role="img" aria-label="Block diagram: Idea, rev A, flows to Prototype, rev B, which iterates on itself, then to Production, rev C" filter="url(#rough)">
+      <rect class="ln" pathLength="1" x="20" y="60" width="240" height="100" rx="6"/>
+      <text class="t" x="102" y="104" style="font-size:30px;--d:.6s">IDEA</text>
+      <text class="t p" x="72" y="138" style="--d:.7s">rev A · the question</text>
+      <path class="ln" pathLength="1" style="--d:.4s" d="M260 110 H420 M404 98 L420 110 L404 122"/>
+      <rect class="ln" pathLength="1" style="--d:.5s" x="420" y="60" width="260" height="100" rx="6"/>
+      <text class="t" x="468" y="104" style="font-size:30px;--d:.9s">PROTOTYPE</text>
+      <text class="t p" x="476" y="138" style="--d:1s">rev B · build, test</text>
+      <path class="ln r" pathLength="1" style="--d:.9s" d="M610 58 C650 -14 470 -14 500 56 M490 42 L500 56 L512 44"/>
+      <text class="t r" x="640" y="10" style="--d:1.2s">iterate ×n</text>
+      <path class="ln" pathLength="1" style="--d:.8s" d="M680 110 H840 M824 98 L840 110 L824 122"/>
+      <rect class="ln" pathLength="1" style="--d:1s" x="840" y="50" width="240" height="120" rx="6"/>
+      <rect class="ln" pathLength="1" style="--d:1.1s" x="850" y="60" width="220" height="100" rx="4"/>
+      <text class="t" x="870" y="104" style="font-size:30px;--d:1.3s">PRODUCTION</text>
+      <text class="t p" x="878" y="138" style="--d:1.4s">rev C · finish together</text>
+      <text class="t p" x="20" y="214" style="--d:1.5s">note: every block owned end to end — no hand-offs into the void.</text>
+    </svg>
+    <p class="note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+  </section>
+
+  <section>
+    <div class="sh"><h2>4. Bill of materials</h2><span class="mono">p. 5</span></div>
+    <div class="two">
+      <table class="bom">
+        <caption>Education</caption>
+        <thead><tr><th>Ref</th><th>Item</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>E1</td><td>Master's, Computer Science</td><td>University of Chicago</td></tr>
+          <tr><td>E2</td><td>Master's, Informatics</td><td>University of Minnesota</td></tr>
+          <tr><td>E3</td><td>Bachelor's, Production, Engineering &amp; Business</td><td>McNally Smith College</td></tr>
+        </tbody>
+      </table>
+      <table class="bom">
+        <caption>Community &amp; research</caption>
+        <thead><tr><th>Ref</th><th>Role</th><th>Organization</th></tr></thead>
+        <tbody>
+          <tr><td>C1</td><td>Board</td><td>Pumping Station: One — Chicago's oldest and largest hackerspace</td></tr>
+          <tr><td>C2</td><td>Research</td><td>STAGE Center — a multidisciplinary technology and arts lab at UChicago</td></tr>
+          <tr><td>C3</td><td>Research</td><td>Chicago Virtual Production — an independent virtual production group</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="next" id="contact">
+    <div class="sh"><h2>5. Next steps</h2><span class="mono">p. 6</span></div>
+    <h3>Let's build something together.</h3>
+    <a class="mail" href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+    <p style="margin-top:10px">Chicago, IL</p>
+    <div class="sign">
+      <div><p class="sig">L. Moore</p><span class="mono">Engineer</span></div>
+      <div><p class="sig">&nbsp;</p><span class="mono">Witnessed by — you?</span></div>
+    </div>
+  </section>
+</main>
+
+<footer class="mono">
+  <span>© Artisan Technology LLC</span>
+  <span>Engineering notebook no. 017 · Chicago, IL</span>
+</footer>
+
+<script>
+  if (location.search.includes('thumb')) document.documentElement.classList.add('thumb');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .3 });
+  document.querySelectorAll('.draw').forEach(d => io.observe(d));
+</script>
+</body>
+</html>

@@ -38,6 +38,20 @@ V15. Modular Typography. This style breaks type into grids or building blocks. I
 V16. Neo-Brutalism
 A cleaner, more structured evolution of classic Brutalism. It retains raw honesty but adds better UI practices — useful in digital products that want to be bold yet functional. Bold colors, large type, stark layouts, minimal UI components, purposeful asymmetry.
 
+V17. Sketchbook Pens. A grungy sketchbook filled with ideas and iterations, crossed out sections, scribbles and doodles, arrows, underlines, and circles.  like an engineers notebook, sketches of schematics, components, and builds.
+
+V18. Surreal Vintage Print Collage. Search the internet for images. The images should be "cutout" from vintage magazines like popular science, popular mechanics, and national geographic, postcards, books, and digitally printed material. THe images carry the authentic look of retro imagery, which adds style and surrealism to the composition. Combining the images in unique ways plays with perspective, size, ratio, and gives the user the sense that they've walked into a surreal masterpiece. 
+
+V19. Pointillism. Pointillism is a painting technique using small dots of color to form an image. In design, it brings texture, detail, and a sense of movement or grain. Dot clusters, optical mixing, pastel or impressionist palettes, fade transitions. Artistic, textured, tranquil.
+
+V20. Cybercore. Cybercore is a high-tech, hyper-modern style drawing from hacker aesthetics, sci-fi, and the underground internet. It’s visually complex and packed with futuristic iconography. Neon lights, glitch effects, code patterns, green/black themes, tech symbology. Futuristic, chaotic, dystopian.
+
+V21. Combine V09 and V11 - a utilitarian take on mid-century design. more muted colors, but some interesting shapes and designs. less retro feeling than mid-century, but not as basic as utilitarian. 
+
+V22. Mixing Console. pushing faders up and down changes the displayed text and visuals. 
+
+
+
 
 
 
