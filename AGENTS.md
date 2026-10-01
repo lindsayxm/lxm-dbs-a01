@@ -15,7 +15,7 @@ V04: create an animation of a noisy static filled signal on one side, passing th
 
 V05: Brutalist version - a monotone, bold, and brash. Brutalism in design is raw, bold, and purposefully unrefined. Borrowed from architecture, it rejects polish for stark functionality and visual honesty. In digital, it breaks UI norms to stand out. Monospaced fonts, grayscale palettes, harsh edges, solid blocks, default buttons.
 
-
+V06: Brutalist but more minimal than 
 
 
 TECH STACK: Plain HTML and CSS, and optional JavaScript. No frameworks, no build step, no external APIs, and no data storage. The index GALLERY LANDING PAGE and each SITE version within will be hosted in vercel.

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artisan Technology LLC</title>
+<meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
+<style>
+  /* No web fonts. No images. System type, black on paper, and rules. */
+  :root {
+    --paper: #f1f1ee;
+    --ink: #000;
+    --grey: #6b6b6b;
+    --rule: 4px solid var(--ink);
+    --hair: 1px solid var(--ink);
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+    --gutter: clamp(16px, 3vw, 40px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); }
+  body { color: var(--ink); font-family: var(--mono); font-size: 15px; line-height: 1.55; padding: 0 var(--gutter); }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  a:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+
+  header { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 16px 0 12px; border-bottom: var(--rule); text-transform: uppercase; font-size: 12px; letter-spacing: .04em; }
+  header nav { display: flex; gap: 18px; }
+
+  .hero { padding: clamp(48px, 8vw, 110px) 0 0; }
+  .hero .meta { display: flex; justify-content: space-between; font-size: 12px; text-transform: uppercase; margin-bottom: 18px; }
+  h1 {
+    font-family: var(--sans); font-weight: 700;
+    font-size: clamp(48px, 12.6vw, 210px); line-height: .84; letter-spacing: -.055em;
+    text-transform: uppercase; margin-left: -.04em;
+  }
+  h1 .caret { display: inline-block; width: .5em; height: .72em; background: var(--ink); vertical-align: baseline; margin-left: .06em; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .slab {
+    background: var(--ink); color: var(--paper);
+    margin: clamp(36px, 5vw, 64px) calc(var(--gutter) * -1) 0;
+    padding: clamp(28px, 5vw, 64px) var(--gutter);
+    font-size: clamp(20px, 2.6vw, 38px); line-height: 1.25; letter-spacing: -.01em;
+  }
+  .slab p { max-width: 34ch; }
+
+  /* the index: numbered rows, a label column and a content column */
+  .row { display: grid; grid-template-columns: minmax(150px, 1fr) 3fr; gap: var(--gutter); padding: 28px 0 40px; border-bottom: var(--rule); }
+  .row > h2 { font-family: var(--mono); font-weight: 400; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .row > h2 b { display: block; font-family: var(--sans); font-size: clamp(40px, 5vw, 76px); line-height: .9; letter-spacing: -.05em; margin-bottom: 6px; }
+  .big { font-family: var(--sans); font-weight: 700; font-size: clamp(30px, 4.2vw, 64px); line-height: .98; letter-spacing: -.04em; text-transform: uppercase; }
+  .lead { font-size: clamp(18px, 1.7vw, 24px); line-height: 1.4; max-width: 40ch; margin-top: 22px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); margin-top: 26px; max-width: 900px; }
+  .cols p { color: var(--ink); }
+
+  .arc { display: grid; grid-template-columns: repeat(3, 1fr); border: var(--rule); margin-top: 6px; }
+  .arc div { padding: 16px 16px 20px; border-right: var(--rule); }
+  .arc div:last-child { border-right: 0; background: var(--ink); color: var(--paper); }
+  .arc span { font-size: 12px; }
+  .arc b { display: block; font-family: var(--sans); font-size: clamp(26px, 3.4vw, 54px); line-height: 1; letter-spacing: -.04em; text-transform: uppercase; margin-top: 30px; }
+  .arc-note { max-width: 60ch; margin-top: 22px; }
+
+  ol.list { list-style: none; border-top: var(--hair); max-width: 900px; }
+  ol.list li { display: grid; grid-template-columns: 9ch 1fr; gap: 16px; padding: 14px 0; border-bottom: var(--hair); }
+  ol.list li b { font-family: var(--sans); font-size: clamp(19px, 1.7vw, 24px); letter-spacing: -.02em; display: block; line-height: 1.15; color: var(--ink); }
+  ol.list li span { color: var(--grey); }
+  ol.list li > span:first-child { color: var(--ink); text-transform: uppercase; font-size: 12px; padding-top: 5px; }
+
+  .contact h3 { font-family: var(--sans); font-weight: 700; font-size: clamp(44px, 9vw, 150px); line-height: .86; letter-spacing: -.055em; text-transform: uppercase; }
+  .contact .act { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 30px; }
+  .contact .mail { font-size: clamp(18px, 2vw, 26px); margin-right: 8px; }
+  button { font-size: 16px; } /* the rest is the browser's own button */
+
+  footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 0 22px; font-size: 12px; text-transform: uppercase; }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr; gap: 14px; }
+    .cols { grid-template-columns: 1fr; }
+    .arc { grid-template-columns: 1fr; }
+    .arc div { border-right: 0; border-bottom: var(--rule); }
+    .arc div:last-child { border-bottom: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { h1 .caret { animation: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <span>Artisan Technology LLC</span>
+  <span>Chicago, IL</span>
+  <nav><a href="#engineer">Engineer</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
+</header>
+
+<section class="hero">
+  <div class="meta"><span>Custom software / Custom hardware</span><span>№ 06</span></div>
+  <h1>Artisan<br>Technology<span class="caret" aria-hidden="true"></span></h1>
+  <div class="slab">
+    <p>Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+  </div>
+</section>
+
+<section class="row" id="engineer">
+  <h2><b>01</b>Principal Engineer</h2>
+  <div>
+    <p class="big">Lindsay Moore</p>
+    <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking "what if we did it this way?" and then building it.</p>
+    <div class="cols">
+      <p>I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      <p>I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+    </div>
+  </div>
+</section>
+
+<section class="row" id="process">
+  <h2><b>02</b>Process</h2>
+  <div>
+    <div class="arc">
+      <div><span>01 →</span><b>Idea</b></div>
+      <div><span>02 →</span><b>Prototype</b></div>
+      <div><span>03 ■</span><b>Production</b></div>
+    </div>
+    <p class="arc-note">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production.</p>
+  </div>
+</section>
+
+<section class="row">
+  <h2><b>03</b>Education</h2>
+  <ol class="list">
+    <li><span>M.S.</span><span><b>Computer Science</b>University of Chicago</span></li>
+    <li><span>M.S.</span><span><b>Informatics</b>University of Minnesota</span></li>
+    <li><span>B.</span><span><b>Production, Engineering &amp; Business</b>McNally Smith College</span></li>
+  </ol>
+</section>
+
+<section class="row">
+  <h2><b>04</b>Community</h2>
+  <ol class="list">
+    <li><span>Board</span><span><b>Pumping Station: One</b>Chicago's oldest and largest hackerspace</span></li>
+    <li><span>Research</span><span><b>STAGE Center</b>A multidisciplinary technology and arts lab at UChicago</span></li>
+    <li><span>Research</span><span><b>Chicago Virtual Production</b>An independent virtual production group</span></li>
+  </ol>
+</section>
+
+<section class="row contact" id="contact">
+  <h2><b>05</b>Contact</h2>
+  <div>
+    <h3>Let's build something together.</h3>
+    <div class="act">
+      <a class="mail" href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+      <button type="button" onclick="location.href='mailto:lindsay@artisan.technology'">Send email</button>
+      <button type="button" id="copy">Copy address</button>
+    </div>
+    <p style="margin-top:18px">Chicago, IL</p>
+  </div>
+</section>
+
+<footer>
+  <span>© Artisan Technology LLC</span>
+  <span>No web fonts. No images. No tracking.</span>
+</footer>
+
+<script>
+  document.getElementById('copy').addEventListener('click', e => {
+    const b = e.currentTarget;
+    navigator.clipboard.writeText('lindsay@artisan.technology').then(
+      () => { b.textContent = 'Copied.'; setTimeout(() => b.textContent = 'Copy address', 1600); },
+      () => { b.textContent = 'Copy failed'; });
+  });
+</script>
+</body>
+</html>
