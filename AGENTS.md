@@ -50,7 +50,11 @@ V21. Combine V09 and V11 - a utilitarian take on mid-century design. more muted 
 
 V22. Mixing Console. pushing faders up and down changes the displayed text and visuals. 
 
+V23. Pixel Rapid Image Swap. A quick succession of images that have pixelated sections. Text that shows momentarily, like a computational process running in the background. Use similiar design elements to V20 but make it edgier and more modern, like a hacker's computer screen from 2049. 
 
+V24. Try a new version of V04. it should have the same animations, but change the colors to feel less like i'm floating on a cloud in barbie land and more like im moving toward a future existence. the colors should be arker and more stark but not brooding or dystopian. make the text a little less script and a little more utilitarian. 
+
+V25. copy v24 almost exactly, but in the exploding chip part, add a little more detail and "wow" factor - add glow to components and a few more highlighting colors - used sparingly (blues and teals, with a few reds and oranges). also add some noise / grain as you did in the hero section. make it feel more real. in the [04 - background] section, where credentials and experience are listed, add the moving circuit board background effect from v01 - again make the color palette match, but add some sparing color accents in deep blues and teals with some very sparse reds and oranges as highlights. 
 
 
 

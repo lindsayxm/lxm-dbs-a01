@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SNR Animation — demo</title>
+<!-- optional fonts; the component falls back to system fonts without them -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="snr-animation.css">
+<style>
+  html, body { margin: 0; background: #0d1117; }
+</style>
+</head>
+<body>
+
+<section class="snr" data-snr>
+  <div class="snr__mist" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <canvas class="snr__field" aria-hidden="true"></canvas>
+
+  <p class="snr__word snr__word--noise" aria-hidden="true">noise<small>problems that don't fit</small></p>
+  <p class="snr__word snr__word--signal" aria-hidden="true">signal<small>creative leading edge</small></p>
+
+  <div class="snr__lens" aria-hidden="true"></div>
+  <p class="snr__lens-cap snr__tiny snr__bracket">custom solution</p>
+
+  <div class="snr__grain" aria-hidden="true"></div>
+</section>
+
+<script src="snr-animation.js"></script>
+</body>
+</html>
