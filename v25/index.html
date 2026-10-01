@@ -3,717 +3,244 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Artisan Technology — Signal</title>
+<title>Artisan Technology — AT-01</title>
 <meta name="description" content="Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pearl: #0d1117;
-    --ink: #e9eef4;
-    --ink-soft: rgba(233, 238, 244, .62);
-    --ink-faint: rgba(233, 238, 244, .3);
-    --coral: #d9a45b;
-    --peach: #d9a45b;
-    --lilac: #4f7cff;
-    --sky: #3ae0c8;
-    --serif: "Space Grotesk", "Helvetica Neue", sans-serif;
-    --sans: "JetBrains Mono", ui-monospace, monospace;
-    --gutter: clamp(18px, 4vw, 56px);
+    --paper: #ecebe6;
+    --ink: #121212;
+    --grey: #77756f;
+    --line: #c9c7bf;
+    --orange: #e4572e;
+    --sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --g: clamp(16px, 3vw, 44px);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--pearl); color: var(--ink);
-    font-family: var(--sans); font-weight: 300; font-size: 15px; line-height: 1.6;
-    -webkit-font-smoothing: antialiased; overflow-x: hidden;
-  }
-  ::selection { background: var(--lilac); color: #fff; }
+  html { background: var(--paper); }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--orange); color: var(--paper); }
   a { color: inherit; }
+  .mono { font-family: var(--mono); font-size: 11px; line-height: 1.5; letter-spacing: .02em; }
+  .mono b { font-weight: 500; }
+  .grey { color: var(--grey); }
+  .bar { display: block; height: 10px; background: var(--ink); }
+  .wrap { padding: 0 var(--g); }
 
-  /* ---------- atmosphere: drifting pastel mist + film grain ---------- */
-  .mist { position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(90px); opacity: .55; }
-  .mist i { position: absolute; border-radius: 50%; animation: drift 38s ease-in-out infinite alternate; }
-  .mist i:nth-child(1) { width: 55vw; height: 55vw; left: 5%;  top: 8%;  background: #123a52; }
-  .mist i:nth-child(2) { width: 48vw; height: 48vw; left: 52%; top: 0%;  background: #1c2a5c; animation-duration: 46s; }
-  .mist i:nth-child(3) { width: 50vw; height: 50vw; left: 30%; top: 48%; background: #0f4a4e; animation-duration: 52s; }
-  .mist i:nth-child(4) { width: 36vw; height: 36vw; left: 70%; top: 55%; background: #3a2e1a; animation-duration: 42s; }
-  @keyframes drift { to { transform: translate(8vw, -6vh) scale(1.15); } }
-  .grain {
-    position: fixed; inset: -100px; z-index: 30; pointer-events: none; opacity: .09; mix-blend-mode: screen;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .8  0 0 0 0 .85  0 0 0 0 .9  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    animation: grain .9s steps(5) infinite;
-  }
-  @keyframes grain { 20% { transform: translate(-30px, 20px); } 40% { transform: translate(25px, -35px); } 60% { transform: translate(-15px, -10px); } 80% { transform: translate(35px, 30px); } }
-  main, footer { position: relative; z-index: 1; }
+  /* ================= HERO: spec poster ================= */
+  .hero { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: var(--g); gap: clamp(16px, 2.4vw, 32px); }
+  .top { display: grid; grid-template-columns: auto auto 1fr auto auto; align-items: start; gap: clamp(12px, 2vw, 28px); }
+  .big { font-weight: 800; font-size: clamp(64px, 10vw, 160px); line-height: .78; letter-spacing: -.06em; }
+  .top .sub { font-size: clamp(14px, 1.3vw, 19px); font-weight: 500; letter-spacing: -.01em; padding-top: .1em; }
+  .top .bar { align-self: center; margin-top: -1.5vw; }
+  .top .r { text-align: right; }
 
-  /* ---------- poster type ---------- */
-  .tiny {
-    font-family: var(--sans); font-weight: 400; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--ink-soft); line-height: 1.5;
-  }
-  .bracket::before { content: "[ "; } .bracket::after { content: " ]"; }
-  .serif { font-family: var(--serif); font-weight: 400; }
-  .reveal { opacity: 0; filter: blur(12px); transform: translateY(24px); transition: opacity 1.6s ease, filter 1.6s ease, transform 1.6s cubic-bezier(.2,.7,.2,1); }
-  .reveal.in { opacity: 1; filter: blur(0); transform: none; }
+  .stage { display: grid; grid-template-columns: 1fr minmax(0, 2.2fr) 1fr; align-items: center; gap: clamp(16px, 3vw, 40px); }
+  .stage .col { display: grid; gap: 22px; align-self: stretch; align-content: space-between; }
+  .stage .col.r { text-align: right; }
+  .device { position: relative; aspect-ratio: 1075 / 628; width: 100%; }
+  .device img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: grayscale(1) contrast(1.15) brightness(1.08); }
+  .device .block { position: absolute; left: -9%; top: 41%; width: 64%; height: 26%; background: var(--orange); mix-blend-mode: multiply; }
+  .device .cal { position: absolute; right: 0; bottom: -18px; }
 
-  /* ---------- hero: noise → filter → signal ---------- */
-  .hero { position: relative; height: 100vh; min-height: 620px; overflow: hidden; }
-  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .corner { position: absolute; z-index: 3; }
-  .corner.tl { top: 26px; left: var(--gutter); }
-  .corner.tr { top: 26px; right: var(--gutter); text-align: right; }
-  .corner.bl { bottom: 30px; left: var(--gutter); }
-  .corner.br { bottom: 34px; right: var(--gutter); text-align: right; }
+  .foot { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(16px, 3vw, 48px); align-items: end; border-top: 1px solid var(--ink); padding-top: 14px; }
+  .foot h1 { font-weight: 800; font-size: clamp(40px, 6.6vw, 112px); line-height: .84; letter-spacing: -.055em; }
+  .foot .lede { font-size: clamp(15px, 1.25vw, 18px); font-weight: 500; max-width: 34ch; }
+  .foot .lede + .mono { margin-top: 14px; }
 
-  .word { position: absolute; z-index: 2; top: 25%; font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 4.6vw, 76px); line-height: 1; letter-spacing: -.03em; text-transform: lowercase; }
-  .word.noise {
-    left: var(--gutter); color: rgba(233,238,244,.45);
-    text-shadow: 3px 0 0 rgba(217,164,91,.55), -3px 0 0 rgba(79,124,255,.6);
-    filter: blur(1.4px);
-    animation: jitter .18s steps(2) infinite;
-  }
-  @keyframes jitter { 0% { transform: translate(0,0); } 25% { transform: translate(-2px,1px) skewX(-4deg); } 50% { transform: translate(2px,-1px); } 75% { transform: translate(-1px,-2px) skewX(3deg); } }
-  .word.signal { right: var(--gutter); color: #fff; text-shadow: 0 0 20px rgba(58,224,200,.6), 0 0 50px rgba(58,224,200,.3); }
-  .word small { display: block; font-family: var(--sans); font-style: normal; font-weight: 400; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-top: 12px; filter: none; text-shadow: none; }
-  .word.signal small { text-align: right; }
-
-  .lens {
-    position: absolute; z-index: 2; left: 50%; top: 52%;
-    width: clamp(66px, 8vw, 118px); height: 58vh; transform: translate(-50%, -50%);
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(150,235,222,.16), rgba(150,235,222,.03) 50%, rgba(150,235,222,.12));
-    -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
-    border: 1px solid rgba(58,224,200,.55);
-    box-shadow: 0 0 60px 4px rgba(58,224,200,.22), inset 0 0 30px rgba(58,224,200,.18), 0 30px 80px -30px rgba(0,0,0,.6);
-    overflow: hidden;
-  }
-  .lens::before {
-    content: ""; position: absolute; inset: -40%;
-    background: conic-gradient(from 0deg, #3ae0c8, #4f7cff, #0d1117, #d9a45b, #3ae0c8);
-    opacity: .22; mix-blend-mode: screen; filter: blur(14px);
-    animation: spin 14s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(1turn); } }
-  .lens-cap { position: absolute; z-index: 3; left: 50%; top: calc(52% - 29vh - 34px); transform: translateX(-50%); text-align: center; white-space: nowrap; }
-
-  .title { position: absolute; z-index: 3; left: var(--gutter); bottom: 64px; }
-  .title h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(46px, 8vw, 140px); line-height: .86; letter-spacing: -.05em; }
-  .title h1 em { display: block; font-style: normal; font-weight: 300; color: var(--sky); }
-  @media (max-width: 700px) {
-    .word { top: 18%; }
-    .title { bottom: 80px; }
-    .corner.br, .lens-cap { display: none; }
+  @media (max-width: 860px) {
+    .top { grid-template-columns: auto 1fr auto; }
+    .top .bar, .top .hide { display: none; }
+    .stage { grid-template-columns: 1fr; }
+    .stage .col { grid-template-columns: 1fr 1fr; }
+    .stage .col.r { text-align: left; }
+    .stage .col.l { order: 2; } .stage .col.r { order: 3; }
+    .foot { grid-template-columns: 1fr; }
   }
 
-  /* ---------- sections ---------- */
-  section { padding: clamp(110px, 16vw, 220px) var(--gutter); }
-  .statement { text-align: center; overflow-x: clip; }
-  .statement p.big {
-    font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 4.4vw, 68px); line-height: 1.06; letter-spacing: -.035em;
-    max-width: 18ch; margin: 28px auto 0;
-  }
-  /* the chip, exploded into its glass layers on scroll */
-  .stack { position: relative; width: min(100%, 980px); aspect-ratio: 1294 / 470; margin: clamp(130px, 15vw, 220px) auto clamp(80px, 10vw, 150px); --p: 0; }
-  .stack canvas { position: absolute; left: -10%; top: -45%; width: 120%; height: 190%; pointer-events: none;
-    -webkit-mask: radial-gradient(ellipse 50% 50% at 50% 50%, #000 75%, transparent 100%); mask: radial-gradient(ellipse 50% 50% at 50% 50%, #000 75%, transparent 100%); }
-  .stack .lbl { position: absolute; transform: translateY(-50%); white-space: nowrap; opacity: var(--p); text-align: left; }
-  .stack .lbl::before { content: ""; display: inline-block; width: 40px; height: 1px; background: var(--sky); vertical-align: middle; margin-right: 10px; }
-  @media (max-width: 700px) { .stack .lbl { display: none; } }
-  .statement em { font-style: normal; color: transparent; background: linear-gradient(90deg, #4f7cff, #3ae0c8 60%, #ffffff); -webkit-background-clip: text; background-clip: text; padding: 0 .12em 0 .02em; margin-right: -.1em; }
+  /* ================= MANUAL SECTIONS ================= */
+  .sec { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 clamp(12px, 2vw, 24px); padding: clamp(56px, 8vw, 110px) var(--g); border-top: 10px solid var(--ink); }
+  .sec .idx { grid-column: 1 / 4; }
+  .sec .idx .n { font-weight: 800; font-size: clamp(48px, 6vw, 96px); line-height: .8; letter-spacing: -.05em; }
+  .sec .idx .mono { margin-top: 14px; }
+  .sec .body { grid-column: 4 / 13; }
+  .sec h2 { font-weight: 800; font-size: clamp(36px, 5vw, 80px); line-height: .9; letter-spacing: -.05em; max-width: 14ch; }
+  .sec .lead { font-size: clamp(19px, 1.7vw, 25px); font-weight: 500; line-height: 1.3; letter-spacing: -.01em; max-width: 36ch; margin-top: 26px; }
+  .sec p { max-width: 58ch; }
+  @media (max-width: 860px) { .sec .idx, .sec .body { grid-column: 1 / -1; } .sec .idx { margin-bottom: 28px; } }
 
-  .engineer { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(40px, 6vw, 100px); align-items: center; }
-  /* the diagram sits on a frosted-glass card, like the lens */
-  .plate { position: relative; }
-  .plate .card {
-    padding: clamp(12px, 1.6vw, 22px); border-radius: 6px;
-    background: rgba(150,235,222,.05);
-    -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
-    border: 1px solid rgba(58,224,200,.35);
-    box-shadow: 0 0 50px rgba(58,224,200,.12), 0 30px 70px -30px rgba(0,0,0,.6);
-  }
-  .plate img { display: block; width: 100%; height: auto; border-radius: 2px; filter: invert(1) hue-rotate(180deg) saturate(.8) brightness(.95); }
-  .plate figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 18px; padding-top: 12px; border-top: 1px solid rgba(233,238,244,.18); }
-  .bio h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(50px, 7vw, 116px); line-height: .88; letter-spacing: -.05em; margin: 18px 0 40px; }
-  .bio h2 em { display: block; font-style: normal; font-weight: 300; color: var(--sky); }
-  .bio .lead { font-family: var(--serif); font-weight: 400; font-size: clamp(21px, 2vw, 30px); line-height: 1.3; letter-spacing: -.015em; max-width: 26ch; margin-bottom: 34px; }
-  .bio .lead q { color: var(--sky); quotes: "“" "”"; }
-  .bio .fine { columns: 2; column-gap: 36px; max-width: 640px; color: var(--ink-soft); }
-  .bio .fine p { break-inside: avoid; margin-bottom: 14px; }
-  @media (max-width: 820px) { .engineer { grid-template-columns: 1fr; } .bio .fine { columns: 1; } }
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); margin-top: 44px; }
+  .modes div { padding: 14px 16px 22px 0; border-right: 1px solid var(--line); }
+  .modes div + div { padding-left: 16px; }
+  .modes div:last-child { border-right: 0; }
+  .modes b { display: block; font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin: 26px 0 6px; }
+  @media (max-width: 640px) { .modes { grid-template-columns: 1fr; } .modes div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0 !important; } }
 
-  .arc-head { text-align: center; }
-  .arc-head p.big { font-family: var(--serif); font-weight: 400; letter-spacing: -.035em; font-size: clamp(28px, 3.6vw, 54px); line-height: 1.08; max-width: 20ch; margin: 24px auto 0; }
-  .arc { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: clamp(8px, 2vw, 28px); margin-top: clamp(60px, 8vw, 110px); }
-  .stage { text-align: center; }
-  .stage svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .stage h3 { font-family: var(--sans); font-weight: 500; text-transform: uppercase; letter-spacing: .14em; font-size: clamp(14px, 1.3vw, 18px); margin-top: 14px; }
-  .arc .chev { font-family: var(--sans); font-size: clamp(24px, 3vw, 44px); color: var(--ink-faint); }
-  /* block-letter stages with a progress line that fills on scroll */
-  .steps { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(50px, 7vw, 90px); text-align: left; --p: 0; }
-  .steps .track { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(233,238,244,.14); }
-  .steps .track i { position: absolute; inset: 0 auto 0 0; width: calc(var(--p) * 100%); background: #d9a45b; box-shadow: 0 0 10px rgba(217,164,91,.5); }
-  .steps .step { padding: clamp(22px, 3vw, 40px) clamp(14px, 2vw, 30px) 6px 0; }
-  .steps .step + .step { border-left: 1px solid rgba(233,238,244,.14); padding-left: clamp(14px, 2vw, 30px); }
-  .steps .meta { display: flex; align-items: center; gap: 16px; font-family: var(--sans); font-size: 13px; letter-spacing: .1em; color: #d9a45b; }
-  .steps .meta hr { flex: 1; border: 0; height: 1px; background: rgba(233,238,244,.16); }
-  .steps .meta b { font-weight: 700; letter-spacing: -.1em; opacity: .35; transition: opacity .4s; }
-  .steps .meta b.sq { width: 11px; height: 11px; background: #d9a45b; }
-  .steps h3 { margin-top: clamp(16px, 2.4vw, 34px); font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; font-size: clamp(42px, 5.4vw, 92px); line-height: .82; letter-spacing: .005em; text-transform: uppercase;
-    color: transparent; -webkit-text-stroke: 1px rgba(233,238,244,.4); transition: color .5s, -webkit-text-stroke-color .5s; }
-  .steps .step.on h3 { color: #ece8de; -webkit-text-stroke-color: transparent; }
-  .steps .step.on .meta b { opacity: 1; }
-  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } .steps .step + .step { border-left: 0; padding-left: 0; } }
-  .arc .stage h3 { display: none; }
-  .arc-note { max-width: 520px; margin: 50px auto 0; text-align: center; color: var(--ink-soft); }
-  @media (max-width: 700px) { .arc { grid-template-columns: 1fr; } .arc .chev { text-align: center; transform: rotate(90deg); } }
+  /* operator: figure on the paper, an orange plate behind */
+  .operator { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(20px, 4vw, 56px); align-items: end; }
+  .plate { position: relative; aspect-ratio: 4 / 5; }
+  .plate::before { content: ""; position: absolute; left: 12%; right: 0; top: 18%; bottom: 0; background: var(--orange); }
+  .plate::after { content: ""; position: absolute; left: 0; right: 30%; top: 46%; height: 10px; background: var(--ink); }
+  .plate img { position: absolute; left: 6%; bottom: 0; height: 100%; filter: grayscale(1) contrast(1.15) brightness(1.15); }
+  .plate .cap { position: absolute; left: 0; bottom: -40px; right: 0; display: flex; justify-content: space-between; }
+  .operator .text p + p { margin-top: 14px; }
+  .operator q { quotes: "“" "”"; }
+  @media (max-width: 860px) { .operator { grid-template-columns: 1fr; } .plate { max-width: 420px; margin-bottom: 50px; } }
 
-  /* near-black board like v01: a stark break from the haze above and below */
-  main > section:not(.ethos) { position: relative; z-index: 1; }
-  /* ---------- ethos: the chip and the tagline, in the dark ---------- */
-  .ethos { position: relative; z-index: 0; isolation: isolate; background: #05070a; padding: clamp(80px, 10vw, 140px) var(--gutter) clamp(60px, 8vw, 120px); }
-  .ethos::before { content: ""; position: absolute; left: 0; right: 0; top: -70vh; height: 70vh; z-index: -1; pointer-events: none;
-    background: linear-gradient(180deg, rgba(5,7,10,0) 0, rgba(5,7,10,.55) 45%, #05070a 100%); }
-  .ethos .wrap { position: relative; max-width: 1400px; margin: 0 auto; }
-  @media (min-width: 900px) { .ethos .photo { margin: 0 clamp(-60px, -3vw, 0px); } }
-  .ethos blockquote, .ethos .tag { padding-left: clamp(0px, 2vw, 30px); }
-  .ethos .photo { position: relative; aspect-ratio: 1294 / 422; overflow: hidden;
-    -webkit-mask: linear-gradient(180deg, #000 60%, transparent 100%); mask: linear-gradient(180deg, #000 60%, transparent 100%); }
-  .ethos .photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(calc(1.12 - var(--e, 0) * .12)) translateY(calc((1 - var(--e, 0)) * 3%)); transition: transform .1s linear; filter: saturate(1.05) contrast(1.04); }
-  .ethos blockquote { position: relative; margin-top: clamp(-80px, -5vw, -30px); font-family: "Newsreader", Georgia, serif; font-weight: 300; font-size: clamp(36px, 5.4vw, 92px); line-height: 1.08; letter-spacing: -.025em; color: #ece8de; max-width: 22ch; text-shadow: 0 2px 30px rgba(5,7,10,.6); }
-  .ethos blockquote b { font-family: "Bebas Neue", Impact, sans-serif; font-weight: 400; letter-spacing: 0; font-size: 1.1em; line-height: .9; }
-  .ethos blockquote em { font-style: italic; color: transparent; background: linear-gradient(90deg, #5b5bff, #b04dff 45%, #ff4f8b); -webkit-background-clip: text; background-clip: text; padding-right: .08em; }
-  .ethos .tag { margin-top: clamp(30px, 4vw, 54px); font-family: var(--sans); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft); }
-  .ethos .tag::before { content: "◆"; color: #d9a45b; margin-right: 10px; font-size: 10px; }
-  /* ---------- 04: stark light record ---------- */
-  .credits { position: relative; z-index: 1; background: #dcdde1; color: #16181d; padding: clamp(70px, 9vw, 130px) var(--gutter) clamp(90px, 12vw, 170px); }
-  .credits > .tiny { color: #5a5e66; text-align: left; max-width: 1360px; margin: 0 auto clamp(36px, 5vw, 60px); }
-  .credits .grid { display: grid; grid-template-columns: minmax(240px, 4fr) 8fr; gap: clamp(40px, 8vw, 140px); max-width: 1360px; margin: 0 auto; align-items: start; }
-  .credits figure { margin: 0; }
-  .credits .frame { position: relative; padding: 12px; }
-  .credits figure img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 30%; clip-path: polygon(0 0, 100% 0, 100% 94%, 94% 100%, 0 100%); }
-  .credits .frame::before, .credits .frame::after { content: ""; position: absolute; width: 22px; height: 22px; border-color: #16181d; border-style: solid; }
-  .credits .frame::before { left: 0; top: 0; border-width: 1.5px 0 0 1.5px; }
-  .credits .frame::after { right: 0; bottom: 0; border-width: 0 1.5px 1.5px 0; }
-  .credits figcaption { margin-top: 22px; padding-left: 12px; font-family: var(--sans); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #3a3d44; }
-  .credits dl { border-top: 1.5px solid #16181d; }
-  .credits .row { display: grid; grid-template-columns: 1fr 3fr; gap: 20px; padding: 26px 0 28px; border-bottom: 1px solid #a9acb3; }
-  .credits dt { font-family: var(--sans); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #3a3d44; padding-top: .45em; }
-  .credits dd + dd { margin-top: 18px; }
-  .credits .items { min-width: 0; }
-  .credits dd b { display: block; font-family: "Newsreader", Georgia, serif; font-weight: 500; font-size: clamp(19px, 1.7vw, 26px); line-height: 1.25; color: #16181d; letter-spacing: -.005em; }
-  .credits dd span { display: block; margin-top: 4px; font-family: "Newsreader", Georgia, serif; font-weight: 400; font-size: clamp(16px, 1.3vw, 20px); color: #5a5e66; }
-  @media (max-width: 820px) { .credits .grid { grid-template-columns: 1fr; } .credits figure { max-width: 360px; } .credits .row { grid-template-columns: 1fr; gap: 10px; } }
+  /* procedure */
+  ol.steps { list-style: none; margin-top: 40px; border-top: 1px solid var(--ink); counter-reset: s; }
+  ol.steps li { display: grid; grid-template-columns: 70px 1fr auto; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  ol.steps li b { font-size: clamp(30px, 4vw, 64px); font-weight: 800; letter-spacing: -.05em; line-height: .9; }
+  ol.steps li:last-child b { color: var(--orange); }
 
-  .cta { position: relative; min-height: 92vh; display: grid; place-items: center; text-align: center; padding-top: 80px; padding-bottom: 80px; background: linear-gradient(180deg, #0c1016 0, #05070a 45%); }
-  .cta canvas { position: absolute; left: 0; top: 50%; width: 100%; height: 360px; transform: translateY(-50%); pointer-events: none; }
-  .cta .inner { position: relative; }
-  .cta h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(48px, 8.6vw, 150px); line-height: .9; letter-spacing: -.05em; margin: 24px 0 44px; text-shadow: 0 0 40px rgba(13,17,23,.95); }
-  .cta h2 em { display: block; font-style: normal; font-weight: 300; color: var(--sky); }
-  .cta a.mail { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; padding: 14px 26px; border: 1px solid rgba(58,224,200,.5); border-radius: 2px; background: rgba(13,17,23,.5); backdrop-filter: blur(8px); transition: background .4s, box-shadow .4s; }
-  .cta a.mail:hover { background: var(--sky); color: #0d1117; box-shadow: 0 0 40px rgba(58,224,200,.5); }
-  .cta .where { margin-top: 30px; }
+  /* spec tables */
+  .specs { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); margin-top: 40px; }
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; padding-bottom: 10px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 0; border-top: 1px solid var(--line); }
+  thead th { border-top: 2px solid var(--ink); font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--grey); }
+  td:first-child { width: 28%; font-family: var(--mono); font-size: 12px; padding-right: 12px; }
+  td b { display: block; font-weight: 700; letter-spacing: -.01em; }
+  td span { color: var(--grey); font-size: 14px; }
+  @media (max-width: 860px) { .specs { grid-template-columns: 1fr; } }
 
-  footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 22px var(--gutter) 28px; background: #05070a; position: relative; z-index: 1; }
+  /* contact */
+  .contact h2 { max-width: none; font-size: clamp(44px, 8vw, 140px); }
+  .contact .row { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; margin-top: 36px; border-top: 1px solid var(--ink); padding-top: 16px; }
+  .contact a { font-weight: 700; font-size: clamp(20px, 2.6vw, 40px); letter-spacing: -.03em; text-decoration: none; }
+  .contact a::after { content: " ↗"; color: var(--orange); }
+  .contact a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  @media (max-width: 640px) { .contact .row { grid-template-columns: 1fr; } }
 
-  .thumb .reveal { opacity: 1; filter: none; transform: none; transition: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; filter: none; transform: none; transition: none; }
-    .mist i, .grain, .word.noise, .lens::before { animation: none; }
-  }
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px var(--g) 22px; border-top: 1px solid var(--ink); }
 </style>
 </head>
 <body>
-<div class="mist" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-<div class="grain" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="top">
+    <span class="big">AT</span>
+    <span class="sub">Artisan<br>Technology</span>
+    <span class="bar"></span>
+    <span class="sub r hide">Custom<br>hardware + software</span>
+    <span class="big">01</span>
+  </div>
+
+  <div class="stage">
+    <div class="col l">
+      <p class="mono"><b>UNIT</b><br>AT-01 / Bespoke<br>Build to order</p>
+      <p class="mono"><b>OPERATOR</b><br>Lindsay Moore<br>Principal Engineer</p>
+      <p class="mono grey">Creative<br>leading edge.</p>
+    </div>
+    <div class="device">
+      <img src="../img/esp32-cutout.png" alt="A microcontroller development board, photographed as a product shot">
+      <span class="block" aria-hidden="true"></span>
+      <span class="cal mono grey">FIG. 01 — CUSTOM HARDWARE</span>
+    </div>
+    <div class="col r">
+      <p class="mono"><b>LOCATION</b><br>Chicago, IL<br>41.88° N / 87.63° W</p>
+      <p class="mono"><b>SCOPE</b><br>Idea → Prototype<br>→ Production</p>
+      <p class="mono grey">Software · Hardware<br>Systems</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h1>Artisan<br>Technology</h1>
+    <div>
+      <p class="lede">Artisan Technology LLC designs and builds custom software and hardware to solve problems that don't fit off-the-shelf solutions.</p>
+      <p class="mono grey">SEC. 1.0 — 5.0 BELOW ↓</p>
+    </div>
+  </div>
+</header>
 
 <main>
-  <header class="hero">
-    <canvas id="field" aria-hidden="true"></canvas>
-
-    <p class="corner tl tiny">Artisan Technology LLC<br>Custom software + hardware</p>
-    <p class="corner tr tiny">Chicago, IL<br>41.88° N — 87.63° W</p>
-
-    <p class="word noise" aria-hidden="true">noise<small>problems that don't fit</small></p>
-    <p class="word signal" aria-hidden="true">signal<small>creative leading edge</small></p>
-
-    <div class="lens" aria-hidden="true"></div>
-    <p class="lens-cap tiny bracket">custom solution</p>
-
-    <div class="title">
-      <h1>Artisan <em>Technology</em></h1>
-    </div>
-    <p class="corner bl tiny">Idea » Prototype » Production</p>
-    <p class="corner br tiny">Scroll ↓</p>
-  </header>
-
-  <section class="statement">
-    <p class="tiny bracket reveal">01 — the practice</p>
-    <p class="big reveal">Artisan Technology LLC designs and builds custom software and hardware to solve problems that <em>don't fit off-the-shelf solutions.</em></p>
-    <figure class="stack" id="stack" role="img" aria-label="A glowing line drawing of a three-layer chip that separates into its layers as you scroll">
-      <canvas id="stackcv"></canvas>
-      <span class="lbl a tiny">L1 — software</span><span class="lbl b tiny">L2 — hardware</span><span class="lbl c tiny">L3 — systems</span>
-    </figure>
-  </section>
-
-  <section>
-    <div class="engineer">
-      <figure class="plate reveal">
-        <div class="card"><img src="../img/snr_noise_to_signal.png" alt="Signal-to-noise demonstration: a portrait bust and its intensity profile at 0, 10, 20 and 40 dB SNR, the signal emerging from noise as the ratio rises"></div>
-        <figcaption><span class="tiny bracket">signal-to-noise</span><span class="tiny">0 dB → 40 dB</span></figcaption>
-      </figure>
-      <div class="bio">
-        <p class="tiny bracket reveal">02 — principal engineer</p>
-        <h2 class="reveal">Lindsay <em>Moore</em></h2>
-        <p class="lead reveal">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <q>what if we did it this way?</q> and then building it.</p>
-        <div class="fine reveal">
-          <p>I design systems, build things that matter, and bring a maker's mindset to every problem. </p>
-          <Bring>I imagine big, tell the story that illuminates a path, then make sure we all finish together. </p>
-        </div>
+  <section class="sec">
+    <div class="idx"><div class="n">1.0</div><p class="mono grey">OVERVIEW</p></div>
+    <div class="body">
+      <h2>If we can dream it, we can build it.</h2>
+      <p class="lead">Three disciplines, one bench. </p>
+      <div class="modes">
+        <div><span class="mono grey">1.1</span><b>Hardware</b><p>Circuits, sensors and devices, from first sketch to working build.</p></div>
+        <div><span class="mono grey">1.2</span><b>Software</b><p>Firmware, tools and applications written for the problem at hand.</p></div>
+        <div><span class="mono grey">1.3</span><b>Systems</b><p>The pieces designed as one, and built with rigor and engineered for durability.</p></div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="arc-head">
-      <p class="tiny bracket reveal">03 — the full arc</p>
-      <p class="big reveal">I like interesting questions and the full arc.</p>
-    </div>
-    <div class="arc reveal">
-      <div class="stage"><svg viewBox="0 0 300 110" data-wave="0"></svg><h3>idea</h3></div>
-      <span class="chev" aria-hidden="true">»</span>
-      <div class="stage"><svg viewBox="0 0 300 110" data-wave="1"></svg><h3>prototype</h3></div>
-      <span class="chev" aria-hidden="true">»</span>
-      <div class="stage"><svg viewBox="0 0 300 110" data-wave="2"></svg><h3>production</h3></div>
-    </div>
-    <div class="steps" id="steps" aria-label="Idea, then prototype, then production">
-      <div class="track"><i></i></div>
-      <div class="step"><div class="meta"><span>01</span><hr><b>&gt;&gt;</b></div><h3>Idea</h3></div>
-      <div class="step"><div class="meta"><span>02</span><hr><b>&gt;&gt;</b></div><h3>Prototype</h3></div>
-      <div class="step"><div class="meta"><span>03</span><hr><b class="sq"></b></div><h3>Production</h3></div>
-    </div>
-  </section>
-
-  <section class="ethos" aria-label="Philosophy">
-    <div class="wrap">
-      <figure class="photo reveal"><img src="../img/artisan-technology.jpg" alt="A stacked glass circuit die with a gold-rimmed core"></figure>
-      <blockquote class="reveal">The best engineering is equal parts <b>RIGOR</b> and <em>imagination.</em></blockquote>
-      <p class="tag reveal">If we can dream it, we can build it.</p>
-    </div>
-  </section>
-
-  <section class="credits">
-    <p class="tiny bracket reveal">04 — background</p>
-    <div class="grid">
-      <figure class="reveal">
-        <div class="frame"><img src="../img/lindsay.jpg" alt="Portrait of Lindsay Moore"></div>
-        <figcaption>Chicago, IL</figcaption>
+  <section class="sec">
+    <div class="idx"><div class="n">2.0</div><p class="mono grey">OPERATOR</p></div>
+    <div class="body operator">
+      <figure class="plate">
+        <img src="../img/lindsay-v2-figure.png" alt="Lindsay Moore seated in an armchair">
+        <figcaption class="cap mono"><span><b>LINDSAY MOORE</b></span><span class="grey">PRINCIPAL ENGINEER</span></figcaption>
       </figure>
-      <dl class="reveal">
-        <div class="row"><dt>Education</dt>
-          <div class="items">
-          <dd><b>Master's in Computer Science</b><span>University of Chicago</span></dd>
-          <dd><b>Bachelor's in Production &amp; Business</b><span>McNally Smith College</span></dd>
-          </div>
-        </div>
-        <div class="row"><dt>Board</dt>
-          <div class="items">
-          <dd><b>Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></dd>
-          </div>
-        </div>
-        <div class="row"><dt>Research</dt>
-          <div class="items">
-          <dd><b>STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></dd>
-          <dd><b>Chicago Virtual Production</b><span>An independent virtual production group</span></dd>
-          </div>
-        </div>
-      </dl>
+      <div class="text">
+        <h2>Lindsay Moore</h2>
+        <p class="mono grey" style="margin-top:12px">PRINCIPAL ENGINEER · 10+ YEARS</p>
+        <p class="lead">I'm a Design Thinker with 10+ years of experience. Really, I'm someone who's spent a decade asking <q>what if we did it this way?</q> and then building it.</p>
+        <p style="margin-top:22px">I design systems, build things that matter, and bring a maker's mindset to every problem. I believe the best engineering is equal parts rigor and imagination.</p>
+      </div>
     </div>
   </section>
 
-  <section class="cta" id="contact">
-    <canvas id="calm" aria-hidden="true"></canvas>
-    <div class="inner">
-      <p class="tiny bracket reveal">05 — begin</p>
-      <h2 class="reveal">Let's build <em>together.</em></h2>
-      <a class="mail reveal" href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
-      <p class="where tiny reveal">Chicago, IL</p>
+  <section class="sec">
+    <div class="idx"><div class="n">3.0</div><p class="mono grey">PROCEDURE</p></div>
+    <div class="body">
+      <h2>The full arc.</h2>
+      <ol class="steps">
+        <li><span class="mono grey">3.1</span><b>Idea</b><span class="mono grey">Ask the interesting question</span></li>
+        <li><span class="mono grey">3.2</span><b>Prototype</b><span class="mono grey">Build it to find out</span></li>
+        <li><span class="mono grey">3.3</span><b>Production</b><span class="mono grey">Finish together</span></li>
+      </ol>
+      <p style="margin-top:26px">I like interesting questions and the full arc: idea &gt;&gt; prototype &gt;&gt; production. I imagine big, tell the story that illuminates a path, then make sure we all finish together.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="idx"><div class="n">4.0</div><p class="mono grey">SPECIFICATIONS</p></div>
+    <div class="body">
+      <h2>Background.</h2>
+      <div class="specs">
+        <table>
+          <caption class="mono"><b>4.1 EDUCATION</b></caption>
+          <thead><tr><th>DEGREE</th><th>FIELD / INSTITUTION</th></tr></thead>
+          <tbody>
+            <tr><td>M.S.</td><td><b>Computer Science</b><span>University of Chicago</span></td></tr>
+            <tr><td>M.S.</td><td><b>Informatics, Data Science</b><span>University of Minnesota</span></td></tr>
+            <tr><td>B.</td><td><b>Production &amp; Business</b><span>McNally Smith College</span></td></tr>
+          </tbody>
+        </table>
+        <table>
+          <caption class="mono"><b>4.2 COMMUNITY &amp; RESEARCH</b></caption>
+          <thead><tr><th>ROLE</th><th>ORGANIZATION</th></tr></thead>
+          <tbody>
+            <tr><td>Board</td><td><b>Pumping Station: One</b><span>Chicago's oldest and largest hackerspace</span></td></tr>
+            <tr><td>Research</td><td><b>STAGE Center</b><span>A multidisciplinary technology and arts lab at UChicago</span></td></tr>
+            <tr><td>Research</td><td><b>Chicago Virtual Production</b><span>An independent virtual production group</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec contact" id="contact">
+    <div class="idx"><div class="n">5.0</div><p class="mono grey">CONTACT</p></div>
+    <div class="body">
+      <h2>Let's build together.</h2>
+      <div class="row">
+        <a href="mailto:lindsay@artisan.technology">lindsay@artisan.technology</a>
+        <p class="mono">CHICAGO, IL<br><span class="grey">41.88° N / 87.63° W</span></p>
+      </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <span class="tiny">© Artisan Technology LLC</span>
-  <span class="tiny">Signal from noise · v25</span>
+<footer class="mono">
+  <span>© ARTISAN TECHNOLOGY LLC</span>
+  <span class="grey">DOC. AT-01 / REV. 11</span>
 </footer>
-
-<script>
-(() => {
-  const THUMB = location.search.includes('thumb');
-  if (THUMB) document.documentElement.classList.add('thumb');
-  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const TAU = Math.PI * 2;
-  const NOISE_COLS = ['217,164,91', '79,124,255', '58,224,200', '150,165,185'];
-
-  function fit(cv) {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    const w = cv.clientWidth, h = cv.clientHeight;
-    cv.width = w * dpr; cv.height = h * dpr;
-    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    return { ctx, w, h };
-  }
-
-  // A pure sine rendered as light: ghost echoes trailing behind, then halo → core.
-  function glowSine(ctx, x0, x1, cy, amp, k, phase, fade) {
-    const trace = (ph, a = amp) => {
-      ctx.beginPath();
-      for (let x = x0; x <= x1; x += 3) {
-        const y = cy + a * Math.sin(k * x - ph);
-        x === x0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-      }
-    };
-    const g = ctx.createLinearGradient(x0, 0, x1, 0);
-    g.addColorStop(0, `rgba(79,124,255,${fade})`); g.addColorStop(.5, `rgba(58,224,200,${fade})`); g.addColorStop(1, `rgba(220,245,255,${fade * .9})`);
-    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    for (let e = 4; e >= 1; e--) {
-      ctx.globalAlpha = .09 * (5 - e) / 4; ctx.strokeStyle = g; ctx.lineWidth = 1.2;
-      trace(phase - e * .32, amp * (1 - e * .04)); ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = g;
-    ctx.lineWidth = 26; ctx.globalAlpha = .1; trace(phase); ctx.stroke();
-    ctx.lineWidth = 11; ctx.globalAlpha = .22; trace(phase); ctx.stroke();
-    ctx.lineWidth = 4.5; ctx.globalAlpha = .55; trace(phase); ctx.stroke();
-    ctx.globalAlpha = 1; ctx.strokeStyle = 'rgba(255,255,255,.95)'; ctx.lineWidth = 1.6; trace(phase); ctx.stroke();
-  }
-
-  // ---------- hero field ----------
-  const field = document.getElementById('field');
-  let F, strands = [], motes = [];
-  function setupField() {
-    F = fit(field);
-    strands = Array.from({ length: 7 }, (_, s) => ({
-      col: NOISE_COLS[s % NOISE_COLS.length],
-      parts: Array.from({ length: 6 }, () => ({ a: Math.random(), f: .012 + Math.random() * .2, p: Math.random() * TAU, w: (Math.random() - .5) * 14 })),
-    }));
-    motes = Array.from({ length: Math.round(F.w / 18) }, () => ({ x: Math.random() * F.w, y: Math.random() * F.h, r: .6 + Math.random() * 1.8, v: 4 + Math.random() * 12, tw: Math.random() * TAU }));
-  }
-
-  function drawField(ts) {
-    const { ctx, w, h } = F;
-    ctx.clearRect(0, 0, w, h);
-    const cy = h * .52, amp = Math.min(h * .1, 84), k = TAU / Math.max(260, w * .2), phase = ts * 1.7;
-    const fx = w / 2;
-
-    // light gathering behind the lens
-    const halo = ctx.createRadialGradient(fx, cy, 0, fx, cy, Math.max(w, h) * .32);
-    halo.addColorStop(0, 'rgba(58,224,200,.14)'); halo.addColorStop(1, 'rgba(58,224,200,0)');
-    ctx.fillStyle = halo; ctx.fillRect(0, 0, w, h);
-
-    // --- the noisy input: carrier buried under static ---
-    const env = x => .55 + .6 * (1 - x / fx);
-    ctx.lineJoin = 'round';
-    for (const s of strands) {
-      ctx.beginPath();
-      for (let x = -10; x <= fx + 20; x += 3) {
-        let n = 0;
-        for (const q of s.parts) n += q.a * Math.sin(q.f * x + q.p + q.w * ts);
-        n = n / 2.2 * amp * env(x) + (Math.random() - .5) * amp * .5 * env(x);
-        const y = cy + amp * Math.sin(k * x - phase) + n;
-        x === -10 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-      }
-      ctx.strokeStyle = `rgba(${s.col},.09)`; ctx.lineWidth = 6; ctx.stroke();
-      ctx.strokeStyle = `rgba(${s.col},.55)`; ctx.lineWidth = 1; ctx.stroke();
-    }
-    // static: specks clustered around the signal, a few loose everywhere, torn scanlines
-    for (let i = 0; i < 520; i++) {
-      const x = Math.random() * (fx + 10);
-      const spread = i < 420 ? (Math.random() + Math.random() + Math.random() - 1.5) * amp * 2.2 * env(x) : (Math.random() - .5) * h;
-      ctx.fillStyle = `rgba(${NOISE_COLS[i & 3]},${.12 + Math.random() * .5})`;
-      const r = .6 + Math.random() * 1.8;
-      ctx.fillRect(x, cy + spread, r, r);
-    }
-    for (let i = 0; i < 4; i++) {
-      const y = cy + (Math.random() - .5) * amp * 5, x = Math.random() * fx * .9, len = 20 + Math.random() * 140;
-      ctx.fillStyle = `rgba(233,238,244,${.2 + Math.random() * .3})`; ctx.fillRect(x, y, len, 1);
-      ctx.fillStyle = `rgba(${NOISE_COLS[i]},.25)`; ctx.fillRect(x + 4, y + 2, len * .7, 1);
-    }
-
-    // --- the clean output ---
-    glowSine(ctx, fx - 10, w + 10, cy, amp, k, phase, 1);
-
-    // --- dust motes drifting up through the light ---
-    for (const m of motes) {
-      m.y -= m.v / 60; if (m.y < -5) { m.y = h + 5; m.x = Math.random() * w; }
-      const a = .25 + .25 * Math.sin(ts * 1.5 + m.tw);
-      ctx.fillStyle = `rgba(160,240,228,${a})`;
-      ctx.beginPath(); ctx.arc(m.x + Math.sin(ts * .4 + m.tw) * 6, m.y, m.r, 0, TAU); ctx.fill();
-    }
-  }
-
-  // ---------- closing calm sine ----------
-  const calm = document.getElementById('calm');
-  let C;
-  function drawCalm(ts) {
-    const { ctx, w, h } = C;
-    ctx.clearRect(0, 0, w, h);
-    const k = TAU / Math.max(320, w * .28);
-    // a softer, more diffused take on glowSine so the headline reads over it
-    const cy = h / 2, amp = Math.min(70, h * .2), ph = ts * .9;
-    const trace = () => { ctx.beginPath(); for (let x = -10; x <= w + 10; x += 3) { const y = cy + amp * Math.sin(k * x - ph); x === -10 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); } };
-    const g = ctx.createLinearGradient(0, 0, w, 0);
-    g.addColorStop(0, 'rgba(79,124,255,1)'); g.addColorStop(.5, 'rgba(58,224,200,1)'); g.addColorStop(1, 'rgba(220,245,255,1)');
-    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = g;
-    ctx.save(); ctx.filter = 'blur(18px)'; ctx.globalAlpha = .22; ctx.lineWidth = 40; trace(); ctx.stroke(); ctx.restore();
-    ctx.save(); ctx.filter = 'blur(8px)'; ctx.globalAlpha = .22; ctx.lineWidth = 14; trace(); ctx.stroke(); ctx.restore();
-    ctx.globalAlpha = .28; ctx.lineWidth = 2.4; trace(); ctx.stroke();
-    ctx.globalAlpha = .35; ctx.strokeStyle = 'rgba(255,255,255,1)'; ctx.lineWidth = 1; trace(); ctx.stroke();
-    ctx.globalAlpha = 1;
-  }
-
-  // ---------- the arc: noise → noisy sine → pure sine ----------
-  const arcSvgs = [...document.querySelectorAll('[data-wave]')];
-  function waveD(level) {
-    const pts = [];
-    for (let x = 0; x <= 300; x += 3) {
-      const clean = 26 * Math.sin(x / 300 * TAU * 2);
-      const n = (Math.random() - .5) * [70, 26, 0][level] + (level === 0 ? 18 * Math.sin(x * .21 + Math.random()) : 0);
-      pts.push(`${x},${(55 + clean * [0.2, 1, 1][level] + n).toFixed(1)}`);
-    }
-    return 'M' + pts.join(' L');
-  }
-  arcSvgs.forEach((svg, i) => {
-    svg.innerHTML = `
-      <defs>
-        <linearGradient id="g${i}" x1="0" x2="1"><stop offset="0" stop-color="#d9a45b"/><stop offset=".5" stop-color="#4f7cff"/><stop offset="1" stop-color="#3ae0c8"/></linearGradient>
-        <filter id="b${i}" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="${i === 2 ? 6 : 3}"/></filter>
-      </defs>
-      <path class="halo" fill="none" stroke="url(#g${i})" stroke-width="${i === 2 ? 8 : 4}" opacity=".55" filter="url(#b${i})"/>
-      <path class="core" fill="none" stroke="${i === 2 ? '#fff' : `url(#g${i})`}" stroke-width="${i === 2 ? 2 : 1.1}" stroke-linejoin="round"/>`;
-  });
-  function drawArc() {
-    arcSvgs.forEach((svg, i) => {
-      const d = waveD(i);
-      svg.querySelector('.halo').setAttribute('d', d);
-      svg.querySelector('.core').setAttribute('d', d);
-    });
-  }
-
-  // ---------- loop ----------
-  let calmVisible = false, heroVisible = true;
-  function frame(now) {
-    const ts = now / 1000;
-    if (heroVisible) drawField(ts);
-    if (calmVisible) drawCalm(ts);
-    requestAnimationFrame(frame);
-  }
-
-  function setup() { setupField(); C = fit(calm); drawCalm(0); drawField(0); drawArc(); }
-  setup();
-  if (!REDUCE) {
-    new IntersectionObserver(([e]) => heroVisible = e.isIntersecting).observe(field);
-    new IntersectionObserver(([e]) => calmVisible = e.isIntersecting).observe(calm);
-    requestAnimationFrame(frame);
-    setInterval(() => { if (!document.hidden) drawArc(); }, 140);
-  }
-  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(setup, 150); });
-
-  // ---------- the chip, redrawn in light: three plates that separate on scroll ----------
-  const stack = document.getElementById('stack'), scv = document.getElementById('stackcv');
-  let S, sp = 0, stackVisible = false, motesS = [];
-  const lbls = [...stack.querySelectorAll('.lbl')];
-  // deterministic traces for the middle plate (plate coords, -1..1)
-  let seed = 7; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
-  const traces = Array.from({ length: 9 }, () => {
-    let u = -0.85 + rnd() * 1.7, v = -1, pts = [[u, v]];
-    while (v < 1) { v = Math.min(1, v + .25 + rnd() * .45); pts.push([u, v]); if (v < 1 && rnd() < .55) { u = Math.max(-.92, Math.min(.92, u + (rnd() - .5) * .9)); pts.push([u, v]); } }
-    return pts;
-  });
-  const nodes = []; for (let a = -0.8; a <= .81; a += .2) for (let b = -0.8; b <= .81; b += .2) nodes.push([a, b, rnd()]);
-  const specks = Array.from({ length: 420 }, () => [rnd(), rnd(), rnd()]);
-  // SMD parts on the hardware layer: [u, v, size, kind] kind 0=plain 1=red status LED 2=orange regulator
-  const smd = [[-.55, .35, 1.2, 0], [-.2, -.55, 1, 0], [.45, -.3, 1.4, 2], [.6, .55, 1, 1], [-.65, -.2, .9, 0], [.15, .7, 1.1, 0], [.2, .1, .8, 0], [-.35, .7, .9, 1]];
-  let grainPat = null;
-  (() => { const g = document.createElement('canvas'); g.width = g.height = 128; const c = g.getContext('2d'), id = c.createImageData(128, 128);
-    for (let k = 0; k < id.data.length; k += 4) { const v = Math.random() * 255; id.data[k] = id.data[k + 1] = id.data[k + 2] = v; id.data[k + 3] = 90; }
-    c.putImageData(id, 0, 0); grainPat = c.createPattern(g, 'repeat'); })();
-
-  function sizeStack() { S = fit(scv); }
-  function drawStack(ts) {
-    if (!S) return; const { ctx, w, h } = S; ctx.clearRect(0, 0, w, h);
-    // dust motes drifting up behind the stack, as in the hero
-    if (!motesS.length || motesS.w !== w) { motesS = Array.from({ length: Math.round(w / 5) }, () => ({ x: Math.random() * w, y: Math.random() * h, r: .7 + Math.random() * 2, v: 8 + Math.random() * 20, tw: Math.random() * TAU, c: Math.random() < .08 ? (Math.random() < .5 ? '255,138,61' : '47,211,181') : '160,240,228' })); motesS.w = w; }
-    for (const m of motesS) {
-      m.y -= m.v / 60; if (m.y < -5) { m.y = h + 5; m.x = Math.random() * w; }
-      const al = .32 + .3 * Math.sin(ts * 1.5 + m.tw);
-      if (al <= 0) continue;
-      ctx.fillStyle = `rgba(${m.c},${al})`; ctx.beginPath(); ctx.arc(m.x + Math.sin(ts * .4 + m.tw) * 8, m.y, m.r, 0, TAU); ctx.fill();
-    }
-    const p = sp, cx = w / 2, cy = h / 2, a = Math.min(w * .2, h * .52), b = a * .42, th = Math.max(5, a * .045);
-    const gap = th * 1.6, spread = h * .17 * p;
-    const iso = (u, v, oy) => [cx + (u - v) * a, cy + oy + (u + v) * b];
-    const grad = ctx.createLinearGradient(cx - a * 2, 0, cx + a * 2, 0);
-    grad.addColorStop(0, 'rgba(79,124,255,1)'); grad.addColorStop(.55, 'rgba(58,224,200,1)'); grad.addColorStop(1, 'rgba(220,245,255,1)');
-    const glow = (path, col = grad, k = 1) => {
-      ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = col;
-      [[14, .08], [6, .2], [2.6, .55]].forEach(([lw, al]) => { ctx.globalAlpha = al * k; ctx.lineWidth = lw; path(); ctx.stroke(); });
-      ctx.globalAlpha = .95 * k; ctx.strokeStyle = 'rgba(255,255,255,.95)'; ctx.lineWidth = 1.1; path(); ctx.stroke(); ctx.globalAlpha = 1;
-    };
-    const poly = (pts) => () => { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); };
-    const rhomb = (s, oy) => [iso(-s, -s, oy), iso(s, -s, oy), iso(s, s, oy), iso(-s, s, oy)];
-
-    function plate(oy, k) {
-      const top = rhomb(1, oy), [T, R, B, L] = top;
-      // glassy body: dark fill so plates below read through faintly
-      ctx.fillStyle = 'rgba(13,17,23,.72)';
-      ctx.beginPath(); [T, R, [R[0], R[1] + th], [B[0], B[1] + th], [L[0], L[1] + th], L].forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fill();
-      const sheen = ctx.createLinearGradient(L[0], T[1], R[0], B[1]); sheen.addColorStop(0, 'rgba(58,224,200,.08)'); sheen.addColorStop(.5, 'rgba(79,124,255,.02)'); sheen.addColorStop(1, 'rgba(58,224,200,.06)');
-      ctx.fillStyle = sheen; ctx.beginPath(); top.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fill();
-      glow(poly([...top, T]), grad, k);
-      glow(poly([L, [L[0], L[1] + th], [B[0], B[1] + th], [R[0], R[1] + th], R]), grad, k * .7);
-      glow(poly([B, [B[0], B[1] + th]]), grad, k * .7);
-    }
-
-    const o2 = gap * 2 + spread, o1 = 0, o0 = -gap * 2 - spread;
-    [o0, o1, o2].forEach((o, i) => { lbls[i].style.top = ((cy + o) - h * (.45 / 1.9)) + 'px'; lbls[i].style.left = (cx + 2 * a + 18 - w * (.1 / 1.2)) + 'px'; });
-    // accents: teal + deep blue mostly; red/orange used sparingly
-    const TEAL = '47,211,181', DEEP = '44,76,255', RED = '255,74,61', ORNG = '255,138,61', CYAN = '58,224,200';
-    const bloom = (x, y, r, col, al) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${col},${al})`); g.addColorStop(1, `rgba(${col},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
-    const fillPoly = (pts, style) => { ctx.fillStyle = style; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fill(); };
-
-    // light pooling under each plate (additive)
-    ctx.globalCompositeOperation = 'lighter';
-    bloom(cx, cy + o2 + b * .2, a * 1.15, DEEP, .16 + .12 * p);
-    bloom(cx, cy + o1 + b * .2, a * 1.2, TEAL, .08 + .1 * p);
-    bloom(cx, cy + o0, a * .9, CYAN, .08 + .12 * p);
-    ctx.globalCompositeOperation = 'source-over';
-
-    // ---- L3 systems: node mesh, links, a single warm heartbeat ----
-    plate(o2, .8);
-    const nodePts = nodes.map(([u, v, r]) => [iso(u, v, o2), r]);
-    ctx.lineWidth = 1; ctx.strokeStyle = `rgba(${DEEP},${.18 + .2 * p})`;
-    ctx.beginPath(); nodePts.forEach(([[x, y]], k) => { if (k % 9 !== 8 && k + 1 < nodePts.length) { const [nx, ny] = nodePts[k + 1][0]; ctx.moveTo(x, y); ctx.lineTo(nx, ny); } if (k + 9 < nodePts.length) { const [nx, ny] = nodePts[k + 9][0]; ctx.moveTo(x, y); ctx.lineTo(nx, ny); } }); ctx.stroke();
-    ctx.globalCompositeOperation = 'lighter';
-    nodePts.forEach(([[x, y], r], k) => {
-      const pulse = .35 + .65 * Math.max(0, Math.sin(ts * 1.6 + r * 9));
-      const col = k === 40 ? RED : (r > .86 ? TEAL : CYAN);
-      ctx.fillStyle = `rgba(${col},${(.3 + .55 * p) * pulse})`; ctx.beginPath(); ctx.arc(x, y, 1.5 + pulse * 1.4, 0, TAU); ctx.fill();
-      if (k === 40 || r > .93) bloom(x, y, 14 + pulse * 8, col, .25 * pulse);
-    });
-    ctx.globalCompositeOperation = 'source-over';
-    glow(poly(rhomb(.55, o2).concat([rhomb(.55, o2)[0]])), `rgba(${DEEP},1)`, .4 + .3 * p);
-
-    // ---- L2 hardware: traces, vias, SMD parts, status LEDs ----
-    plate(o1, .9);
-    traces.forEach((tr, i) => {
-      const pts = tr.map(([u, v]) => iso(u * .9, v * .9, o1));
-      glow(poly(pts), i % 4 === 1 ? `rgba(${TEAL},1)` : `rgba(${CYAN},1)`, .3 + .25 * p);
-      // vias at the ends
-      [pts[0], pts[pts.length - 1]].forEach(([x, y]) => { ctx.strokeStyle = `rgba(${CYAN},.7)`; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.ellipse(x, y, 3.4, 1.8, 0, 0, TAU); ctx.stroke(); });
-      const segs = []; let L = 0; for (let k = 1; k < pts.length; k++) { const d = Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]); segs.push(d); L += d; }
-      let d = ((ts * 70 + i * 53) % (L + 40)) - 20, acc = 0;
-      for (let k = 0; k < segs.length; k++) { if (d >= acc && d <= acc + segs[k]) { const f = (d - acc) / segs[k], x = pts[k][0] + (pts[k + 1][0] - pts[k][0]) * f, y = pts[k][1] + (pts[k + 1][1] - pts[k][1]) * f;
-        ctx.globalCompositeOperation = 'lighter'; bloom(x, y, 12, i === 6 ? ORNG : '255,255,255', .9); bloom(x, y, 26, i === 6 ? ORNG : CYAN, .25); ctx.globalCompositeOperation = 'source-over'; break; } acc += segs[k]; }
-    });
-    // SMD components: small raised blocks on the board
-    smd.forEach(([u, v, s, kind], k) => {
-      const sz = .07 * s, z = th * .9, pts = [iso(u - sz, v - sz * .5, o1 - z), iso(u + sz, v - sz * .5, o1 - z), iso(u + sz, v + sz * .5, o1 - z), iso(u - sz, v + sz * .5, o1 - z)];
-      fillPoly(pts, 'rgba(18,24,34,.95)');
-      ctx.strokeStyle = `rgba(${kind === 2 ? ORNG : CYAN},.75)`; ctx.lineWidth = 1; ctx.beginPath(); pts.forEach(([x, y], q) => q ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.stroke();
-      const [mx, my] = iso(u, v, o1 - z);
-      if (kind === 1) { const on = Math.sin(ts * 3 + k) > .2; ctx.globalCompositeOperation = 'lighter'; bloom(mx, my, on ? 16 : 6, RED, on ? .75 : .2); ctx.globalCompositeOperation = 'source-over'; }
-      if (kind === 2) { ctx.globalCompositeOperation = 'lighter'; bloom(mx, my, 12, ORNG, .35 + .2 * Math.sin(ts * 1.3 + k)); ctx.globalCompositeOperation = 'source-over'; }
-    });
-
-    // ---- L1 software: die, seal ring, bond wires, bond pads ----
-    plate(o0, 1);
-    const ringPts = rhomb(.5, o0 - th * .3);
-    ctx.globalCompositeOperation = 'lighter'; bloom(cx, cy + o0, a * .55, '217,164,91', .14 + .1 * p); ctx.globalCompositeOperation = 'source-over';
-    glow(poly([...ringPts, ringPts[0]]), 'rgba(217,164,91,1)', .9);
-    const lift = th * 2.2, die = rhomb(.36, o0 - lift);
-    // bond wires: tiny arcs from the die edge out to pads just inside the ring
-    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(232,190,120,.55)';
-    for (let k = 0; k < 4; k++) for (let n = 0; n < 7; n++) {
-      const t = -.3 + n * .1, sgn = k < 2 ? -1 : 1, onU = k % 2 === 0;
-      const [x0, y0] = onU ? iso(t, sgn * .36, o0 - lift) : iso(sgn * .36, t, o0 - lift);
-      const [x1, y1] = onU ? iso(t * 1.2, sgn * .46, o0 - th * .3) : iso(sgn * .46, t * 1.2, o0 - th * .3);
-      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo((x0 + x1) / 2, Math.min(y0, y1) - 8, x1, y1); ctx.stroke();
-      ctx.fillStyle = 'rgba(232,190,120,.9)'; ctx.fillRect(x1 - 1.2, y1 - 1, 2.4, 2);
-    }
-    fillPoly(die, 'rgba(13,17,23,.92)');
-    // die surface: a faint grid of logic, lit from within
-    const dieG = ctx.createLinearGradient(die[3][0], die[0][1], die[1][0], die[2][1]);
-    dieG.addColorStop(0, `rgba(${DEEP},.18)`); dieG.addColorStop(.6, `rgba(${TEAL},.12)`); dieG.addColorStop(1, `rgba(${CYAN},.2)`);
-    fillPoly(die, dieG);
-    ctx.strokeStyle = `rgba(${CYAN},.14)`; ctx.lineWidth = 1; ctx.beginPath();
-    for (let g = -.3; g <= .31; g += .075) { let [x0, y0] = iso(g, -.34, o0 - lift), [x1, y1] = iso(g, .34, o0 - lift); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); [x0, y0] = iso(-.34, g, o0 - lift); [x1, y1] = iso(.34, g, o0 - lift); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); }
-    ctx.stroke();
-    glow(poly([...die, die[0]]), grad, 1);
-    const db = rhomb(.36, o0 - lift); glow(poly([db[3], [db[3][0], db[3][1] + lift * .7], [db[2][0], db[2][1] + lift * .7], [db[1][0], db[1][1] + lift * .7], db[1]]), grad, .6);
-    const core = .5 + .5 * Math.sin(ts * 2);
-    glow(poly([...rhomb(.2, o0 - lift), rhomb(.2, o0 - lift)[0]]), `rgba(${CYAN},1)`, .35 + .4 * core);
-    ctx.globalCompositeOperation = 'lighter'; bloom(cx, cy + o0 - lift, a * .28, CYAN, .18 + .18 * core); ctx.globalCompositeOperation = 'source-over';
-
-    // chromatic fringe on the top plate's rim
-    const rim = rhomb(1, o0);
-    ctx.lineWidth = 1; ctx.globalAlpha = .35;
-    ctx.strokeStyle = `rgba(${RED},1)`; ctx.beginPath(); rim.forEach(([x, y], q) => q ? ctx.lineTo(x + 1.6, y) : ctx.moveTo(x + 1.6, y)); ctx.closePath(); ctx.stroke();
-    ctx.strokeStyle = `rgba(${DEEP},1)`; ctx.beginPath(); rim.forEach(([x, y], q) => q ? ctx.lineTo(x - 1.6, y) : ctx.moveTo(x - 1.6, y)); ctx.closePath(); ctx.stroke();
-    ctx.globalAlpha = 1;
-
-    // light shafts between layers once they've separated
-    if (p > .05) {
-      ctx.globalCompositeOperation = 'lighter';
-      [[o0, o1, CYAN], [o1, o2, TEAL]].forEach(([ya, yb, col]) => {
-        const top = cy + ya + th, bot = cy + yb, g = ctx.createLinearGradient(0, top, 0, bot);
-        g.addColorStop(0, `rgba(${col},${.12 * p})`); g.addColorStop(1, `rgba(${col},0)`);
-        ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(cx - a * .7, top); ctx.lineTo(cx + a * .7, top); ctx.lineTo(cx + a * 1.1, bot); ctx.lineTo(cx - a * 1.1, bot); ctx.closePath(); ctx.fill();
-      });
-      ctx.globalCompositeOperation = 'source-over';
-    }
-
-    // static around the stack (clears as the layers separate, never fully)
-    const noise = 1 - p * .7;
-    specks.forEach(([x, y, r], i) => {
-      if (r > noise) return;
-      const jx = (Math.random() - .5) * 6, jy = (Math.random() - .5) * 6;
-      ctx.fillStyle = `rgba(${NOISE_COLS[i & 3]},${.15 + Math.random() * .45 * noise})`;
-      ctx.fillRect(cx - a * 1.4 + x * a * 2.8 + jx, cy - h * .4 + y * h * .8 + jy, 1.4, 1.4);
-    });
-    // film grain over the drawing, refreshed each frame
-    if (grainPat) { ctx.save(); ctx.globalCompositeOperation = 'source-atop'; ctx.globalAlpha = .22; ctx.translate((Math.random() * 64) | 0, (Math.random() * 64) | 0); ctx.fillStyle = grainPat; ctx.fillRect(-64, -64, w + 128, h + 128); ctx.restore(); }
-  }
-  function explode() {
-    const r = stack.getBoundingClientRect();
-    let p = THUMB ? 0 : (innerHeight * .85 - r.top) / (innerHeight * .75);
-    p = Math.max(0, Math.min(1, p)); p = p * p * (3 - 2 * p);
-    sp = REDUCE ? .6 : p; stack.style.setProperty('--p', sp.toFixed(3));
-  }
-  sizeStack(); explode(); drawStack(0);
-  addEventListener('resize', () => { sizeStack(); drawStack(performance.now() / 1000); });
-  if (!REDUCE) {
-    addEventListener('scroll', () => requestAnimationFrame(explode), { passive: true });
-    new IntersectionObserver(([e]) => stackVisible = e.isIntersecting).observe(stack);
-    (function loop(now) { if (stackVisible) drawStack(now / 1000); requestAnimationFrame(loop); })(0);
-  }
-
-  // ---------- stage progress fills on scroll ----------
-  (() => {
-    const el = document.getElementById('steps'); if (!el) return; const st = [...el.querySelectorAll('.step')];
-    const upd = () => { const r = el.getBoundingClientRect(); let p = THUMB || REDUCE ? 1 : (innerHeight * .9 - r.top) / (innerHeight * .65); p = Math.max(0, Math.min(1, p));
-      el.style.setProperty('--p', p.toFixed(3)); st.forEach((s, i) => s.classList.toggle('on', p >= (i + .5) / 3)); };
-    upd(); addEventListener('scroll', () => requestAnimationFrame(upd), { passive: true });
-  })();
-
-  // ---------- reveal from the mist ----------
-  if (!THUMB && !REDUCE) {
-    const io = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }), { threshold: .18 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  }
-})();
-</script>
 </body>
 </html>
