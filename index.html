@@ -6,7 +6,7 @@
 <title>Accelerated Prototyping: Artisan Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0b0c10;
@@ -23,9 +23,11 @@
   }
   header { margin-bottom: clamp(32px, 5vw, 56px); }
   h1 {
+    font-family: "Roboto", system-ui, sans-serif;
     font-size: clamp(28px, 4.4vw, 60px); line-height: 1; letter-spacing: -.03em; font-weight: 700;
   }
   h1 span { color: var(--muted); }
+  .intro { margin-top: 20px; max-width: 60ch; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.5; color: var(--muted); }
   .meta {
     margin-top: 14px; font-family: "JetBrains Mono", monospace; font-size: 12px;
     letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
@@ -54,6 +56,7 @@
 <body>
 <header>
   <h1>ACCELERATED PROTOTYPING: <span>ARTISAN TECHNOLOGY</span></h1>
+  <p class="intro">Artisan Technology designs and builds custom software and hardware for problems that don't fit off-the-shelf solutions. Below, one site, reimagined 25 ways, each iteration a fast prototype with its own look and feel.</p>
   <p class="meta" id="count"></p>
 </header>
 
